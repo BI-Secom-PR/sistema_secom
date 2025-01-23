@@ -21,7 +21,7 @@ const menu = () => {
                         style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: '12px' }}
                       >
                         <img src={item.icon} alt={item.name} className="icon" />
-                        <span className="menu-text">{item.name}</span>
+                    <span className="menu-text">{item.name}</span>
                       </a>
                     </li>
                   ))}
