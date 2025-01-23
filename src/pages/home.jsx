@@ -6,6 +6,7 @@ import Grafico_bi from '../components/grafico_bi'
 import Veiculos_investimentos from '../components/veiculos_investimentos'
 import Engajamento from '../components/engajamento'
 import Trending_topics from '../components/trending_topics'
+import GraficoComparativo from '../components/grafico_comparativo'
 
 const Home = () => {
   return (
@@ -28,6 +29,10 @@ const Home = () => {
           <Col xs={12} md={6} lg={5}><Veiculos_investimentos /></Col>
           <Col xs={12} md={6} lg={3}><Engajamento /></Col>
           <Col xs={12} md={6} lg={4}><Trending_topics /></Col>        
+        </Row>
+        <br/>
+        <Row>
+          <Col><GraficoComparativo /></Col>         
         </Row>
         
     </>
