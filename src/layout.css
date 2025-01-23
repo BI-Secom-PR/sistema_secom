@@ -1,0 +1,113 @@
+/* src/styles/components/layout.css */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    background: #fff;
+    border-right: 1px solid #eaeaea;
+    padding: 20px;
+  }
+  
+  .logo-container {
+    padding: 20px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .logo {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .menu-item {
+    padding: 18px 20px;
+    margin: 8px 0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .menu-item.active {
+    background-color: #ffc916;
+  }
+  
+  .menu-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .main-content {
+    margin-left: 200px; /* Compensa a largura da sidebar */
+    padding: 30px;
+    transition: margin-left 0.3s ease-in-out;
+  } 
+  
+  /* Empurra o conteúdo para trás quando a sidebar está aberta no mobile */
+  .sidebar-open .main-content {
+    filter: blur(4px); /* Efeito de desfoque */
+  }
+  /* Melhorias para responsividade dos cards */
+  .metrics-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  
+  
+  
+  .metric-card.selected {
+    background: #FFF9C4;
+  }
+  
+  .metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+  
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  /* Responsividade básica */
+  @media (max-width: 1200px) {
+    .charts-row {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .charts-row {
+      gap: 15px;
+    }
+    
+    .metrics-cards {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .main-content {
+      margin-left: 0; /* Remove o espaço da sidebar */
+    }
+  }
