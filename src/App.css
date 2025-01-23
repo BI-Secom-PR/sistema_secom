@@ -16,11 +16,10 @@ body {
 }
 
 .sidebar {
-  width: 140px;  /* Ajuste o tamanho conforme necessário */
+  width: 100px;  /* Ajuste o tamanho conforme necessário */
   transition: width 0.3s;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   height: 100vh;
 }
 
@@ -492,4 +491,42 @@ h3 {
 .progress {
   height: 100%;
   border-radius: 3px;
+}
+/*engajamento*/
+.title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.metrics-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;  /* Aumentado de 1.5rem para 2.5rem */
+  justify-content: space-between;  /* Mudado de space-between para space-around */
+  height: 100%;
+ }
+
+.campaign-card {
+  min-height: 480px;
+}
+
+.metric-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.metric-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+.share-text {
+  margin-right: 8px;  /* ou qualquer valor que deseje para o espaçamento */
 }
