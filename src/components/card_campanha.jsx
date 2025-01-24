@@ -5,8 +5,8 @@ import { campaigns } from '../data/campaigns'; // Dados de campanhas
 
 const Card_campanha = () => {
   const [selectedCampaigns, setSelectedCampaigns] = useState([]);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const toggleCampaignSelection = (id) => {
     setSelectedCampaigns((prevSelected) =>
@@ -38,25 +38,24 @@ const Card_campanha = () => {
         {/* Filtro de Data */}
         <div className="date-filter">
           <div className="date-inputs">
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              dateFormat="dd/MM/yyyy"
-              placeholderText="dd/mm/aaaa"
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
               className="date-input"
             />
             <span className="date-separator">até</span>
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              dateFormat="dd/MM/yyyy"
-              placeholderText="dd/mm/aaaa"
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
               className="date-input"
             />
+            <Button variant="success" className="apply-filter">
+              Aplicar
+            </Button>
           </div>
-          <Button variant="success" className="apply-filter">
-            Aplicar
-          </Button>
+          
         </div>
 
         {/* Lista de Campanhas */}

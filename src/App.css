@@ -549,3 +549,50 @@ h3 {
 .share-text {
   margin-right: 8px;  /* ou qualquer valor que deseje para o espaçamento */
 }
+
+.date-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.date-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-input {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.date-input:focus {
+  border-color: #28a745;
+  outline: none;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+.date-separator {
+  font-size: 16px;
+  color: #666;
+}
+
+.apply-filter {
+  align-self: flex-end;
+}
+
+@media (max-width: 768px) {
+  .date-inputs {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .apply-filter {
+    width: 100%;
+  }
+}
