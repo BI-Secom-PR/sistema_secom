@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker'; // Importa o componente de datas
-import 'react-datepicker/dist/react-datepicker.css'; // Importa o estilo padrão
 import { campaigns } from '../data/campaigns'; // Dados de campanhas
 
 const Card_campanha = () => {
@@ -40,25 +39,24 @@ const Card_campanha = () => {
         {/* Filtro de Data */}
         <div className="date-filter">
           <div className="date-inputs">
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              dateFormat="dd/MM/yyyy"
-              placeholderText="dd/mm/aaaa"
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
               className="date-input"
             />
             <span className="date-separator">até</span>
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              dateFormat="dd/MM/yyyy"
-              placeholderText="dd/mm/aaaa"
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
               className="date-input"
             />
+            <Button variant="success" className="apply-filter">
+              Aplicar
+            </Button>
           </div>
-          <Button variant="success" className="apply-filter">
-            Aplicar
-          </Button>
+          
         </div>
 
         {/* Lista de Campanhas */}
