@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import DatePicker from 'react-datepicker'; // Importa o componente de datas
 import { campaigns } from '../data/campaigns'; // Dados de campanhas
 
 const Card_campanha = () => {
@@ -73,9 +74,10 @@ const Card_campanha = () => {
                 <span className="campaign-name">{campaign.name}</span>
               </div>
               <img
-                src={campaign.image}
-                alt={campaign.name}
-                className="campaign-image"
+              src={campaign.image}
+              alt={campaign.name}
+              className="campaign-image"
+              style={{ width: '110px', height: '70px' }}  // Aumentando de 40px para 60px
               />
             </div>
           ))}
