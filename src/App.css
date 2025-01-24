@@ -72,6 +72,9 @@ body {
 }
 
 .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 24px;
   height: 24px;
 }
@@ -402,8 +405,10 @@ h3 {
 }
 
 .platform {
-  display: flex;
-  flex-direction: column;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 6px;
 }
 .platform-row {
   border-bottom: 1px solid #e5e5e5;
@@ -413,7 +418,8 @@ h3 {
 .platform-header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  margin-bottom: 6px;
 }
 
 .platform strong {
@@ -423,6 +429,8 @@ h3 {
 .platform-info {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
 .platform-info strong {
@@ -443,12 +451,12 @@ h3 {
 
 .metrics {
   display: flex;
-  gap: 15px;
-  margin-top: 10px;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
+  gap: 2rem;
+  padding: 3px 10px;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
 }
-
 .metric span {
   display: block;
   font-size: 0.9rem;
@@ -468,7 +476,10 @@ h3 {
 }
 
 .metric {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
 }
 
 .metric span {
@@ -482,15 +493,15 @@ h3 {
 }
 
 .progress-bar {
-  margin-top: 10px;
+  margin-top: 8px;
   height: 6px;
-  background-color: #f5f5f5;
   border-radius: 3px;
 }
 
 .progress {
-  height: 100%;
-  border-radius: 3px;
+  height: 4px;
+  border-radius: 2px;
+  transition: width 0.3s ease;
 }
 /*engajamento*/
 .title {
@@ -509,8 +520,16 @@ h3 {
 
 .campaign-card {
   min-height: 480px;
+  padding: 1.5rem;
+}
+.bg-light {
+  padding: 1rem !important;
+  height: 6rem;
 }
 
+.h5 {
+  margin-bottom: 1.5rem !important;
+}
 .metric-info {
   display: flex;
   align-items: center;

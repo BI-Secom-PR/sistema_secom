@@ -29,7 +29,7 @@ const Veiculos_investimentos = () => {
                 className="progress"
                 style={{
                   width: `${(index + 1) * 20}%`,
-                  backgroundColor: "#DB4437",
+                  backgroundColor: "#ff4027",
                 }}
               ></div>
             </div>
