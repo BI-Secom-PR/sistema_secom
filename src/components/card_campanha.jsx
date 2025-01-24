@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker'; // Importa o componente de datas
-import 'react-datepicker/dist/react-datepicker.css'; // Importa o estilo padrão
 import { campaigns } from '../data/campaigns'; // Dados de campanhas
 
 const Card_campanha = () => {
