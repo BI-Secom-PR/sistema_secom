@@ -1,89 +1,142 @@
-import React, { useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import { campaigns } from '../data/campaigns';
+import { useState, useEffect } from "react";
+import { fetchCampaigns } from "../data/fetchMetrics";
+import { Button, Card } from "react-bootstrap";
 
-const Card_campanha = () => {
- const [selectedCampaigns, setSelectedCampaigns] = useState([]);
- const [startDate, setStartDate] = useState('');
- const [endDate, setEndDate] = useState('');
+const CardCampanha = ({ 
+  onDateChange, 
+  onCampaignSelect, 
+  startDate, 
+  endDate, 
+  selectedCampaign 
+}) => {
+  const [campaigns, setCampaigns] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [inputStartDate, setInputStartDate] = useState(startDate);
+  const [inputEndDate, setInputEndDate] = useState(endDate);
 
- const toggleCampaignSelection = (id) => {
-   setSelectedCampaigns((prevSelected) =>
-     prevSelected.includes(id)
-       ? prevSelected.filter((campaignId) => campaignId !== id)
-       : [...prevSelected, id]
-   );
- };
+  const loadCampaigns = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchCampaigns(startDate, endDate);
+      setCampaigns(data);
+    } catch (error) {
+      setError("Erro ao carregar campanhas. Por favor, tente novamente.");
+      console.error("Erro ao carregar campanhas:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
- return (
-   <Card className="campaign-card">
-     <Card.Body>
-       <h3 className="campaign-title">Campanhas Secom</h3>
+  useEffect(() => {
+    loadCampaigns();
+  }, [startDate, endDate]);
 
-       <div className="status-legend d-flex flex-wrap gap-3 mb-3">
-         <span className="d-flex align-items-center">
-           <span className="dot active"></span> Ativas
-         </span>
-         <span className="d-flex align-items-center">
-           <span className="dot paused"></span> Pausada/Cancelada
-         </span>
-         <span className="d-flex align-items-center">
-           <span className="dot concluded"></span> Concluída
-         </span>
-       </div>
+  const handleRefresh = () => {
+    const normalizedStartDate = new Date(inputStartDate + "T00:00:00Z").toISOString().split("T")[0];
+    const normalizedEndDate = new Date(inputEndDate + "T00:00:00Z").toISOString().split("T")[0];
+    console.log(normalizedStartDate, normalizedEndDate)
+    
+    onDateChange(normalizedStartDate, normalizedEndDate);
+  };
 
-       <div className="date-filter">
-         <div className="date-inputs" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-           <input
-             type="date"
-             value={startDate}
-             onChange={(e) => setStartDate(e.target.value)}
-             className="date-input"
-           />
-           <span className="date-separator">até</span>
-           <input
-             type="date"
-             value={endDate}
-             onChange={(e) => setEndDate(e.target.value)}
-             className="date-input"
-           />
-           <Button variant="success" className="apply-filter" style={{ marginLeft: '2rem' }}>
-             Aplicar
-           </Button>
-         </div>
-       </div>
+  const handleCampaignSelect = (campaignName) => {
+    onCampaignSelect(campaignName === selectedCampaign ? null : campaignName);
+  };
 
-       <div className="campaigns-list">
-         {campaigns.map((campaign) => (
-           <div
-             key={campaign.id}
-             className={`campaign-item ${
-               selectedCampaigns.includes(campaign.id) ? 'selected' : ''
-             } d-flex flex-wrap justify-content-between align-items-center p-2`}
-             onClick={() => toggleCampaignSelection(campaign.id)}
-           >
-             <div className="campaign-info d-flex align-items-center gap-2">
-               <span className={`dot ${campaign.status}`}></span>
-               <span className="campaign-name text-break">{campaign.name}</span>
-             </div>
-             <img
-               src={campaign.image}
-               alt={campaign.name}
-               className="campaign-image img-fluid"
-               style={{ 
-                 width: '110px', 
-                 height: '70px',
-                 maxWidth: '100%',
-                 objectFit: 'cover' 
-               }}
-             />
-           </div>
-         ))}
-       </div>
-     </Card.Body>
-   </Card>
- );
+  return (
+    <Card style={{ border: '1px solid #e5e7eb', borderRadius: '8px', padding: '20px', width: '100%', minHeight: '450px' }}>
+      <div>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '16px' }}>Campanhas Ativas</h2>
+        
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <input
+            type="date"
+            value={inputStartDate}
+            onChange={(e) => setInputStartDate(e.target.value)}
+            style={{
+              padding: '8px',
+              border: '1px solid #e5e7eb',
+              borderRadius: '4px',
+              height: '38px',
+              flex: '1',
+              minWidth: '130px'
+            }}
+          />
+          <input
+            type="date"
+            value={inputEndDate}
+            onChange={(e) => setInputEndDate(e.target.value)}
+            style={{
+              padding: '8px',
+              border: '1px solid #e5e7eb',
+              borderRadius: '4px',
+              height: '38px',
+              flex: '1',
+              minWidth: '130px'
+            }}
+          />
+          <Button
+            onClick={handleRefresh}
+            disabled={loading}
+            style={{
+              backgroundColor: '#0d6efd',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              padding: '8px 16px',
+              height: '38px',
+              minWidth: '100px'
+            }}
+          >
+            {loading ? "Carregando..." : "Atualizar"}
+          </Button>
+        </div>
+        <br/>
+        {error && <p className="error-message">{error}</p>}
+        {loading ? <p className="loading-message">Carregando campanhas...</p> : null}
+        
+        {campaigns.length > 0 ? (
+          <div className="campaigns-list">
+            {campaigns.map((campaign) => (
+              <div 
+                key={campaign.Nome_Interno_Campanha}
+                className={`campaign-item ${selectedCampaign === campaign.Nome_Interno_Campanha ? 'selected' : ''}`}
+                onClick={() => handleCampaignSelect(campaign.Nome_Interno_Campanha)}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '8px', 
+                  padding: '8px', 
+                  cursor: 'pointer',
+                  width: '100%',
+                  backgroundColor: selectedCampaign === campaign.Nome_Interno_Campanha ? '#e6f0ff' : 'transparent'
+                }}
+              >
+                <span
+                  className="status-dot"
+                  style={{
+                    width: '10px',
+                    height: '10px',
+                    borderRadius: '50%',
+                    backgroundColor: 'green',
+                    flexShrink: 0
+                  }}
+                ></span>
+              
+                <span className="campaign-name" style={{ flex: 1 }}>
+                  {campaign.Nome_Interno_Campanha || 'Sem nome'}
+                </span>
+              </div>            
+            ))}
+          </div>
+        ) : (
+          <p className="no-campaigns-message">Nenhuma campanha ativa encontrada.</p>
+        )}
+      </div>
+    </Card>
+  );
 };
 
-export default Card_campanha;
+export default CardCampanha;

@@ -20,7 +20,7 @@ const menu = () => {
                         href={item.path}
                         style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: '12px' }}
                       >
-                        <img src={item.icon} alt={item.name} className="icon" />
+                        {item.icon}
                     <span className="menu-text">{item.name}</span>
                       </a>
                     </li>
