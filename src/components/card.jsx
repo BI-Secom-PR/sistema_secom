@@ -54,9 +54,11 @@ function Cards({ startDate, endDate, selectedCampaign }) {
                     <Spinner animation="border" variant="primary" />
                   ) : (
                     <Card.Text className="metric-type mb-0 text-center fw-bold" style={{ fontSize: '1.6rem' }}>
-                      {metric.type === 'investment'
-                        ? `R$ ${currentValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                        : Math.round(currentValue).toLocaleString('pt-BR')}
+                      {currentValue !== null && currentValue !== undefined
+                        ? metric.type === 'investment'
+                          ? `R$ ${currentValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                          : Math.round(currentValue).toLocaleString('pt-BR')
+                        : '—'}
                     </Card.Text>
                   )}
                 </div>

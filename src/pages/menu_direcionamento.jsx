@@ -23,34 +23,7 @@ const Menu_direcionamento = () => {
             Menu de direcionamento
           </h1>
 
-          <div className="d-flex align-items-center gap-3">
-            <Button
-              variant="primary"
-              style={{
-                backgroundColor: '#4285f4',
-                border: 'none',
-                whiteSpace: 'nowrap',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-              }}
-            >
-              <User size={20} />
-              Marcos Vitor | Gestão
-            </Button>
-            <Button
-              variant="danger"
-              style={{
-                backgroundColor: '#ff4131',
-                border: 'none',
-                width: '40px',
-                height: '40px',
-                padding: '8px',
-              }}
-            >
-              <LogOut size={20} />
-            </Button>
-          </div>
+          
         </div>
 
         <h2 className="mb-4">Dashboards ativos</h2>

@@ -173,15 +173,6 @@ function Trends() {
   };
 }, []);
 
- const menuItems = [
-   { icon: <Home size={24} color="#666" />, label: "Menu" },
-   { icon: <LayoutDashboard size={24} color="#666" />, label: "Campanhas Ativas" },
-   { icon: <BarChart3 size={24} color="#666" />, label: "Dashboard Planilha" },
-   { icon: <Clock size={24} color="#666" />, label: "Monitoramento" },
-   { icon: <BarChart2 size={24} color="#666" />, label: "Power BI" },
-   { icon: <TrendingUp size={24} color="#000" />, label: "Trending" },
- ];
-
  const trendingX = [
    { rank: 1, topic: "Neymar", tweets: "252K" },
    { rank: 2, topic: "Raissa", tweets: "41K" },

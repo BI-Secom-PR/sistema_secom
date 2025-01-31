@@ -5,7 +5,6 @@ import { Col, Row } from 'react-bootstrap'
 import Grafico_bi from '../components/grafico_bi'
 import Veiculos_investimentos from '../components/veiculos_investimentos'
 import Engajamento from '../components/engajamento'
-//import GraficoComparativo from '../components/grafico_comparativo'
 import Grafico_demografico from '../components/grafico_demografico'
 import { format, subDays } from 'date-fns'
 
