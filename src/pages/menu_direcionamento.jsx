@@ -6,6 +6,7 @@ import dashboardImg from '../assets/dashboard.png';
 import monitoramentoImg from '../assets/monitoramento.png';
 import powerBiImg from '../assets/powerbi.png';
 import { Link } from 'react-router-dom';
+import trendingTopicsImg from '../assets/trending-topics.png';
 
 const Menu_direcionamento = () => {
   return (
@@ -15,18 +16,17 @@ const Menu_direcionamento = () => {
           <h1
             style={{
               fontSize: '2rem',
-              fontFamily: 'Rhodium Libre',
+              fontFamily: 'Rawline',
+              fontWeight: '600',
               textAlign: 'center',
               width: '100%',
             }}
           >
-            Menu de direcionamento
+            PAINEL GERAL
           </h1>
-
-          
         </div>
 
-        <h2 className="mb-4">Dashboards ativos</h2>
+        <h2 className="mb-4"></h2>
 
         <Row className="g-4">
           {/* Campanhas Ativas */}
@@ -34,7 +34,6 @@ const Menu_direcionamento = () => {
             <Card className="border-0 h-100" style={{ borderRadius: '12px' }}>
               <Card.Body className="d-flex flex-column">
                 <Link to='/campanhas_ativas'>
-
                 <div style={{ flex: 1 }}>
                   <Image src={campanhasImg} fluid />
                 </div>
@@ -55,7 +54,6 @@ const Menu_direcionamento = () => {
             <Card className="border-0 h-100" style={{ borderRadius: '12px' }}>
               <Card.Body className="d-flex flex-column">
                 <Link to='/demandas'>
-
                 <div style={{ flex: 1 }}>
                   <Image src={dashboardImg} fluid />
                 </div>
@@ -76,9 +74,8 @@ const Menu_direcionamento = () => {
             <Card className="border-0 h-100" style={{ borderRadius: '12px' }}>
               <Card.Body className="d-flex flex-column">
                 <Link to='/trends'>
-
                 <div style={{ flex: 1 }}>
-                  <Image src={monitoramentoImg} fluid />
+                  <Image src={trendingTopicsImg} fluid />
                 </div>
                 <Button
                   variant="danger"
@@ -117,7 +114,6 @@ const Menu_direcionamento = () => {
             <Card className="border-0 h-100" style={{ borderRadius: '12px' }}>
               <Card.Body className="d-flex flex-column">
                 <Link to='/monitoramento'>
-              
                 <div style={{ flex: 1 }}>
                   <Image src={monitoramentoImg} fluid />
                 </div>
@@ -132,8 +128,6 @@ const Menu_direcionamento = () => {
               </Card.Body>
             </Card>
           </Col>
-
-
         </Row>
     </>
   )

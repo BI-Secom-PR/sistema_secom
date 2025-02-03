@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f5f5f5;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Rawline', sans-serif;
 }
 
 .dashboard-title {
@@ -181,6 +181,7 @@ body {
   font-weight: bold;
   margin: 0; /* Remove margens padrão */
   color: #333; /* Cor do texto */
+
 }
 
 .metric-type {
@@ -198,7 +199,7 @@ body {
 .metric-content {
   display: flex;
   justify-content: space-between; /* Coloca o ícone à direita */
-  align-items: center; /* Centraliza verticalmente o ícone e o conteúdo */
+  align-items: left; /* Centraliza verticalmente o ícone e o conteúdo */
 }
 
 /* Campanhas */

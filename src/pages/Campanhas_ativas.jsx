@@ -27,7 +27,11 @@ const Campanhas_ativas = () => {
 
   return (
     <>
-      <h1 style={{textAlign: "center"}}>SECOM DASHBOARD</h1>        
+      <h1 style={{
+        textAlign: "center",
+        fontFamily: "Rawline",
+        fontWeight: "600"
+      }}>CAMPANHAS ATIVAS</h1>        
       <Cards 
         startDate={startDate}
         endDate={endDate}

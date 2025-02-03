@@ -33,27 +33,49 @@ function Cards({ startDate, endDate, selectedCampaign }) {
     return (((current - previous) / previous) * 100).toFixed(2);
   };
 
+  const getIcon = (type) => {
+    switch (type) {
+      case 'investment':
+        return <img src="https://img.icons8.com/?size=100&id=QHui8fGzf5rs&format=png&color=000000" alt="investment" width={30} height={30} />;
+      case 'clicks':
+        return <img src="https://img.icons8.com/?size=100&id=23540&format=png&color=000000" alt="clicks" width={30} height={30} />;
+      case 'views':
+        return <img src="https://img.icons8.com/?size=100&id=85028&format=png&color=000000" alt="views" width={30} height={30} />;
+      case 'engagement':
+        return <img src="https://img.icons8.com/?size=100&id=qtmxiFzhBiJq&format=png&color=000000" alt="engagement" width={30} height={30} />;
+      case 'impressions':
+        return <img src="https://img.icons8.com/?size=100&id=3TL0RN7MtStC&format=png&color=000000" alt="impressions" width={30} height={30} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <Row xs={1} sm={2} md={3} lg={4} xl={5} className="g-4">
       {metricCards.map((metric, idx) => {
         const matchedMetric = metrics.find(m => m.type === metric.type);
         const currentValue = matchedMetric ? matchedMetric.currentValue : null;
         const previousValue = matchedMetric ? matchedMetric.previousValue : null;
-        const percentageDiff = currentValue !== null ? getPercentageDiff(currentValue, previousValue) : null;
+        let percentageDiff = currentValue !== null ? getPercentageDiff(currentValue, previousValue) : null;
+        console.log(percentageDiff)
+
+        // Verificar se a diferença é zero
         const isPositive = percentageDiff > 0;
+        const isZero = percentageDiff === '0.00' || percentageDiff === null; // Verifica se a porcentagem é 0% ou null
 
         return (
           <Col key={idx} className="d-flex">
             <Card className={`metric-card ${metric.type} w-100`} style={{ minHeight: '200px' }}>
-              <Card.Body className="d-flex flex-column justify-content-center align-items-center p-3">
-                <div className="metric-content d-flex flex-column justify-content-center align-items-center gap-2">
-                  <Card.Title className="metric-title h5 text-center text-truncate">
+              <Card.Body className="d-flex flex-column p-3">
+                <div className="metric-content d-flex flex-column gap-2">
+                  <Card.Title className="d-flex align-items-center justify-content-between gap-2">
                     {metric.title}
+                    {getIcon(metric.type)}
                   </Card.Title>
                   {loading ? (
                     <Spinner animation="border" variant="primary" />
                   ) : (
-                    <Card.Text className="metric-type mb-0 text-center fw-bold" style={{ fontSize: '1.6rem' }}>
+                    <Card.Text className="metric-type mb-0 text-left fw-bold" style={{ fontSize: '1.6rem' }}>
                       {currentValue !== null && currentValue !== undefined
                         ? metric.type === 'investment'
                           ? `R$ ${currentValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
@@ -64,12 +86,19 @@ function Cards({ startDate, endDate, selectedCampaign }) {
                 </div>
               </Card.Body>
               <Card.Footer className="py-2">
-                <div className="d-flex align-items-center justify-content-center">
+                <div className="d-flex align-items-left justify-content-left">
                   {loading ? (
                     <Spinner animation="border" variant="secondary" size="sm" />
                   ) : (
-                    <small className={`text-${isPositive ? 'success' : 'danger'} h6`}>
-                      {isPositive ? '↑' : '↓'} {Math.abs(percentageDiff)}%
+                    <small 
+                      className={`text-${isZero ? 'muted' : isPositive ? 'success' : 'danger'}`} // Alterado para 0% ser neutro
+                      style={{ fontSize: '1.4rem', fontWeight: '600' }} // Fonte semibold
+                    >
+                      <span style={{ fontSize: '1.5rem' }}>
+                        {isZero ? '' : isPositive ? '↑' : '↓'} {/* Seta neutra para 0% */}
+                      </span>
+                     
+                      {Math.abs(percentageDiff)}%
                     </small>
                   )}
                 </div>

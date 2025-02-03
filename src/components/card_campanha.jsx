@@ -48,7 +48,7 @@ const CardCampanha = ({
   return (
     <Card style={{ border: '1px solid #e5e7eb', borderRadius: '8px', padding: '20px', width: '100%', minHeight: '450px' }}>
       <div>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '16px' }}>Campanhas Ativas</h2>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '16px' }}></h2>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <input
@@ -61,7 +61,7 @@ const CardCampanha = ({
               borderRadius: '4px',
               height: '38px',
               flex: '1',
-              minWidth: '130px'
+              minWidth: '100px'
             }}
           />
           <input
@@ -74,7 +74,7 @@ const CardCampanha = ({
               borderRadius: '4px',
               height: '38px',
               flex: '1',
-              minWidth: '130px'
+              minWidth: '100px'
             }}
           />
           <Button
