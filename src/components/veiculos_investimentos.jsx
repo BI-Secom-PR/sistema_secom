@@ -32,6 +32,15 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
         return <FaLinkedin style={{ color: "#0077B5" }} />;
       case "google":
         return <FaGoogle style={{ color: "#DB4437" }} />;
+      case "tiktok":
+        return (
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14h-2v-6h2v6zm0-8h-2V7h2v1zm5 8h-2V9h2v7zm0-9h-2V7h2v1z"
+              fill="#000"
+            />
+          </svg>
+        );
       default:
         return null;
     }
@@ -56,43 +65,49 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
               <div className="platform-header">
                 <div className="icon">{getIcon(item.platform)}</div>
                 <div className="platform-info">
-                  <strong>{item.platform}</strong>
-                  <div className="investment" style={{ fontSize: '1.3rem', fontWeight: 'bold' }}>
-                    {item.spend ? `R$${item.spend.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : "R$0,00"}
+                  <strong style={{ fontSize: '1.3rem', textAlign: 'left', marginRight: 'auto' }}>
+                    {item.platform}
+                  </strong>
+                  <div className="investment" style={{ fontSize: '1.3rem' }}>
+                    {item.spend
+                      ? `R$${item.spend.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                      : "R$0,00"}
                   </div>
                 </div>
                 <div className="metrics d-flex flex-wrap justify-content-end" style={{ marginLeft: 'auto', gap: '2rem' }}>
                   <div className="metric">
-                    <span>CPM</span>
-                    <strong>{item.CPM ? `R$${item.CPM.toFixed(2)}` : "R$0,00"}</strong>
+                    <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>CPM</span>
+                    <strong style={{ fontSize: '1.3rem', fontWeight: 'normal' }}>
+                      {item.CPM ? `R$${item.CPM.toFixed(2)}` : "R$0,00"}
+                    </strong>
                   </div>
                   <div className="metric">
-                    <span>CPV</span>
-                    <strong>{item.CPV ? `R$${item.CPV.toFixed(2)}` : "R$0,00"}</strong>
+                    <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>CPV</span>
+                    <strong style={{ fontSize: '1.3rem', fontWeight: 'normal' }}>
+                      {item.CPV ? `R$${item.CPV.toFixed(2)}` : "R$0,00"}
+                    </strong>
                   </div>
                   <div className="metric">
-                    <span>CPC</span>
-                    <strong>{item.CPC ? `R$${item.CPC.toFixed(2)}` : "R$0,00"}</strong>
+                    <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>CPC</span>
+                    <strong style={{ fontSize: '1.3rem', fontWeight: 'normal' }}>
+                      {item.CPC ? `R$${item.CPC.toFixed(2)}` : "R$0,00"}
+                    </strong>
                   </div>
                   <div className="metric">
-                    <span>CTR</span>
-                    <strong>{item.CTR ? `${(item.CTR * 100).toFixed(2)}%` : "0%"}</strong>
+                    <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>CTR</span>
+                    <strong style={{ fontSize: '1.3rem', fontWeight: 'normal' }}>
+                      {item.CTR ? `${(item.CTR * 100).toFixed(2)}%` : "0%"}
+                    </strong>
                   </div>
                   <div className="metric">
-                    <span>VTR</span>
-                    <strong>{item.VTR ? `${(item.VTR * 100).toFixed(2)}%` : "0%"}</strong>
+                    <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>VTR</span>
+                    <strong style={{ fontSize: '1.3rem', fontWeight: 'normal' }}>
+                      {item.VTR ? `${(item.VTR * 100).toFixed(2)}%` : "0%"}
+                    </strong>
                   </div>
                 </div>
               </div>
-              <div className="progress-bar">
-                <div
-                  className="progress"
-                  style={{
-                    width: `${calculateProgress(item)}%`,
-                    backgroundColor: "#ff4027",
-                  }}
-                ></div>
-              </div>
+              <div className="progress-bar"></div>
             </Col>
           </Row>
         ))}

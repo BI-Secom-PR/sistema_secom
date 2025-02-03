@@ -111,32 +111,3 @@
       margin-left: 0; /* Remove o espaço da sidebar */
     }
   }
-  .logout-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3) !important;
-    background-color: #c82333 !important;
-  }
-  
-  .logout-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2) !important;
-  }
-  .logout-button {
-    transition: all 0.2s ease !important;
-  }
-  
-  .logout-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3) !important;
-    background-color: #c82333 !important;
-  }
-  
-  .logout-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2) !important;
-  }
-  
-  .logout-button span {
-    display: inline-block !important;
-    white-space: nowrap !important;
-  }
