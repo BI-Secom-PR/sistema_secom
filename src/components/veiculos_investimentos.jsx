@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Spinner } from "react-bootstrap";
 import { FaInstagram, FaFacebook, FaPinterest, FaLinkedin, FaGoogle } from "react-icons/fa";
 import { fetchPlatformMetrics } from '../data/fetchMetrics';
+import tiktokLogo from "../assets/tiktok-logo.png";
 
 const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
   const [metrics, setMetrics] = useState(null);
@@ -37,15 +38,10 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
         return <FaLinkedin style={{ color: "#0077B5" }} />;
       case "google":
         return <FaGoogle style={{ color: "#DB4437" }} />;
-      case "tiktok":
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14h-2v-6h2v6zm0-8h-2V7h2v1zm5 8h-2V9h2v7zm0-9h-2V7h2v1z"
-              fill="#000"
-            />
-          </svg>
-        );
+        case "tiktok":
+          return (
+            <img src={require("../assets/tiktok-logo.png")} alt="TikTok Logo" width="24" height="24" />
+          );
       default:
         return null;
     }

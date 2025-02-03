@@ -27,8 +27,8 @@ export const fetchMetrics = async (metricCards, startDate = null, endDate = null
 
     // Construção da URL para a requisição atual
     const url = selectedCampaign 
-      ? `http://localhost:4000/plataforma_dia/campaigns?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${start}&endDate=${end}`
-      : `http://localhost:4000/plataforma_dia/campaigns?startDate=${start}&endDate=${end}`;
+      ? `https://api-nest-alpha.vercel.app/plataforma_dia/campaigns?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${start}&endDate=${end}`
+      : `https://api-nest-alpha.vercel.app/plataforma_dia/campaigns?startDate=${start}&endDate=${end}`;
 
     const responseCurrent = await fetch(url);
     if (!responseCurrent.ok) throw new Error(`Erro na requisição atual: ${responseCurrent.statusText}`);
@@ -41,8 +41,8 @@ export const fetchMetrics = async (metricCards, startDate = null, endDate = null
 
     // Construção da URL para a requisição do período anterior
     const url_previous = selectedCampaign 
-      ? `http://localhost:4000/plataforma_dia/campaigns?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${startDatePrevious}&endDate=${endDatePrevious}`
-      : `http://localhost:4000/plataforma_dia/campaigns?startDate=${startDatePrevious}&endDate=${endDatePrevious}`;
+      ? `https://api-nest-alpha.vercel.app/plataforma_dia/campaigns?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${startDatePrevious}&endDate=${endDatePrevious}`
+      : `https://api-nest-alpha.vercel.app/plataforma_dia/campaigns?startDate=${startDatePrevious}&endDate=${endDatePrevious}`;
 
     const responsePrevious = await fetch(url_previous);
     if (!responsePrevious.ok) throw new Error(`Erro na requisição anterior: ${responsePrevious.statusText}`);
@@ -70,7 +70,7 @@ export const fetchCampaigns = async (startDate = null, endDate = null) => {
     console.log(start, end)
 
     const response = await fetch(
-      `http://localhost:4000/plataforma_dia/campaigns?startDate=${start}&endDate=${end}`
+      `https://api-nest-alpha.vercel.app/plataforma_dia/campaigns?startDate=${start}&endDate=${end}`
     );
     
     if (!response.ok) throw new Error(`Erro na requisição: ${response.statusText}`);
@@ -93,7 +93,7 @@ export const fetchCampaigns = async (startDate = null, endDate = null) => {
 
 export const fetchCampaignMetrics = async (metricCards, campaignName, startDate, endDate) => {
     try {
-      const url = `http://localhost:4000/plataforma_dia/campaigns?campaignName=${encodeURIComponent(campaignName)}&startDate=${startDate}&endDate=${endDate}`;
+      const url = `https://api-nest-alpha.vercel.app/plataforma_dia/campaigns?campaignName=${encodeURIComponent(campaignName)}&startDate=${startDate}&endDate=${endDate}`;
       const response = await fetch(url);
   
       if (!response.ok) throw new Error(`Erro na requisição: ${response.statusText}`);
@@ -122,8 +122,8 @@ export const fetchCampaignMetrics = async (metricCards, campaignName, startDate,
   
       // Construção da URL com ou sem o parâmetro de campanha
       const url = selectedCampaign
-        ? `http://localhost:4000/plataforma_dia/platform?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${start}&endDate=${end}`
-        : `http://localhost:4000/plataforma_dia/platform?startDate=${start}&endDate=${end}`;
+        ? `https://api-nest-alpha.vercel.app/plataforma_dia/platform?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${start}&endDate=${end}`
+        : `https://api-nest-alpha.vercel.app/plataforma_dia/platform?startDate=${start}&endDate=${end}`;
   
       const response = await fetch(url);
   
@@ -146,8 +146,8 @@ export const fetchCampaignMetrics = async (metricCards, campaignName, startDate,
   
       // Construção da URL com ou sem o parâmetro de campanha
       const url = selectedCampaign
-        ? `http://localhost:4000/plataforma_dia/platform/meta/engagement?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${start}&endDate=${end}`
-        : `http://localhost:4000/plataforma_dia/platform/meta/engagement?startDate=${start}&endDate=${end}`;
+        ? `https://api-nest-alpha.vercel.app/plataforma_dia/platform/meta/engagement?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${start}&endDate=${end}`
+        : `https://api-nest-alpha.vercel.app/plataforma_dia/platform/meta/engagement?startDate=${start}&endDate=${end}`;
   
       const response = await fetch(url);
   

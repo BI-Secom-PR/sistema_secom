@@ -6,6 +6,7 @@ import xLogo from '../assets/x-logo.png';
 import googleLogo from '../assets/google-logo.png';
 import trendingImage from '../assets/trending.png';
 import instagramLogo from '../assets/instagram-logo.png';
+import tiktokLogo from '../assets/tiktok-logo.png';
 
 function TrendingTopics() {
 
@@ -287,6 +288,34 @@ function TrendingTopics() {
               </Card.Body>
             </Card>
           </Col>
+           {/* TikTok Embed Card */}
+<Col md={3} style={{ position: 'relative', zIndex: 1 }}>
+  <Card className="border-0 rounded-3" style={{ position: 'absolute', top: 0, left: 0, zIndex: 10, width: '100%' }}>
+    <Card.Body style={{ padding: '1rem' }}>
+      <div className="d-flex align-items-center gap-2 mb-2">
+        <Image src={tiktokLogo} alt="TikTok Logo" style={{ width: '20px', height: '20px' }} />
+        <h3 className="mb-0" style={{ fontSize: '1.1rem', fontWeight: '500' }}>TikTok Trending</h3>
+      </div>
+      <div style={{ width: '100%', height: '880px', overflow: 'hidden' }}>
+        <iframe 
+          src="https://ads.tiktok.com/business/creativecenter/inspiration/popular/hashtag/pc/pt" 
+          style={{ width: '100%', height: '100%', border: 'none' }} 
+          title="TikTok Trending" 
+        />
+      </div>
+      <div className="mt-2">
+        <Button 
+          variant="danger" 
+          className="w-100 py-2"
+          style={{ backgroundColor: '#ff4131', border: 'none', fontSize: '0.9rem' }}
+        >
+          Ver mais no TikTok
+        </Button>
+      </div>
+    </Card.Body>
+  </Card>
+</Col>
+
 
          {/* Google Trends Donut Card */}
          <Col md={3}>
