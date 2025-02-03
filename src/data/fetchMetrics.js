@@ -137,3 +137,27 @@ export const fetchCampaignMetrics = async (metricCards, campaignName, startDate,
       return null;
     }
   };
+
+
+  export const fetchPlatformEngagement = async (startDate = null, endDate = null, selectedCampaign = null) => {
+    try {
+      const end = endDate ? endDate : format(new Date(), 'yyyy-MM-dd');
+      const start = startDate ? startDate : format(subDays(new Date(), 7), 'yyyy-MM-dd');
+  
+      // Construção da URL com ou sem o parâmetro de campanha
+      const url = selectedCampaign
+        ? `http://localhost:4000/plataforma_dia/platform/meta/engagement?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${start}&endDate=${end}`
+        : `http://localhost:4000/plataforma_dia/platform/meta/engagement?startDate=${start}&endDate=${end}`;
+  
+      const response = await fetch(url);
+  
+      if (!response.ok) throw new Error(`Erro na requisição: ${response.statusText}`);
+  
+      const data = await response.json();
+  
+      return data;
+    } catch (error) {
+      console.error('Erro ao buscar métricas da plataforma:', error.message);
+      return null;
+    }
+  };
