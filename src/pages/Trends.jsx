@@ -171,7 +171,7 @@ function TrendingTopics() {
           textAlign: 'center',
           width: '100%'
         }}>
-          TRENDS
+          ASSUNTOS DO MOMENTO
         </h1>
        </div>
 

@@ -1,0 +1,34 @@
+/* Importação da fonte Rawline */
+@import url('https://fonts.googleapis.com/css2?family=Rawline:wght@300;400;600;700&display=swap');
+
+/* Estilos globais para a fonte Rawline */
+.rawline-font {
+  font-family: 'Rawline', sans-serif !important;
+}
+
+.rawline-title {
+  font-family: 'Rawline', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.rawline-metric {
+  font-family: 'Rawline', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+.rawline-percentage {
+  font-family: 'Rawline', sans-serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+/* Estilos adicionais para garantir consistência */
+body, html {
+  font-family: 'Rawline', sans-serif;
+}
+
+.metric-card {
+  font-family: 'Rawline', sans-serif;
+}

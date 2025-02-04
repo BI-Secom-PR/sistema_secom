@@ -31,7 +31,8 @@ const Campanhas_ativas = () => {
         textAlign: "center",
         fontFamily: "Rawline",
         fontWeight: "600"
-      }}>CAMPANHAS ATIVAS</h1>        
+      }}>CAMPANHAS ATIVAS</h1> 
+      <br/>     
       <Cards 
         startDate={startDate}
         endDate={endDate}

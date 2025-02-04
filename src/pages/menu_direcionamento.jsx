@@ -26,12 +26,12 @@ const Menu_direcionamento = () => {
           </h1>
         </div>
 
-        <h2 className="mb-4"></h2>
+        <h2 className="mb-4" style={{ fontFamily: 'Rawline' }}></h2>
 
-        <Row className="g-4">
+        <Row className="g-4" style={{ fontFamily: 'Rawline' }}>
           {/* Campanhas Ativas */}
           <Col md={4}>
-            <Card className="border-0 h-100" style={{ borderRadius: '12px' }}>
+            <Card className="border-0 h-100" style={{ borderRadius: '12px', fontFamily: 'Rawline' }}>
               <Card.Body className="d-flex flex-column">
                 <Link to='/campanhas_ativas'>
                 <div style={{ flex: 1 }}>
@@ -40,7 +40,7 @@ const Menu_direcionamento = () => {
                 <Button
                   variant="danger"
                   className="w-100 mt-3"
-                  style={{ backgroundColor: '#ff4131', border: 'none' }}
+                  style={{ backgroundColor: '#ff4131', border: 'none', fontFamily: 'Rawline' }}
                 >                   
                   Ver Campanhas Ativas
                 </Button>
@@ -51,7 +51,7 @@ const Menu_direcionamento = () => {
 
           {/* Dashboard Planilha */}
           <Col md={4}>
-            <Card className="border-0 h-100" style={{ borderRadius: '12px' }}>
+            <Card className="border-0 h-100" style={{ borderRadius: '12px', fontFamily: 'Rawline' }}>
               <Card.Body className="d-flex flex-column">
                 <Link to='/demandas'>
                 <div style={{ flex: 1 }}>
@@ -60,7 +60,7 @@ const Menu_direcionamento = () => {
                 <Button
                   variant="danger"
                   className="w-100 mt-3"
-                  style={{ backgroundColor: '#ff4131', border: 'none' }}
+                  style={{ backgroundColor: '#ff4131', border: 'none', fontFamily: 'Rawline' }}
                 >
                   Ver Dashboard Demandas
                 </Button>
@@ -71,7 +71,7 @@ const Menu_direcionamento = () => {
 
           {/* Trends */}
           <Col md={4}>
-            <Card className="border-0 h-100" style={{ borderRadius: '12px' }}>
+            <Card className="border-0 h-100" style={{ borderRadius: '12px', fontFamily: 'Rawline' }}>
               <Card.Body className="d-flex flex-column">
                 <Link to='/trends'>
                 <div style={{ flex: 1 }}>
@@ -80,9 +80,9 @@ const Menu_direcionamento = () => {
                 <Button
                   variant="danger"
                   className="w-100 mt-3"
-                  style={{ backgroundColor: '#ff4131', border: 'none' }}
+                  style={{ backgroundColor: '#ff4131', border: 'none', fontFamily: 'Rawline' }}
                 >
-                  Ver Trends
+                  Ver Assuntos do Momento
                 </Button>
                 </Link>
               </Card.Body>
@@ -91,7 +91,7 @@ const Menu_direcionamento = () => {
 
           {/* Power BI */}
           <Col md={4}>
-            <Card className="border-0 h-100" style={{ borderRadius: '12px' }}>
+            <Card className="border-0 h-100" style={{ borderRadius: '12px', fontFamily: 'Rawline' }}>
               <Card.Body className="d-flex flex-column">
                 <Link to='/powerbi'>
                 <div style={{ flex: 1 }}>
@@ -100,7 +100,7 @@ const Menu_direcionamento = () => {
                 <Button
                   variant="danger"
                   className="w-100 mt-3"
-                  style={{ backgroundColor: '#ff4131', border: 'none' }}
+                  style={{ backgroundColor: '#ff4131', border: 'none', fontFamily: 'Rawline' }}
                 >
                   Ver Power BI
                 </Button>
@@ -111,7 +111,7 @@ const Menu_direcionamento = () => {
           
           {/* Monitoramento */}
           <Col md={4}>
-            <Card className="border-0 h-100" style={{ borderRadius: '12px' }}>
+            <Card className="border-0 h-100" style={{ borderRadius: '12px', fontFamily: 'Rawline' }}>
               <Card.Body className="d-flex flex-column">
                 <Link to='/monitoramento'>
                 <div style={{ flex: 1 }}>
@@ -120,7 +120,7 @@ const Menu_direcionamento = () => {
                 <Button
                   variant="danger"
                   className="w-100 mt-3"
-                  style={{ backgroundColor: '#ff4131', border: 'none' }}
+                  style={{ backgroundColor: '#ff4131', border: 'none', fontFamily: 'Rawline' }}
                 >
                   Ver Monitoramento
                 </Button>
