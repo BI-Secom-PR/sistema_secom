@@ -177,109 +177,128 @@ function TrendingTopics() {
 
        <Row className="g-4">
          {/* X Card */}
-         <Col md={3}>
-           <Card className="border-0 h-100 rounded-3">
-             <Card.Body style={{ padding: '1rem' }}>
-               <div className="d-flex align-items-center gap-2 mb-2">
-                 <Image src={xLogo} alt="X Logo" style={{ width: '35px', height: '20px' }} />
-                 <h3 className="mb-0" style={{ fontSize: '1.1rem', fontWeight: '500' }}>Trending Topics</h3>
-               </div>
-               {trendingX.map((trend, index) => (
-                 <div 
-                   key={index}
-                   className="d-flex justify-content-between align-items-center py-2 border-bottom"
-                   style={{ cursor: 'pointer' }}
-                 >
-                   <div className="d-flex gap-2">
-                     <span className="text-secondary" style={{ fontSize: '0.9rem', fontWeight: '500' }}>{trend.rank}</span>
-                     <span style={{ fontSize: '0.9rem', fontWeight: '500' }}>{trend.topic}</span>
-                   </div>
-                   <span className="text-secondary" style={{ fontSize: '0.8rem' }}>{trend.tweets}</span>
-                 </div>
-               ))}
-               <div className="mt-2">
-                 <Button 
-                   variant="danger" 
-                   className="w-100 py-2"
-                   style={{ 
-                     backgroundColor: '#ff4131', 
-                     border: 'none',
-                     fontSize: '0.9rem'
-                   }}
-                 >
-                   Ver mais no X
-                 </Button>
-               </div>
-             </Card.Body>
-           </Card>
-         </Col>
-
-         {/* Google Card */}
-         <Col md={3}>
-           <Card className="border-0 h-100 rounded-3">
-             <Card.Body style={{ padding: '1rem' }}>
-               <div className="d-flex align-items-center gap-2 mb-2">
-               <Image src={googleLogo} alt="Google Logo" style={{ width: '20px', height: '20px' }} />
-                 <h3 className="mb-0" style={{ fontSize: '1.1rem', fontWeight: '500' }}>Google Trends - Search</h3>
-               </div>
-               {trendingGoogle.map((trend, index) => (
-                 <div 
-                   key={index}
-                   className="d-flex justify-content-between align-items-center py-2 border-bottom"
-                   style={{ cursor: 'pointer' }}
-                 >
-                   <div className="d-flex gap-2">
-                     <span className="text-secondary" style={{ fontSize: '0.9rem', fontWeight: '500' }}>{trend.rank}</span>
-                     <span style={{ fontSize: '0.9rem', fontWeight: '500' }}>{trend.topic}</span>
-                   </div>
-                   <span className="text-secondary" style={{ fontSize: '0.8rem' }}>{trend.searches}</span>
-                 </div>
-               ))}
-               <div className="mt-2">
-                 <Button 
-                   variant="danger" 
-                   className="w-100 py-2"
-                   style={{ 
-                     backgroundColor: '#ff4131', 
-                     border: 'none',
-                     fontSize: '0.9rem'
-                   }}
-                 >
-                   Ver mais no Google
-                 </Button>
-               </div>
-             </Card.Body>
-             </Card>
-         </Col>
-         {/* Instagram Card */}
           <Col md={3}>
-            <Card className="border-0 h-100 rounded-3">
-              <Card.Body style={{ padding: '1rem' }}>
-                <div className="d-flex align-items-center gap-2 mb-2">
-                  <Image src={instagramLogo} alt="Instagram Logo" style={{ width: '20px', height: '20px' }} />
-                  <h3 className="mb-0" style={{ fontSize: '1.1rem', fontWeight: '500' }}>Instagram Trends</h3>
+            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
+              <Card.Body style={{ padding: '1.25rem' }}>
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <Image src={xLogo} alt="X Logo" style={{ width: '35px', height: '20px' }} />
+                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Trending Topics</h3>
+                </div>
+                {trendingX.map((trend, index) => (
+                  <div 
+                    key={index}
+                    className="d-flex justify-content-between align-items-center py-2 mb-2 hover-bg-light rounded"
+                    style={{ 
+                      cursor: 'pointer',
+                      borderBottom: '1px solid #f0f0f0',
+                      transition: 'all 0.2s ease',
+                      padding: '0.5rem'
+                    }}
+                  >
+                    <div className="d-flex gap-3">
+                      <span className="text-secondary fw-medium">{trend.rank}</span>
+                      <span className="fw-medium">{trend.topic}</span>
+                    </div>
+                    <span className="text-secondary" style={{ fontSize: '0.9rem' }}>{trend.tweets}</span>
+                  </div>
+                ))}
+                <div className="mt-3">
+                  <Button 
+                    variant="dark" 
+                    className="w-100 py-2 rounded-3"
+                    style={{ 
+                      backgroundColor: '#000', 
+                      border: 'none',
+                      fontSize: '0.95rem',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Ver mais no X
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          {/* Google Card */}
+          <Col md={3}>
+            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
+              <Card.Body style={{ padding: '1.25rem' }}>
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <Image src={googleLogo} alt="Google Logo" style={{ width: '24px', height: '24px' }} />
+                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Google Trends - Search</h3>
+                </div>
+                {trendingGoogle.map((trend, index) => (
+                  <div 
+                    key={index}
+                    className="d-flex justify-content-between align-items-center py-2 mb-2 hover-bg-light rounded"
+                    style={{ 
+                      cursor: 'pointer',
+                      borderBottom: '1px solid #f0f0f0',
+                      transition: 'all 0.2s ease',
+                      padding: '0.5rem'
+                    }}
+                  >
+                    <div className="d-flex gap-3">
+                      <span className="text-secondary fw-medium">{trend.rank}</span>
+                      <span className="fw-medium">{trend.topic}</span>
+                    </div>
+                    <span className="text-secondary" style={{ fontSize: '0.9rem' }}>{trend.searches}</span>
+                  </div>
+                ))}
+                <div className="mt-3">
+                  <Button 
+                    variant="primary" 
+                    className="w-100 py-2 rounded-3"
+                    style={{ 
+                      backgroundColor: '#4285f4', 
+                      border: 'none',
+                      fontSize: '0.95rem',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Ver mais no Google
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          {/* Instagram Card */}
+          <Col md={3}>
+            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
+              <Card.Body style={{ padding: '1.25rem' }}>
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <Image src={instagramLogo} alt="Instagram Logo" style={{ width: '24px', height: '24px' }} />
+                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Instagram Trends</h3>
                 </div>
                 {trendingInstagram.map((trend, index) => (
                   <div 
                     key={index}
-                    className="d-flex justify-content-between align-items-center py-2 border-bottom"
-                    style={{ cursor: 'pointer' }}
+                    className="d-flex justify-content-between align-items-center py-2 mb-2 hover-bg-light rounded"
+                    style={{ 
+                      cursor: 'pointer',
+                      borderBottom: '1px solid #f0f0f0',
+                      transition: 'all 0.2s ease',
+                      padding: '0.5rem'
+                    }}
                   >
-                    <div className="d-flex gap-2">
-                      <span className="text-secondary" style={{ fontSize: '0.9rem', fontWeight: '500' }}>{trend.rank}</span>
-                      <span style={{ fontSize: '0.9rem', fontWeight: '500' }}>{trend.topic}</span>
+                    <div className="d-flex gap-3">
+                      <span className="text-secondary fw-medium">{trend.rank}</span>
+                      <span className="fw-medium">{trend.topic}</span>
                     </div>
-                    <span className="text-secondary" style={{ fontSize: '0.8rem' }}>{trend.likes}</span>
+                    <span className="text-secondary" style={{ fontSize: '0.9rem' }}>{trend.likes}</span>
                   </div>
                 ))}
-                <div className="mt-2">
+                <div className="mt-3">
                   <Button 
                     variant="danger" 
-                    className="w-100 py-2"
+                    className="w-100 py-2 rounded-3"
                     style={{ 
-                      backgroundColor: '#ff4131', 
+                      backgroundColor: '#E4405F', 
                       border: 'none',
-                      fontSize: '0.9rem'
+                      fontSize: '0.95rem',
+                      fontWeight: '500'
                     }}
                   >
                     Ver mais no Instagram
@@ -288,26 +307,93 @@ function TrendingTopics() {
               </Card.Body>
             </Card>
           </Col>
-           {/* TikTok Embed Card */}
-<Col md={3} style={{ position: 'relative', zIndex: 1 }}>
-  <Card className="border-0 rounded-3" style={{ position: 'absolute', top: 0, left: 0, zIndex: 10, width: '100%' }}>
-    <Card.Body style={{ padding: '1rem' }}>
-      <div className="d-flex align-items-center gap-2 mb-2">
-        <Image src={tiktokLogo} alt="TikTok Logo" style={{ width: '20px', height: '20px' }} />
-        <h3 className="mb-0" style={{ fontSize: '1.1rem', fontWeight: '500' }}>TikTok Trending</h3>
+                    {/* TikTok Embed Card */}
+<Col 
+  md={3} 
+  style={{ 
+    position: 'relative', 
+    zIndex: 1,
+    '@media (max-width: 767px)': {
+      position: 'static',
+      zIndex: 'auto'
+    }
+  }}
+>
+  <Card 
+    className="shadow-sm border-1" 
+    style={{ 
+      position: 'absolute', 
+      top: 0, 
+      left: 0, 
+      zIndex: 10, 
+      width: '100%',
+      borderColor: '#e0e0e0',
+      '@media (max-width: 767px)': {
+        position: 'static',
+        height: 'auto'
+      }
+    }}
+  >
+    <Card.Body style={{ padding: '1.25rem' }}>
+      <div className="d-flex align-items-center gap-2 mb-3">
+        <Image src={tiktokLogo} alt="TikTok Logo" style={{ width: '24px', height: '24px' }} />
+        <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>TikTok Trending</h3>
       </div>
-      <div style={{ width: '100%', height: '880px', overflow: 'hidden' }}>
+      
+      {/* Desktop Version - Large */}
+      <div 
+        className="d-none d-md-block" 
+        style={{ 
+          width: '100%', 
+          height: '1053px', 
+          overflow: 'hidden',
+          borderRadius: '8px'
+        }}
+      >
         <iframe 
           src="https://ads.tiktok.com/business/creativecenter/inspiration/popular/hashtag/pc/pt" 
-          style={{ width: '100%', height: '100%', border: 'none' }} 
-          title="TikTok Trending" 
+          style={{ 
+            width: '100%', 
+            height: '100%', 
+            border: 'none',
+            borderRadius: '8px'
+          }} 
+          title="TikTok Trending Desktop" 
         />
       </div>
-      <div className="mt-2">
+
+      {/* Mobile Version - Small */}
+      <div 
+        className="d-md-none" 
+        style={{ 
+          width: '100%', 
+          height: '400px', 
+          overflow: 'hidden',
+          borderRadius: '8px'
+        }}
+      >
+        <iframe 
+          src="https://ads.tiktok.com/business/creativecenter/inspiration/popular/hashtag/pc/pt" 
+          style={{ 
+            width: '100%', 
+            height: '100%', 
+            border: 'none',
+            borderRadius: '8px'
+          }} 
+          title="TikTok Trending Mobile" 
+        />
+      </div>
+
+      <div className="mt-3">
         <Button 
-          variant="danger" 
-          className="w-100 py-2"
-          style={{ backgroundColor: '#ff4131', border: 'none', fontSize: '0.9rem' }}
+          variant="dark" 
+          className="w-100 py-2 rounded-3"
+          style={{ 
+            backgroundColor: '#000000', 
+            border: 'none',
+            fontSize: '0.95rem',
+            fontWeight: '500'
+          }}
         >
           Ver mais no TikTok
         </Button>
@@ -315,67 +401,110 @@ function TrendingTopics() {
     </Card.Body>
   </Card>
 </Col>
+                  {/* Google Trends Donut Card */}
+          <Col md={3}>
+            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
+              <Card.Body style={{ padding: '1.25rem' }}>
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '24px', height: '24px' }} />
+                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Google Trends - Gráfico</h3>
+                </div>
+                <div 
+                  id="google-trends-donut-container" 
+                  style={{ 
+                    width: '100%',
+                    height: '400px',
+                    overflow: 'hidden',
+                    borderRadius: '8px'
+                  }}
+                />
+                <div className="mt-3">
+                  <Button 
+                    variant="primary" 
+                    className="w-100 py-2 rounded-3"
+                    style={{ 
+                      backgroundColor: '#4285f4', 
+                      border: 'none',
+                      fontSize: '0.95rem',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Ver mais detalhes
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
 
+          {/* Google Trends Queries Card */}
+          <Col md={3}>
+            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
+              <Card.Body style={{ padding: '1.25rem' }}>
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '24px', height: '24px' }} />
+                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Google Trends - Queries</h3>
+                </div>
+                <div 
+                  id="google-trends-queries-container" 
+                  style={{ 
+                    width: '100%',
+                    height: '400px',
+                    overflow: 'hidden',
+                    borderRadius: '8px'
+                  }}
+                />
+                <div className="mt-3">
+                  <Button 
+                    variant="primary" 
+                    className="w-100 py-2 rounded-3"
+                    style={{ 
+                      backgroundColor: '#4285f4', 
+                      border: 'none',
+                      fontSize: '0.95rem',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Ver mais detalhes
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
 
-         {/* Google Trends Donut Card */}
-         <Col md={3}>
-           <Card className="border-0 h-100 rounded-3">
-             <Card.Body style={{ padding: '1rem' }}>
-               <div className="d-flex align-items-center gap-2 mb-2">
-                 <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '20px', height: '20px' }} />
-                 <h3 className="mb-0" style={{ fontSize: '1.1rem', fontWeight: '500' }}>Google Trends - Gráfico</h3>
-               </div>
-               <div 
-                 id="google-trends-donut-container" 
-                 style={{ 
-                   width: '100%',
-                   height: '400px',
-                   overflow: 'hidden'
-                 }}
-               />
-             </Card.Body>
-           </Card>
-         </Col>
-
-         {/* Google Trends Queries Card */}
-         <Col md={3}>
-           <Card className="border-0 h-100 rounded-3">
-             <Card.Body style={{ padding: '1rem' }}>
-               <div className="d-flex align-items-center gap-2 mb-2">
-                 <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '20px', height: '20px' }} />
-                 <h3 className="mb-0" style={{ fontSize: '1.1rem', fontWeight: '500' }}>Google Trends - Queries</h3>
-               </div>
-               <div 
-                 id="google-trends-queries-container" 
-                 style={{ 
-                   width: '100%',
-                   height: '400px',
-                   overflow: 'hidden'
-                 }}
-               />
-             </Card.Body>
-           </Card>
-         </Col>
-
-         {/* Google Trends Related Queries Card */}
-         <Col md={3}>
-           <Card className="border-0 h-100 rounded-3">
-             <Card.Body style={{ padding: '1rem' }}>
-               <div className="d-flex align-items-center gap-2 mb-2">
-                 <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '20px', height: '20px' }} />
-                 <h3 className="mb-0" style={{ fontSize: '1.1rem', fontWeight: '500' }}>Google Trends - Related Queries</h3>
-               </div>
-               <div 
-                 id="google-trends-new-related-queries-container" 
-                 style={{ 
-                   width: '100%',
-                   height: '400px',
-                   overflow: 'hidden'
-                 }}
-               />
-             </Card.Body>
-           </Card>
-         </Col>
+          {/* Google Trends Related Queries Card */}
+          <Col md={3}>
+            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
+              <Card.Body style={{ padding: '1.25rem' }}>
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '24px', height: '24px' }} />
+                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Google Trends - Related Queries</h3>
+                </div>
+                <div 
+                  id="google-trends-new-related-queries-container" 
+                  style={{ 
+                    width: '100%',
+                    height: '380px',
+                    overflow: 'hidden',
+                    borderRadius: '8px'
+                  }}
+                />
+                <div className="mt-3">
+                  <Button 
+                    variant="primary" 
+                    className="w-100 py-2 rounded-3"
+                    style={{ 
+                      backgroundColor: '#4285f4', 
+                      border: 'none',
+                      fontSize: '0.95rem',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Ver mais detalhes
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
        </Row>
      </Container>
    </div>
