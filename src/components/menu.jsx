@@ -10,7 +10,6 @@ const Menu = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [showLogoutText, setShowLogoutText] = useState(false);
 
   const logout = () => {
     sessionStorage.removeItem('_role');
@@ -49,67 +48,53 @@ const Menu = () => {
                   }}
                 >
                   {item.icon}
-                  <span className="menu-text">{item.name}</span>
+                  {!isCollapsed && <span className="menu-text">{item.name}</span>}
                 </a>
               </li>
             );
           })}
         </ul>
       </nav>
-      <div className="logout-container" style={{
-        position: 'absolute',
-        bottom: '20px',
-        left: 0,
-        right: 0,
-        padding: '0 20px',
-      }}>
-        <div 
-          className="tooltip-container"
-          onMouseEnter={() => setShowLogoutText(true)}
-          onMouseLeave={() => setShowLogoutText(false)}
+      <div
+        className="logout-container"
+        style={{
+          position: 'absolute',
+          bottom: '20px',
+          left: 0,
+          right: 0,
+          padding: '0 20px',
+        }}
+      >
+        <Button
+          variant="danger"
+          onClick={logout}
+          className="logout-button"
+          style={{
+            width: isCollapsed ? '40px' : '100%',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0',
+            fontSize: '14px',
+            fontWeight: '500',
+            backgroundColor: '#dc3545',
+            border: 'none',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(220, 53, 69, 0.2)',
+            transition: 'all 0.3s ease',
+            cursor: 'pointer',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#c82333';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#dc3545';
+          }}
         >
-          <Button
-            variant="danger"
-            onClick={logout}
-            className="logout-button"
-            style={{
-              width: isCollapsed ? '40px' : '100%',
-              height: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '10px',
-              padding: isCollapsed ? '0' : '0 15px',
-              fontSize: '14px',
-              fontWeight: '500',
-              backgroundColor: '#dc3545',
-              border: 'none',
-              borderRadius: '8px',
-              boxShadow: '0 2px 4px rgba(220, 53, 69, 0.2)',
-              position: 'relative',
-              transition: 'all 0.3s ease',
-            }}
-          >
-            <FiLogOut size={20} />
-            {(!isCollapsed || showLogoutText) && (
-              <span 
-                className="logout-text"
-                style={{
-                  position: isCollapsed ? 'absolute' : 'relative',
-                  left: isCollapsed ? '45px' : 'auto',
-                  backgroundColor: isCollapsed ? '#dc3545' : 'transparent',
-                  padding: isCollapsed ? '5px 10px' : '0',
-                  borderRadius: isCollapsed ? '4px' : '0',
-                  whiteSpace: 'nowrap',
-                  opacity: showLogoutText || !isCollapsed ? 1 : 0,
-                  transition: 'opacity 0.3s ease',
-                }}
-              >
-                Sair
-              </span>
-            )}
-          </Button>
-        </div>
+          <FiLogOut size={20} />
+          {!isCollapsed && <span className="logout-text"></span>}
+        </Button>
       </div>
     </aside>
   );

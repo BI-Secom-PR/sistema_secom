@@ -9,11 +9,24 @@ import { format, subDays } from "date-fns";
 const Campanhas_ativas = () => {
   const [startDate, setStartDate] = useState(format(subDays(new Date(), 7), "yyyy-MM-dd"));
   const [endDate, setEndDate] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [tempStartDate, setTempStartDate] = useState(startDate);  // Estado temporário para data de início
+  const [tempEndDate, setTempEndDate] = useState(endDate);        // Estado temporário para data final
   const [selectedCampaign, setSelectedCampaign] = useState(null);
 
+  // Função para alterar o estado temporário de startDate
+  const handleStartDateChange = (e) => {
+    setTempStartDate(e.target.value);
+  };
+
+  // Função para alterar o estado temporário de endDate
+  const handleEndDateChange = (e) => {
+    setTempEndDate(e.target.value);
+  };
+
+  // Atualizar startDate e endDate quando o botão for clicado
   const handleDateChange = () => {
-    setStartDate(document.getElementById("startDate").value);
-    setEndDate(document.getElementById("endDate").value);
+    setStartDate(tempStartDate);
+    setEndDate(tempEndDate);
   };
 
   const handleCampaignSelect = (campaign) => {
@@ -47,8 +60,8 @@ const Campanhas_ativas = () => {
             <input
               type="date"
               id="startDate"
-              value={startDate}  // Alteração aqui
-              onChange={handleDateChange}  // Usando onChange diretamente
+              value={tempStartDate}  // Agora usamos o estado temporário
+              onChange={handleStartDateChange}  // Altera o estado temporário
               className="p-2"
               style={{
                 border: "1px solid #e5e7eb",
@@ -60,8 +73,8 @@ const Campanhas_ativas = () => {
             <input
               type="date"
               id="endDate"
-              value={endDate}  // Alteração aqui
-              onChange={handleDateChange}  // Usando onChange diretamente
+              value={tempEndDate}  // Agora usamos o estado temporário
+              onChange={handleEndDateChange}  // Altera o estado temporário
               className="p-2"
               style={{
                 border: "1px solid #e5e7eb",
@@ -71,7 +84,7 @@ const Campanhas_ativas = () => {
               }}
             />
             <Button
-              onClick={handleDateChange}
+              onClick={handleDateChange}  // Agora altera o estado final quando clicado
               style={{ backgroundColor: "#1f9b00", color: "white" }}
               className="px-4 py-2"
             >

@@ -31,12 +31,13 @@ const CardCampanha = ({
       fontFamily: 'Rawline, sans-serif',
     },
     card: {
-      border: '1px solid #e5e7eb', 
-      borderRadius: '8px', 
+      border: '1px solid #d3d3d3', // Borda sutil
+      borderRadius: '8px', // Bordas arredondadas
       padding: '20px', 
       width: '100%', 
       minHeight: '560px',
       fontFamily: 'Rawline, sans-serif',
+      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', // Sombreamento sutil
     },
     input: {
       padding: '8px',
