@@ -18,8 +18,7 @@ const CardCampanha = ({
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [inputStartDate, setInputStartDate] = useState(startDate);
-  const [inputEndDate, setInputEndDate] = useState(endDate);
+
 
   const rawlineStyles = {
     container: {
@@ -36,7 +35,7 @@ const CardCampanha = ({
       borderRadius: '8px', 
       padding: '20px', 
       width: '100%', 
-      minHeight: '450px',
+      minHeight: '560px',
       fontFamily: 'Rawline, sans-serif',
     },
     input: {
@@ -98,6 +97,7 @@ const CardCampanha = ({
     setError(null);
     try {
       const data = await fetchCampaigns(startDate, endDate);
+      console.log(data)
       setCampaigns(data);
     } catch (error) {
       setError("Erro ao carregar campanhas. Por favor, tente novamente.");
@@ -108,17 +108,10 @@ const CardCampanha = ({
   };
 
   useEffect(() => {
-    loadCampaigns();
+    loadCampaigns(true);
   }, [startDate, endDate]);
 
-  const handleRefresh = () => {
-    const normalizedStartDate = new Date(inputStartDate + "T00:00:00Z").toISOString().split("T")[0];
-    const normalizedEndDate = new Date(inputEndDate + "T00:00:00Z").toISOString().split("T")[0];
-    console.log(normalizedStartDate, normalizedEndDate)
-    
-    onDateChange(normalizedStartDate, normalizedEndDate);
-  };
-
+  
   const handleCampaignSelect = (campaignName) => {
     onCampaignSelect(campaignName === selectedCampaign ? null : campaignName);
   };
@@ -126,29 +119,7 @@ const CardCampanha = ({
   return (
     <Card style={{...rawlineStyles.card, ...rawlineStyles.container}}>
       <div style={rawlineStyles.container}>
-        <h2 style={rawlineStyles.title}></h2>
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <input
-            type="date"
-            value={inputStartDate}
-            onChange={(e) => setInputStartDate(e.target.value)}
-            style={rawlineStyles.input}
-          />
-          <input
-            type="date"
-            value={inputEndDate}
-            onChange={(e) => setInputEndDate(e.target.value)}
-            style={rawlineStyles.input}
-          />
-          <Button
-            onClick={handleRefresh}
-            disabled={loading}
-            style={rawlineStyles.button}
-          >
-            {loading ? "Carregando..." : "Atualizar"}
-          </Button>
-        </div>
+        <h2 style={rawlineStyles.title}>Em veiculação</h2>
         <br/>
         {error && <p style={rawlineStyles.errorMessage}>{error}</p>}
         {loading ? <p style={rawlineStyles.container}>Carregando campanhas...</p> : null}

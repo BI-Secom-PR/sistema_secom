@@ -1,6 +1,6 @@
 import { LogOut, User } from 'lucide-react'
 import React from 'react'
-import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap'
+import { Card, Col, Container, Image, Row } from 'react-bootstrap'
 import campanhasImg from '../assets/campanhas.png';
 import dashboardImg from '../assets/dashboard.png';
 import monitoramentoImg from '../assets/monitoramento.png';
@@ -9,9 +9,46 @@ import { Link } from 'react-router-dom';
 import trendingTopicsImg from '../assets/trending-topics.png';
 
 const Menu_direcionamento = () => {
+  const imageStyle = {
+    width: '100%',
+    height: '330px',
+    objectFit: 'cover',
+    borderRadius: '12px'
+  };
+
+  const overlayStyle = {
+    position: 'absolute',
+    top: '20px',
+    left: '20px',
+    background: 'rgba(255, 255, 255, 0.5)',
+    color: 'black',
+    padding: '10px 15px',
+    borderRadius: '8px',
+    fontFamily: 'Rawline',
+    fontSize: '1.2rem',
+    fontWeight: '500',
+    textAlign: 'left',
+    maxWidth: '80%',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' // Sutil sombra para o overlay
+  };
+
+  const cardContainerStyle = {
+    position: 'relative',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    marginBottom: '20px',
+    border: '1px solid rgba(0, 0, 0, 0.08)', // Borda sutil
+    borderRadius: '14px', // Bordas um pouco mais arredondadas
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08)', // Sombra suave
+    overflow: 'hidden', // Garante que a sombra não ultrapasse as bordas arredondadas
+    '&:hover': {
+      transform: 'translateY(-2px)',
+      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.12)' // Sombra mais pronunciada no hover
+    }
+  };
+
   return (
     <>
-        {/* Main Content */}
         <div className="d-flex justify-content-between align-items-center mb-5">
           <h1
             style={{
@@ -26,111 +63,57 @@ const Menu_direcionamento = () => {
           </h1>
         </div>
 
-        <h2 className="mb-4" style={{ fontFamily: 'Rawline' }}></h2>
-
         <Row className="g-4" style={{ fontFamily: 'Rawline' }}>
           {/* Campanhas Ativas */}
           <Col md={4}>
-            <Card className="border-0 h-100" style={{ borderRadius: '12px', fontFamily: 'Rawline' }}>
-              <Card.Body className="d-flex flex-column">
-                <Link to='/campanhas_ativas'>
-                <div style={{ flex: 1 }}>
-                  <Image src={campanhasImg} fluid />
+            <Link to='/campanhas_ativas' style={{ textDecoration: 'none' }}>
+              <div style={cardContainerStyle}>
+                <Image src={campanhasImg} style={imageStyle} />
+                <div style={overlayStyle}>
+                  Painel Campanhas Ativas
                 </div>
-                <Button
-                  variant="danger"
-                  className="w-100 mt-3"
-                  style={{ backgroundColor: '#ff4131', border: 'none', fontFamily: 'Rawline' }}
-                >                   
-                  Ver Campanhas Ativas
-                </Button>
-                </Link>
-              </Card.Body>
-            </Card>
+              </div>
+            </Link>
           </Col>
 
           {/* Dashboard Planilha */}
           <Col md={4}>
-            <Card className="border-0 h-100" style={{ borderRadius: '12px', fontFamily: 'Rawline' }}>
-              <Card.Body className="d-flex flex-column">
-                <Link to='/demandas'>
-                <div style={{ flex: 1 }}>
-                  <Image src={dashboardImg} fluid />
+            <Link to='/trends' style={{ textDecoration: 'none' }}>
+              <div style={cardContainerStyle}>
+                <Image src={dashboardImg} style={imageStyle} />
+                <div style={overlayStyle}>
+                  Painel Assuntos do Momento
                 </div>
-                <Button
-                  variant="danger"
-                  className="w-100 mt-3"
-                  style={{ backgroundColor: '#ff4131', border: 'none', fontFamily: 'Rawline' }}
-                >
-                  Ver Dashboard Demandas
-                </Button>
-                </Link>
-              </Card.Body>
-            </Card>
+              </div>
+            </Link>
           </Col>
 
           {/* Trends */}
           <Col md={4}>
-            <Card className="border-0 h-100" style={{ borderRadius: '12px', fontFamily: 'Rawline' }}>
-              <Card.Body className="d-flex flex-column">
-                <Link to='/trends'>
-                <div style={{ flex: 1 }}>
-                  <Image src={trendingTopicsImg} fluid />
+            <Link to='/powerbi' style={{ textDecoration: 'none' }}>
+              <div style={cardContainerStyle}>
+                <Image src={trendingTopicsImg} style={imageStyle} />
+                <div style={overlayStyle}>
+                  Painel Análise Detalhada
                 </div>
-                <Button
-                  variant="danger"
-                  className="w-100 mt-3"
-                  style={{ backgroundColor: '#ff4131', border: 'none', fontFamily: 'Rawline' }}
-                >
-                  Ver Assuntos do Momento
-                </Button>
-                </Link>
-              </Card.Body>
-            </Card>
+              </div>
+            </Link>
           </Col>
 
           {/* Power BI */}
           <Col md={4}>
-            <Card className="border-0 h-100" style={{ borderRadius: '12px', fontFamily: 'Rawline' }}>
-              <Card.Body className="d-flex flex-column">
-                <Link to='/powerbi'>
-                <div style={{ flex: 1 }}>
-                  <Image src={powerBiImg} fluid />
+            <Link to='/monitoramento' style={{ textDecoration: 'none' }}>
+              <div style={cardContainerStyle}>
+                <Image src={powerBiImg} style={imageStyle} />
+                <div style={overlayStyle}>
+                  Painel Imersão nas Redes
                 </div>
-                <Button
-                  variant="danger"
-                  className="w-100 mt-3"
-                  style={{ backgroundColor: '#ff4131', border: 'none', fontFamily: 'Rawline' }}
-                >
-                  Ver Power BI
-                </Button>
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
-          
-          {/* Monitoramento */}
-          <Col md={4}>
-            <Card className="border-0 h-100" style={{ borderRadius: '12px', fontFamily: 'Rawline' }}>
-              <Card.Body className="d-flex flex-column">
-                <Link to='/monitoramento'>
-                <div style={{ flex: 1 }}>
-                  <Image src={monitoramentoImg} fluid />
-                </div>
-                <Button
-                  variant="danger"
-                  className="w-100 mt-3"
-                  style={{ backgroundColor: '#ff4131', border: 'none', fontFamily: 'Rawline' }}
-                >
-                  Ver Monitoramento
-                </Button>
-                </Link>
-              </Card.Body>
-            </Card>
+              </div>
+            </Link>
           </Col>
         </Row>
     </>
-  )
+  );
 }
 
-export default Menu_direcionamento
+export default Menu_direcionamento;

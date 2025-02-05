@@ -6,7 +6,6 @@ import chartImg from '../assets/chart-analysis.png';
 import govLogo from '../assets/gov-logo.png';
 import { useNavigate } from 'react-router-dom';
 
-
 function Cadastro() {
   const [showPassword, setShowPassword] = useState(false);
   const [nome, setNome] = useState("");
@@ -22,8 +21,7 @@ function Cadastro() {
       email: email,
       senha: senha,
       cpf: cpf,
-                
-  };
+    };
 
     ApiBase.post(`/user`, { novoUsuario })
       .then(() => {
@@ -36,22 +34,22 @@ function Cadastro() {
   }
 
   return (
-    <Container fluid className="vh-100">
+    <Container fluid className="vh-100" style={{ fontFamily: 'Rawline' }}>
       <Row className="h-100">
         <Col md={6} className="d-none d-md-flex flex-column p-4" style={{ backgroundColor: 'white' }}>
           <div className="d-flex flex-column justify-content-center h-100">
-            <h1 style={{ fontFamily: 'Rhodium Libre', fontSize: '2rem', textAlign: 'center', marginBottom: '2rem' }}>
+            <h1 style={{ fontSize: '2rem', textAlign: 'center', marginBottom: '2rem' }}>
               Dashboards SECOM
             </h1>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Image src={chartImg} alt="Chart Analysis" style={{ width: 'auto', maxWidth: '100%', height: 'auto' }} />
+              <Image src={chartImg} alt="Chart Analysis" style={{ width: 'auto', maxWidth: '100%', height: 'auto', marginLeft: '-32rem' }} />
             </div>
           </div>
         </Col>
 
         <Col md={6} className="p-4" style={{ backgroundColor: '#f8f9fa' }}>
           <div className="d-flex justify-content-between align-items-center mb-5">
-            <h2 style={{ fontSize: '1.75rem', fontFamily: 'Rhodium Libre', marginBottom: '2rem' }}>
+            <h2 style={{ fontSize: '1.75rem', marginBottom: '2rem' }}>
               Cadastro novo usuário
             </h2>
             <Image src={govLogo} alt="Governo Federal" style={{ width: '180px' }} />

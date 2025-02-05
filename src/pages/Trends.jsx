@@ -121,42 +121,27 @@ function TrendingTopics() {
  ];
 
  const trendingX = [
-   { rank: 1, topic: "Trending 1", tweets: "252K" },
-   { rank: 2, topic: "Trending 2", tweets: "41K" },
-   { rank: 3, topic: "Trending 3", tweets: "38K" },
-   { rank: 4, topic: "#TRENDING 1", tweets: "226K" },
-   { rank: 5, topic: "Trending 4", tweets: "16K" },
-   { rank: 6, topic: "Trending 5", tweets: "21K" },
-   { rank: 7, topic: "Trending 6", tweets: "36K" },
-   { rank: 8, topic: "Trending 7", tweets: "751K" },
-   { rank: 9, topic: "Trending 8", tweets: "29K" },
-   { rank: 10, topic: "#TRENDING 2", tweets: "21K" }
+   { rank: 1, topic: "Neymar", tweets: "252K" },
+   { rank: 2, topic: "Cristiano Ronaldo", tweets: "41K" },
+   { rank: 3, topic: "#ReverseWithMeEP1", tweets: "38K" },
+   { rank: 4, topic: "Banco Inter", tweets: "226K" },
+   { rank: 5, topic: "Jonathan Bailey", tweets: "16K" }
  ];
 
  const trendingGoogle = [
-   { rank: 1, topic: "Pesquisado 1", searches: "5M+" },
-   { rank: 2, topic: "Pesquisado 2", searches: "2.8M+" },
-   { rank: 3, topic: "Pesquisado 3", searches: "1.5M+" },
-   { rank: 4, topic: "Pesquisado 4", searches: "1.2M+" },
-   { rank: 5, topic: "Pesquisado 5", searches: "980K+" },
-   { rank: 6, topic: "Pesquisado 6", searches: "850K+" },
-   { rank: 7, topic: "Pesquisado 7", searches: "720K+" },
-   { rank: 8, topic: "Pesquisado 8", searches: "680K+" },
-   { rank: 9, topic: "Pesquisado 9", searches: "580K+" },
-   { rank: 10, topic: "Pesquisado 10", searches: "520K+" }
+   { rank: 1, topic: "atlético-mg x athletic", searches: "5M+" },
+   { rank: 2, topic: "sport recife x fortaleza", searches: "2.8M+" },
+   { rank: 3, topic: "atlético madrid x getafe", searches: "1.5M+" },
+   { rank: 4, topic: "sintonia 5 temporada", searches: "1.2M+" },
+   { rank: 5, topic: "aniversário do neymar", searches: "980K+" }
  ];
 
  const trendingInstagram = [
-    { rank: 1, topic: "Instagram Trend 1", likes: "1.2M" },
-    { rank: 2, topic: "#InstaViral", likes: "980K" },
-    { rank: 3, topic: "Trend Reels", likes: "875K" },
-    { rank: 4, topic: "#InstaChallenge", likes: "750K" },
-    { rank: 5, topic: "Instagram Trend 2", likes: "680K" },
-    { rank: 6, topic: "#InstaTrend", likes: "590K" },
-    { rank: 7, topic: "Reels Trend", likes: "520K" },
-    { rank: 8, topic: "#InstaFamous", likes: "470K" },
-    { rank: 9, topic: "Instagram Trend 3", likes: "420K" },
-    { rank: 10, topic: "#InstaMood", likes: "380K" }
+    { rank: 1, topic: "#brasil", likes: "1.2M" },
+    { rank: 2, topic: "#brazil", likes: "980K" },
+    { rank: 3, topic: "#love", likes: "875K" },
+    { rank: 4, topic: "#instagood", likes: "750K" },
+    { rank: 5, topic: "#riodejaneiro", likes: "680K" }
   ];
 
  return (
@@ -176,7 +161,207 @@ function TrendingTopics() {
        </div>
 
        <Row className="g-4">
-         {/* X Card */}
+         
+                    
+                  {/* Google Trends Donut Card */}
+          <Col md={3}>
+            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
+              <Card.Body style={{ padding: '1.25rem' }}>
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '24px', height: '24px' }} />
+                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Google Trends - Gráfico</h3>
+                </div>
+                <div 
+                  id="google-trends-donut-container" 
+                  style={{ 
+                    width: '100%',
+                    height: '400px',
+                    overflow: 'hidden',
+                    borderRadius: '8px'
+                  }}
+                />
+                <div className="mt-3">
+                  <Button 
+                    variant="primary" 
+                    className="w-100 py-2 rounded-3"
+                    style={{ 
+                      backgroundColor: '#4285f4', 
+                      border: 'none',
+                      fontSize: '0.95rem',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Ver mais detalhes
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          {/* Google Trends Queries Card */}
+          <Col md={3}>
+            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
+              <Card.Body style={{ padding: '1.25rem' }}>
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '24px', height: '24px' }} />
+                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Google Trends - Queries</h3>
+                </div>
+                <div 
+                  id="google-trends-queries-container" 
+                  style={{ 
+                    width: '100%',
+                    height: '400px',
+                    overflow: 'hidden',
+                    borderRadius: '8px'
+                  }}
+                />
+                <div className="mt-3">
+                  <Button 
+                    variant="primary" 
+                    className="w-100 py-2 rounded-3"
+                    style={{ 
+                      backgroundColor: '#4285f4', 
+                      border: 'none',
+                      fontSize: '0.95rem',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Ver mais detalhes
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          {/* Google Trends Related Queries Card */}
+          <Col md={3}>
+            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
+              <Card.Body style={{ padding: '1.25rem' }}>
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '24px', height: '24px' }} />
+                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Google Trends - Related Queries</h3>
+                </div>
+                <div 
+                  id="google-trends-new-related-queries-container" 
+                  style={{ 
+                    width: '100%',
+                    height: '380px',
+                    overflow: 'hidden',
+                    borderRadius: '8px'
+                  }}
+                />
+                <div className="mt-3">
+                  <Button 
+                    variant="primary" 
+                    className="w-100 py-2 rounded-3"
+                    style={{ 
+                      backgroundColor: '#4285f4', 
+                      border: 'none',
+                      fontSize: '0.95rem',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Ver mais detalhes
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          {/* TikTok Embed Card */}
+          <Col 
+                      md={3} 
+                      style={{ 
+                        position: 'relative', 
+                        zIndex: 1,
+                        '@media (max-width: 767px)': {
+                          position: 'static',
+                          zIndex: 'auto'
+                        }
+                      }}
+                    >
+                      <Card 
+                        className="shadow-sm border-1" 
+                        style={{ 
+                          position: 'absolute', 
+                          top: 0, 
+                          left: 0, 
+                          zIndex: 10, 
+                          width: '100%',
+                          borderColor: '#e0e0e0',
+                          '@media (max-width: 767px)': {
+                            position: 'static',
+                            height: 'auto'
+                          }
+                        }}
+                      >
+                        <Card.Body style={{ padding: '1.25rem' }}>
+                          <div className="d-flex align-items-center gap-2 mb-3">
+                            <Image src={tiktokLogo} alt="TikTok Logo" style={{ width: '24px', height: '24px' }} />
+                            <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>TikTok Trending</h3>
+                          </div>
+                          
+                          {/* Desktop Version - Large */}
+                          <div 
+                            className="d-none d-md-block" 
+                            style={{ 
+                              width: '100%', 
+                              height: '808px', 
+                              overflow: 'hidden',
+                              borderRadius: '8px'
+                            }}
+                          >
+                            <iframe 
+                              src="https://ads.tiktok.com/business/creativecenter/inspiration/popular/hashtag/pc/pt" 
+                              style={{ 
+                                width: '100%', 
+                                height: '100%', 
+                                border: 'none',
+                                borderRadius: '8px'
+                              }} 
+                              title="TikTok Trending Desktop" 
+                            />
+                          </div>
+
+                          {/* Mobile Version - Small */}
+                          <div 
+                            className="d-md-none" 
+                            style={{ 
+                              width: '100%', 
+                              height: '400px', 
+                              overflow: 'hidden',
+                              borderRadius: '8px'
+                            }}
+                          >
+                            <iframe 
+                              src="https://ads.tiktok.com/business/creativecenter/inspiration/popular/hashtag/pc/pt" 
+                              style={{ 
+                                width: '100%', 
+                                height: '100%', 
+                                border: 'none',
+                                borderRadius: '8px'
+                              }} 
+                              title="TikTok Trending Mobile" 
+                            />
+                          </div>
+
+                          <div className="mt-3">
+                            <Button 
+                              variant="dark" 
+                              className="w-100 py-2 rounded-3"
+                              style={{ 
+                                backgroundColor: '#000000', 
+                                border: 'none',
+                                fontSize: '0.95rem',
+                                fontWeight: '500'
+                              }}
+                            >
+                              Ver mais no TikTok
+                            </Button>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+          {/* X Card */}
           <Col md={3}>
             <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
               <Card.Body style={{ padding: '1.25rem' }}>
@@ -302,204 +487,6 @@ function TrendingTopics() {
                     }}
                   >
                     Ver mais no Instagram
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-                    {/* TikTok Embed Card */}
-<Col 
-  md={3} 
-  style={{ 
-    position: 'relative', 
-    zIndex: 1,
-    '@media (max-width: 767px)': {
-      position: 'static',
-      zIndex: 'auto'
-    }
-  }}
->
-  <Card 
-    className="shadow-sm border-1" 
-    style={{ 
-      position: 'absolute', 
-      top: 0, 
-      left: 0, 
-      zIndex: 10, 
-      width: '100%',
-      borderColor: '#e0e0e0',
-      '@media (max-width: 767px)': {
-        position: 'static',
-        height: 'auto'
-      }
-    }}
-  >
-    <Card.Body style={{ padding: '1.25rem' }}>
-      <div className="d-flex align-items-center gap-2 mb-3">
-        <Image src={tiktokLogo} alt="TikTok Logo" style={{ width: '24px', height: '24px' }} />
-        <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>TikTok Trending</h3>
-      </div>
-      
-      {/* Desktop Version - Large */}
-      <div 
-        className="d-none d-md-block" 
-        style={{ 
-          width: '100%', 
-          height: '1053px', 
-          overflow: 'hidden',
-          borderRadius: '8px'
-        }}
-      >
-        <iframe 
-          src="https://ads.tiktok.com/business/creativecenter/inspiration/popular/hashtag/pc/pt" 
-          style={{ 
-            width: '100%', 
-            height: '100%', 
-            border: 'none',
-            borderRadius: '8px'
-          }} 
-          title="TikTok Trending Desktop" 
-        />
-      </div>
-
-      {/* Mobile Version - Small */}
-      <div 
-        className="d-md-none" 
-        style={{ 
-          width: '100%', 
-          height: '400px', 
-          overflow: 'hidden',
-          borderRadius: '8px'
-        }}
-      >
-        <iframe 
-          src="https://ads.tiktok.com/business/creativecenter/inspiration/popular/hashtag/pc/pt" 
-          style={{ 
-            width: '100%', 
-            height: '100%', 
-            border: 'none',
-            borderRadius: '8px'
-          }} 
-          title="TikTok Trending Mobile" 
-        />
-      </div>
-
-      <div className="mt-3">
-        <Button 
-          variant="dark" 
-          className="w-100 py-2 rounded-3"
-          style={{ 
-            backgroundColor: '#000000', 
-            border: 'none',
-            fontSize: '0.95rem',
-            fontWeight: '500'
-          }}
-        >
-          Ver mais no TikTok
-        </Button>
-      </div>
-    </Card.Body>
-  </Card>
-</Col>
-                  {/* Google Trends Donut Card */}
-          <Col md={3}>
-            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
-              <Card.Body style={{ padding: '1.25rem' }}>
-                <div className="d-flex align-items-center gap-2 mb-3">
-                  <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '24px', height: '24px' }} />
-                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Google Trends - Gráfico</h3>
-                </div>
-                <div 
-                  id="google-trends-donut-container" 
-                  style={{ 
-                    width: '100%',
-                    height: '400px',
-                    overflow: 'hidden',
-                    borderRadius: '8px'
-                  }}
-                />
-                <div className="mt-3">
-                  <Button 
-                    variant="primary" 
-                    className="w-100 py-2 rounded-3"
-                    style={{ 
-                      backgroundColor: '#4285f4', 
-                      border: 'none',
-                      fontSize: '0.95rem',
-                      fontWeight: '500'
-                    }}
-                  >
-                    Ver mais detalhes
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          {/* Google Trends Queries Card */}
-          <Col md={3}>
-            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
-              <Card.Body style={{ padding: '1.25rem' }}>
-                <div className="d-flex align-items-center gap-2 mb-3">
-                  <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '24px', height: '24px' }} />
-                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Google Trends - Queries</h3>
-                </div>
-                <div 
-                  id="google-trends-queries-container" 
-                  style={{ 
-                    width: '100%',
-                    height: '400px',
-                    overflow: 'hidden',
-                    borderRadius: '8px'
-                  }}
-                />
-                <div className="mt-3">
-                  <Button 
-                    variant="primary" 
-                    className="w-100 py-2 rounded-3"
-                    style={{ 
-                      backgroundColor: '#4285f4', 
-                      border: 'none',
-                      fontSize: '0.95rem',
-                      fontWeight: '500'
-                    }}
-                  >
-                    Ver mais detalhes
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          {/* Google Trends Related Queries Card */}
-          <Col md={3}>
-            <Card className="h-100 rounded-4 shadow-sm border-1" style={{ borderColor: '#e0e0e0' }}>
-              <Card.Body style={{ padding: '1.25rem' }}>
-                <div className="d-flex align-items-center gap-2 mb-3">
-                  <Image src={googleLogo} alt="Google Trends Logo" style={{ width: '24px', height: '24px' }} />
-                  <h3 className="mb-0" style={{ fontSize: '1.2rem', fontWeight: '600' }}>Google Trends - Related Queries</h3>
-                </div>
-                <div 
-                  id="google-trends-new-related-queries-container" 
-                  style={{ 
-                    width: '100%',
-                    height: '380px',
-                    overflow: 'hidden',
-                    borderRadius: '8px'
-                  }}
-                />
-                <div className="mt-3">
-                  <Button 
-                    variant="primary" 
-                    className="w-100 py-2 rounded-3"
-                    style={{ 
-                      backgroundColor: '#4285f4', 
-                      border: 'none',
-                      fontSize: '0.95rem',
-                      fontWeight: '500'
-                    }}
-                  >
-                    Ver mais detalhes
                   </Button>
                 </div>
               </Card.Body>
