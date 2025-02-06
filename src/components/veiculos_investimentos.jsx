@@ -3,6 +3,7 @@ import { Card, Row, Col, Spinner } from "react-bootstrap";
 import { FaInstagram, FaFacebook, FaPinterest, FaLinkedin, FaGoogle } from "react-icons/fa";
 import { fetchPlatformMetrics } from '../data/fetchMetrics';
 import tiktokLogo from "../assets/tiktok-logo.png";
+import kwaiLogo from "../assets/kwai-logo.png"
 
 const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
   const [metrics, setMetrics] = useState(null);
@@ -33,6 +34,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       case "linkedin": return <FaLinkedin style={{ color: "#0077B5" }} />;
       case "google": return <FaGoogle style={{ color: "#DB4437" }} />;
       case "tiktok": return <img src={tiktokLogo} alt="TikTok Logo" width="24" height="24" />;
+      case "kwai": return <img src={kwaiLogo} alt="Kwai Logo" width="24" height="24" />;
       default: return null;
     }
   };

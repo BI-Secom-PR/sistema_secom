@@ -12,6 +12,8 @@ import Powerbi from "../pages/Powerbi";
 import Demandas from "../pages/Demandas";
 import Login from "../pages/login";
 import Cadastro from "../pages/Cadastro";
+import Stilingue from "../pages/AnaliseStilingue";
+import Demografico from "../pages/Demografico";
 
 const Routers = () => {
   return (
@@ -34,6 +36,12 @@ const Routers = () => {
           </Route>
           <Route path="/demandas" element={<PrivateRoute />} >
             <Route path="/demandas" element={<Demandas />} />
+          </Route>
+          <Route path="/demografico" element={<PrivateRoute />} >
+            <Route path="/demografico" element={<Demografico />} />
+          </Route>
+          <Route path="/stilingue" element={<PrivateRoute />} >
+            <Route path="/stilingue" element={<Stilingue />} />
           </Route>
          
             <Route path="/login" element={<Login />} />

@@ -1,12 +1,13 @@
-import { LogOut, User } from 'lucide-react'
-import React from 'react'
-import { Card, Col, Container, Image, Row } from 'react-bootstrap'
+import { LogOut, User } from 'lucide-react';
+import React from 'react';
+import { Col, Row, Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import campanhasImg from '../assets/campanhas.png';
 import dashboardImg from '../assets/dashboard.png';
-import monitoramentoImg from '../assets/monitoramento.png';
-import powerBiImg from '../assets/powerbi.png';
-import { Link } from 'react-router-dom';
 import trendingTopicsImg from '../assets/trending-topics.png';
+import powerBiImg from '../assets/powerbi.png';
+import StilingueImg from '../assets/stilingue.png';
+import DemograficoImg from '../assets/demografico.png';
 
 const Menu_direcionamento = () => {
   const imageStyle = {
@@ -14,29 +15,28 @@ const Menu_direcionamento = () => {
     height: '330px',
     objectFit: 'cover',
     borderRadius: '12px',
-    opacity: 0.12,
+    opacity: 0.2,
     transition: 'opacity 0.3s ease-in-out'
   };
 
   const overlayStyle = {
     position: 'absolute',
-    top: '20px', // Modificado para alinhar ao topo
-    left: '50%',
-    transform: 'translateX(-50%)', // Removido translateY
-    background: 'rgba(255, 255, 255, 0.9)',
-    color: 'black',
+    top: 0,
+    left: 0,
+    width: '100%',
+    background: 'rgba(0, 0, 0, 0.8)',
+    color: 'white',
     padding: '12px 20px',
-    borderRadius: '10px',
+    borderRadius: '12px 12px 0 0',
     fontFamily: 'Rawline',
-    fontSize: '1.5rem',
+    fontSize: '1.2rem',
     fontWeight: '600',
     textAlign: 'center',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '80%',
     boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
-    transition: 'background 0.3s ease-in-out'
+    zIndex: 2 // Added to ensure title stays on top
   };
 
   const cardContainerStyle = {
@@ -47,31 +47,24 @@ const Menu_direcionamento = () => {
     border: '1px solid rgba(0, 0, 0, 0.08)',
     borderRadius: '14px',
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08)',
-    overflow: 'hidden',
+    overflow: 'hidden'
   };
 
   return (
     <>
       <div className="d-flex justify-content-between align-items-center mb-5">
-        <h1
-          style={{
-            fontSize: '2rem',
-            fontFamily: 'Rawline',
-            fontWeight: '600',
-            textAlign: 'center',
-            width: '100%',
-          }}
-        >
+        <h1 style={{ fontSize: '2rem', fontFamily: 'Rawline', fontWeight: '600', textAlign: 'center', width: '100%' }}>
           PAINEL GERAL
         </h1>
       </div>
-
       <Row className="g-4" style={{ fontFamily: 'Rawline' }}>
         {[
           { link: '/campanhas_ativas', img: campanhasImg, text: 'Painel Campanhas Ativas' },
           { link: '/trends', img: dashboardImg, text: 'Painel Assuntos do Momento' },
           { link: '/powerbi', img: trendingTopicsImg, text: 'Painel Análise Detalhada' },
-          { link: '/monitoramento', img: powerBiImg, text: 'Painel Imersão nas Redes' }
+          { link: '/monitoramento', img: powerBiImg, text: 'Painel Imersão nas Redes' },
+          { link: '/demografico', img: DemograficoImg, text: 'Painel Análise Demográfica' },
+          { link: '/stilingue', img: StilingueImg, text: 'Painel Stilingue' }
         ].map((item, index) => (
           <Col key={index} md={4}>
             <Link to={item.link} style={{ textDecoration: 'none' }}>
@@ -79,19 +72,17 @@ const Menu_direcionamento = () => {
                 style={cardContainerStyle}
                 onMouseEnter={(e) => {
                   e.currentTarget.querySelector('img').style.opacity = '0.8';
-                  e.currentTarget.querySelector('div').style.background = 'rgba(255, 255, 255, 1)';
                   e.currentTarget.style.transform = 'translateY(-5px)';
                   e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.15)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.querySelector('img').style.opacity = '0.12';
-                  e.currentTarget.querySelector('div').style.background = 'rgba(255, 255, 255, 0.9)';
+                  e.currentTarget.querySelector('img').style.opacity = '0.2';
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08)';
                 }}
               >
-                <Image src={item.img} style={imageStyle} />
                 <div style={overlayStyle}>{item.text}</div>
+                <Image src={item.img} style={imageStyle} />
               </div>
             </Link>
           </Col>
@@ -99,6 +90,6 @@ const Menu_direcionamento = () => {
       </Row>
     </>
   );
-}
+};
 
 export default Menu_direcionamento;
