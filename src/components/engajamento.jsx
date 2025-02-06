@@ -46,61 +46,59 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
 
   return (
     <Card className="campaign-card h-100 p-4">
-      <h2 className="h4 mb-5 text-dark">Engajamento</h2>  {/* Exibe o intervalo de datas */}
-      {selectedCampaign && <h3 className="text-dark mb-4">Campanha: {selectedCampaign}</h3>}  {/* Exibe o nome da campanha selecionada */}
-      <div className="d-flex flex-column gap-5">
-        <div 
-          className="rounded d-flex justify-content-between align-items-center p-4"
-          style={{
-            minHeight: '90px',
-            background: 'linear-gradient(145deg, #ffffff 0%, #f0f7ff 100%)',
-            borderLeft: '4px solid #3b82f6'
-          }}
-        >
-          <div className="d-flex align-items-center gap-3">
-            <ThumbsUp size={32} color="#3b82f6" />
-            <span className="fs-5 text-dark">Curtidas</span>
-          </div>
-          <span className="fs-4 fw-bold" style={{ color: '#000000' }}>
-            {engagementData.likes.toLocaleString()}
-          </span>
-        </div>
-  
-        <div 
-          className="rounded d-flex justify-content-between align-items-center p-4"
-          style={{
-            minHeight: '90px',
-            background: 'linear-gradient(145deg, #ffffff 0%, #f0fff4 100%)',
-            borderLeft: '4px solid #22c55e'
-          }}
-        >
-          <div className="d-flex align-items-center gap-3">
-            <MessageCircle size={32} color="#22c55e" />
-            <span className="fs-5 text-dark">Comentários</span>
-          </div>
-          <span className="fs-4 fw-bold" style={{ color: '#000000' }}>
-            {engagementData.comments.toLocaleString()}
-          </span>
-        </div>
-  
-        <div 
-          className="rounded d-flex justify-content-between align-items-center p-4"
-          style={{
-            minHeight: '90px',
-            background: 'linear-gradient(145deg, #ffffff 0%, #fffdf3 100%)',
-            borderLeft: '4px solid #FBD500'
-          }}
-        >
-          <div className="d-flex align-items-center gap-3">
-            <Eye size={32} color="#FBD500" />
-            <span className="fs-5 text-dark">Visualizações</span>
-          </div>
-          <span className="fs-4 fw-bold" style={{ color: '#000000' }}>
-            {formatNumber(engagementData.views)}
-          </span>
-        </div>
+  <h2 className="h4 mb-5 text-dark fw-bold">Engajamento</h2>
+  {selectedCampaign && <h3 className="text-dark mb-4">Campanha: {selectedCampaign}</h3>}
+  <div className="d-flex flex-column gap-5">
+    <div 
+      className="rounded d-flex justify-content-between align-items-center p-4"
+      style={{
+        minHeight: '90px',
+        background: 'linear-gradient(145deg, #ffffff 0%, #f0f7ff 100%)',
+        borderLeft: '4px solid #3b82f6'
+      }}
+    >
+      <div className="d-flex align-items-center" style={{ gap: '1rem' }}> {/* Diminuindo o gap */}
+        <ThumbsUp size={32} color="#3b82f6" />
+        <span className="fs-4 fw-bold" style={{ color: '#000000' }}>
+          {engagementData.likes.toLocaleString()}
+        </span>
       </div>
-    </Card>
+    </div>
+
+    <div 
+      className="rounded d-flex justify-content-between align-items-center p-4"
+      style={{
+        minHeight: '90px',
+        background: 'linear-gradient(145deg, #ffffff 0%, #f0fff4 100%)',
+        borderLeft: '4px solid #22c55e'
+      }}
+    >
+      <div className="d-flex align-items-center" style={{ gap: '1rem' }}> {/* Diminuindo o gap */}
+        <MessageCircle size={32} color="#22c55e" />
+        <span className="fs-4 fw-bold" style={{ color: '#000000' }}>
+          {engagementData.comments.toLocaleString()}
+        </span>
+      </div>
+    </div>
+
+    <div 
+      className="rounded d-flex justify-content-between align-items-center p-4"
+      style={{
+        minHeight: '90px',
+        background: 'linear-gradient(145deg, #ffffff 0%, #fffdf3 100%)',
+        borderLeft: '4px solid #FBD500'
+      }}
+    >
+      <div className="d-flex align-items-center" style={{ gap: '1rem' }}> {/* Diminuindo o gap */}
+        <Eye size={32} color="#FBD500" />
+        <span className="fs-4 fw-bold" style={{ color: '#000000' }}>
+          {formatNumber(engagementData.views)}
+        </span>
+      </div>
+    </div>
+  </div>
+</Card>
+
   );
 };
 

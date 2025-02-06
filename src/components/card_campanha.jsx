@@ -35,9 +35,11 @@ const CardCampanha = ({
       borderRadius: '8px', // Bordas arredondadas
       padding: '20px', 
       width: '100%', 
-      minHeight: '560px',
+      minHeight: '500px',  // Mantém altura mínima
       fontFamily: 'Rawline, sans-serif',
       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', // Sombreamento sutil
+      display: 'flex',  // Flex para ajustar o conteúdo internamente
+      flexDirection: 'column',  // Organiza o conteúdo em coluna
     },
     input: {
       padding: '8px',
@@ -92,6 +94,7 @@ const CardCampanha = ({
       fontWeight: '400',
     }
   };
+  
 
   const loadCampaigns = async () => {
     setLoading(true);
@@ -120,7 +123,7 @@ const CardCampanha = ({
   return (
     <Card style={{...rawlineStyles.card, ...rawlineStyles.container}}>
       <div style={rawlineStyles.container}>
-        <h2 style={rawlineStyles.title}>Em veiculação</h2>
+      <h2 className="fw-bold" style={rawlineStyles.title}>Em veiculação</h2>
         <br/>
         {error && <p style={rawlineStyles.errorMessage}>{error}</p>}
         {loading ? <p style={rawlineStyles.container}>Carregando campanhas...</p> : null}
