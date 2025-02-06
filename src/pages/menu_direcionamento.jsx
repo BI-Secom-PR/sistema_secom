@@ -15,7 +15,7 @@ const Menu_direcionamento = () => {
     height: '330px',
     objectFit: 'cover',
     borderRadius: '12px',
-    opacity: 0.2,
+    opacity: 0.6,
     transition: 'opacity 0.3s ease-in-out'
   };
 
@@ -24,19 +24,19 @@ const Menu_direcionamento = () => {
     top: 0,
     left: 0,
     width: '100%',
-    background: 'rgba(0, 0, 0, 0.8)',
+    background: 'rgba(24, 62, 255, 0.9)',
     color: 'white',
     padding: '12px 20px',
     borderRadius: '12px 12px 0 0',
     fontFamily: 'Rawline',
-    fontSize: '1.2rem',
+    fontSize: '1.5rem', // Aumentei o tamanho da fonte aqui
     fontWeight: '600',
     textAlign: 'center',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
-    zIndex: 2 // Added to ensure title stays on top
+    zIndex: 2 // Adicionado para garantir que o título fique em cima
   };
 
   const cardContainerStyle = {
@@ -59,12 +59,11 @@ const Menu_direcionamento = () => {
       </div>
       <Row className="g-4" style={{ fontFamily: 'Rawline' }}>
         {[
-          { link: '/campanhas_ativas', img: campanhasImg, text: 'Painel Campanhas Ativas' },
-          { link: '/trends', img: dashboardImg, text: 'Painel Assuntos do Momento' },
-          { link: '/powerbi', img: trendingTopicsImg, text: 'Painel Análise Detalhada' },
-          { link: '/monitoramento', img: powerBiImg, text: 'Painel Imersão nas Redes' },
-          { link: '/demografico', img: DemograficoImg, text: 'Painel Análise Demográfica' },
-          { link: '/stilingue', img: StilingueImg, text: 'Painel Stilingue' }
+          { link: '/campanhas_ativas', img: campanhasImg, text: 'Campanhas Ativas' },
+          { link: '/demografico', img: DemograficoImg, text: 'Análise Demográfica' },
+          { link: '/powerbi', img: trendingTopicsImg, text: 'Análise Detalhada' },
+          { link: '/trends', img: dashboardImg, text: 'Assuntos do Momento' },
+          { link: '/stilingue', img: StilingueImg, text: 'Debate Digital' }
         ].map((item, index) => (
           <Col key={index} md={4}>
             <Link to={item.link} style={{ textDecoration: 'none' }}>
@@ -76,7 +75,7 @@ const Menu_direcionamento = () => {
                   e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.15)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.querySelector('img').style.opacity = '0.2';
+                  e.currentTarget.querySelector('img').style.opacity = '0.6';
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08)';
                 }}

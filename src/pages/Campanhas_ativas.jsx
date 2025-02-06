@@ -100,16 +100,15 @@ const Campanhas_ativas = () => {
             selectedCampaign={selectedCampaign} 
           />
         </Col>
-        <Col lg={10}>
+        <Col lg={6}>
           <Veiculos_investimentos startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
         </Col>
-        <Col lg={10}>
-        <GraficoComparativo />
-        </Col>        
-        <Col lg={2}>
+        <Col lg={4}>
           <Engajamento startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
         </Col>
-        
+        <Col lg={12}>
+        <GraficoComparativo />
+        </Col>
       </Row>
       <br />
     </>

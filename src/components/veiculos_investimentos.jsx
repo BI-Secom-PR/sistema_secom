@@ -52,7 +52,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '0 2px'
+    padding: '0 1px' // Diminui o espaçamento interno
   };
 
   return (
@@ -73,7 +73,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
                     : "R$0,00"}
                 </div>
               </div>
-              <div className="metrics" style={{ display: 'flex', justifyContent: 'space-between', gap: '2px', flex: 1 }}>
+              <div className="metrics" style={{ display: 'flex', justifyContent: 'space-between', gap: '1px', flex: 1 }}>
                 <div style={metricStyle}>
                   <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>CPM</span>
                   <strong style={{ fontSize: '0.9rem', fontWeight: 'normal' }}>
