@@ -5,6 +5,7 @@ import { Col, Row, Button } from "react-bootstrap";
 import Veiculos_investimentos from "../components/veiculos_investimentos";
 import Engajamento from "../components/engajamento";
 import { format, subDays } from "date-fns";
+import GraficoComparativo from "../components/grafico_comparativo";
 
 const Campanhas_ativas = () => {
   const yesterday = format(subDays(new Date(), 1), "yyyy-MM-dd");
@@ -91,7 +92,7 @@ const Campanhas_ativas = () => {
       <br />
 
       <Row className="g-4">
-        <Col lg={2} className="d-flex align-items-stretch" style={{ height: '100%' }}>
+        <Col lg={2} className="d-flex align-items-stretch">
           <CardCampanha 
             startDate={startDate} 
             endDate={endDate} 
@@ -99,13 +100,16 @@ const Campanhas_ativas = () => {
             selectedCampaign={selectedCampaign} 
           />
         </Col>
-
-        <Col lg={5}>
+        <Col lg={10}>
           <Veiculos_investimentos startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
         </Col>
+        <Col lg={10}>
+        <GraficoComparativo />
+        </Col>        
         <Col lg={2}>
           <Engajamento startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
         </Col>
+        
       </Row>
       <br />
     </>
