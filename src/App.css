@@ -311,7 +311,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 300px; /* Ajuste para limitar a altura (5 itens visíveis aproximadamente) */
+  max-height: 700px; /* Ajuste para limitar a altura (5 itens visíveis aproximadamente) */
   overflow-y: auto; /* Ativa a barra de rolagem vertical */
   padding-right: 8px; /* Espaço para a barra de rolagem */
 }

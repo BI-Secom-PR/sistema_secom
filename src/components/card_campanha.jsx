@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchCampaigns } from "../data/fetchMetrics";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Spinner } from "react-bootstrap"; // Importe o Spinner
 
 const CardCampanha = ({ 
   onDateChange, 
@@ -18,7 +18,6 @@ const CardCampanha = ({
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
 
   const rawlineStyles = {
     container: {
@@ -94,7 +93,6 @@ const CardCampanha = ({
       fontWeight: '400',
     }
   };
-  
 
   const loadCampaigns = async () => {
     setLoading(true);
@@ -115,7 +113,6 @@ const CardCampanha = ({
     loadCampaigns(true);
   }, [startDate, endDate]);
 
-  
   const handleCampaignSelect = (campaignName) => {
     onCampaignSelect(campaignName === selectedCampaign ? null : campaignName);
   };
@@ -123,10 +120,16 @@ const CardCampanha = ({
   return (
     <Card style={{...rawlineStyles.card, ...rawlineStyles.container}}>
       <div style={rawlineStyles.container}>
-      <h2 className="fw-bold" style={rawlineStyles.title}>Em veiculação</h2>
+        <h2 className="fw-bold" style={rawlineStyles.title}>Em veiculação</h2>
         <br/>
         {error && <p style={rawlineStyles.errorMessage}>{error}</p>}
-        {loading ? <p style={rawlineStyles.container}>Carregando campanhas...</p> : null}
+        {loading ? (
+          <div className="d-flex justify-content-center">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Carregando...</span>
+            </Spinner>
+          </div>
+        ) : null}
         
         {campaigns.length > 0 ? (
           <div className="campaigns-list">
