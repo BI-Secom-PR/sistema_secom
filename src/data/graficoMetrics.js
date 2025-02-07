@@ -11,8 +11,8 @@ export const graficoMetrics = async (startDate = null, endDate = null, selectedC
 
       // Construção da URL com ou sem o parâmetro de campanha
       const url = selectedCampaign
-        ? `https://api-nest-alpha.vercel.app/chart?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${start}&endDate=${end}`
-        : `https://api-nest-alpha.vercel.app/chart?startDate=${start}&endDate=${end}`;
+        ? `https://api-nest-alpha.vercel.app/plataforma_dia/chart?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${start}&endDate=${end}`
+        : `https://api-nest-alpha.vercel.app/plataforma_dia/chart?startDate=${start}&endDate=${end}`;
   
       const response = await fetch(url);
   
