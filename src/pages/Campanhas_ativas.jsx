@@ -8,7 +8,7 @@ import { format, subDays } from "date-fns";
 import GraficoComparativo from "../components/grafico_comparativo";
 
 const Campanhas_ativas = () => {
-  const yesterday = format(subDays(new Date(), 1), "yyyy-MM-dd");
+  const yesterday = format((new Date()), "yyyy-MM-dd");
 
   const [startDate, setStartDate] = useState(format(subDays(new Date(), 7), "yyyy-MM-dd"));
   const [endDate, setEndDate] = useState(yesterday);
@@ -68,7 +68,6 @@ const Campanhas_ativas = () => {
               id="endDate"
               value={tempEndDate}
               onChange={handleEndDateChange}
-              max={yesterday} // Limita a seleção até ontem
               className="p-2"
               style={{
                 border: "1px solid #e5e7eb",
@@ -107,7 +106,7 @@ const Campanhas_ativas = () => {
           <Engajamento startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
         </Col>
         <Col lg={12}>
-        <GraficoComparativo />
+        <GraficoComparativo startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
         </Col>
       </Row>
       <br />

@@ -1,33 +1,93 @@
-import React from 'react'
-import { Card } from 'react-bootstrap'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useState, useEffect } from 'react';
+import { Card } from 'react-bootstrap';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
 import { data_grafico_comparativo } from '../data/grafico_comparativo';
+import { graficoMetrics } from '../data/graficoMetrics';
 
-const GraficoComparativo = () => {
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
+  const [metrics, setMetrics] = useState({ actual: [], previous: [] });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadMetrics = async () => {
+      setLoading(true);
+      try {
+        const data = await graficoMetrics(startDate, endDate, selectedCampaign)
+        console.log("Start Date:", startDate);
+        console.log("End Date:", endDate);
+        console.log(data)
+        setMetrics(data);
+      } catch (error) {
+        console.error('Erro ao carregar métricas:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadMetrics();
+  }, [startDate, endDate, selectedCampaign]);
+
+  // Criando as labels com base nas datas
+  const labels = metrics.actual.map(item => item.week_day);
+
+  // Criando os datasets
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: 'Atual',
+        data: metrics.actual.map(item => item.impressions),
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Período Anterior',
+        data: metrics.previous.map(item => item.impressions),
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: false,
+        text: 'Comparação de Impressões por Período',
+      },
+    },
+  };
+
   return (
-    <Card className="campaign-card" style={{ height: "500px" }}>
-        <Card.Title> Comparação de impressões por período</Card.Title>
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          data={data_grafico_comparativo}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 20,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="pv" stroke="#ffa500" strokeWidth={3} />
-          <Line type="monotone" dataKey="uv" stroke="#4169E1" strokeWidth={2} strokeDasharray="3 4 5 2" />
-        </LineChart>
-      </ResponsiveContainer>
+    <Card className="campaign-card" style={{ height: '500px' }}>
+      <Card.Title> Comparação de Impressões por Período </Card.Title>
+      {loading ? <p>Carregando...</p> : <Line options={options} data={data} />}
     </Card>
-  )
-}
+  );
+};
 
-export default GraficoComparativo
+export default GraficoComparativo;

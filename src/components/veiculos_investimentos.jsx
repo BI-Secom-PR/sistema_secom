@@ -55,10 +55,12 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     padding: '0 1px' // Diminui o espaçamento interno
   };
 
+  const sortedMetrics = [...metrics].sort((a, b) => (b.spend || 0) - (a.spend || 0));
+
   return (
     <Card className="investment-card">
       <h3 className="card-title">Investimento por veículo</h3>
-      {metrics.map((item, index) => (
+      {sortedMetrics.map((item, index) => (
         <Row key={index} className="platform-row">
           <Col xs={12} className="platform">
             <div className="platform-header" style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
@@ -69,27 +71,27 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
                 </strong>
                 <div className="investment" style={{ fontSize: '1.1rem' }}>
                   {item.spend
-                    ? `R$${item.spend.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
-                    : "R$0,00"}
+                    ? `R$ ${item.spend.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                    : "R$ 0,00"}
                 </div>
               </div>
               <div className="metrics" style={{ display: 'flex', justifyContent: 'space-between', gap: '1px', flex: 1 }}>
                 <div style={metricStyle}>
                   <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>CPM</span>
                   <strong style={{ fontSize: '0.9rem', fontWeight: 'normal' }}>
-                    {item.CPM ? `R$${item.CPM.toFixed(2)}` : "R$0,00"}
+                    {item.CPM ? `R$ ${item.CPM.toFixed(2)}` : "R$0,00"}
                   </strong>
                 </div>
                 <div style={metricStyle}>
                   <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>CPV</span>
                   <strong style={{ fontSize: '0.9rem', fontWeight: 'normal' }}>
-                    {item.CPV ? `R$${item.CPV.toFixed(2)}` : "R$0,00"}
+                    {item.CPV ? `R$ ${item.CPV.toFixed(2)}` : "R$0,00"}
                   </strong>
                 </div>
                 <div style={metricStyle}>
                   <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>CPC</span>
                   <strong style={{ fontSize: '0.9rem', fontWeight: 'normal' }}>
-                    {item.CPC ? `R$${item.CPC.toFixed(2)}` : "R$0,00"}
+                    {item.CPC ? `R$ ${item.CPC.toFixed(2)}` : "R$0,00"}
                   </strong>
                 </div>
                 <div style={metricStyle}>
@@ -112,6 +114,6 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       ))}
     </Card>
   );
-};
+}
 
 export default Veiculos_investimentos;

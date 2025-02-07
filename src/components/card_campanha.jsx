@@ -99,7 +99,6 @@ const CardCampanha = ({
     setError(null);
     try {
       const data = await fetchCampaigns(startDate, endDate);
-      console.log(data)
       setCampaigns(data);
     } catch (error) {
       setError("Erro ao carregar campanhas. Por favor, tente novamente.");
