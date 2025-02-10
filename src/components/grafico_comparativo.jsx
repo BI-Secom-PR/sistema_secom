@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { Card } from "react-bootstrap";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,9 +9,9 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import { graficoMetrics } from '../data/graficoMetrics';
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import { graficoMetrics } from "../data/graficoMetrics";
 
 ChartJS.register(
   CategoryScale,
@@ -27,14 +27,44 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
   const [metrics, setMetrics] = useState({ actual: [], previous: [] });
   const [loading, setLoading] = useState(true);
 
+  // Agrupa as métricas por label (semana) somando impressões
+  const groupMetricsByLabel = (dataArray) => {
+    return Object.values(
+      dataArray.reduce((acc, item) => {
+        const label = item.label;
+        if (!acc[label]) {
+          acc[label] = { ...item };
+        } else {
+          acc[label].impressions += item.impressions;
+        }
+        return acc;
+      }, {})
+    );
+  };
+
   useEffect(() => {
     const loadMetrics = async () => {
       setLoading(true);
       try {
-        const data = await graficoMetrics(startDate, endDate, selectedCampaign)
+        const data = await graficoMetrics(startDate, endDate, selectedCampaign);
+
+        // Verifica se os dados são semanais e agrupa se necessário
+        if (
+          data.actual.length > 0 &&
+          data.actual[0].label.toLowerCase().startsWith("semana")
+        ) {
+          data.actual = groupMetricsByLabel(data.actual);
+        }
+        if (
+          data.previous.length > 0 &&
+          data.previous[0].label.toLowerCase().startsWith("semana")
+        ) {
+          data.previous = groupMetricsByLabel(data.previous);
+        }
+
         setMetrics(data);
       } catch (error) {
-        console.error('Erro ao carregar métricas:', error);
+        console.error("Erro ao carregar métricas:", error);
       } finally {
         setLoading(false);
       }
@@ -43,45 +73,85 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
     loadMetrics();
   }, [startDate, endDate, selectedCampaign]);
 
-  // Criando as labels com base nas datas
-  const labels = metrics.actual.map(item => item.label);
+  const labels = metrics.actual.map((item) => item.label);
 
-  // Criando os datasets
-  const data = {
+  const chartData = {
     labels,
     datasets: [
       {
-        label: 'Atual',
-        data: metrics.actual.map(item => item.impressions),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        label: "Veiculação Atual",
+        data: metrics.actual.map((item) => item.impressions),
+        borderColor: "rgba(220, 38, 38, 1)", // Vermelho forte
+        backgroundColor: "rgba(220, 38, 38, 0.2)",
+        borderWidth: 2,
+        pointRadius: 4,
+        pointBackgroundColor: "rgba(220, 38, 38, 1)",
+        pointBorderWidth: 2,
+        fill: true,
+        tension: 0.4,
       },
       {
-        label: 'Período Anterior',
-        data: metrics.previous.map(item => item.impressions),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        label: "Veiculação Anterior",
+        data: metrics.previous.map((item) => item.impressions),
+        borderColor: "rgba(53, 162, 235, 0.8)", // Azul moderno
+        backgroundColor: "rgba(53, 162, 235, 0.2)",
+        borderWidth: 2,
+        pointRadius: 3,
+        borderDash: [5, 5], // Linha tracejada
+        fill: false,
+        tension: 0.4,
       },
     ],
   };
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
+        position: "top",
+        labels: {
+          font: { size: 14 },
+          color: "#333",
+          boxWidth: 20,
+        },
       },
-      title: {
-        display: false,
-        text: 'Comparação de Impressões por Período',
+      tooltip: {
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        titleFont: { size: 14 },
+        bodyFont: { size: 12 },
+        padding: 10,
+        displayColors: false,
+      },
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { font: { size: 12 }, color: "#666" },
+      },
+      y: {
+        grid: { color: "rgba(200, 200, 200, 0.2)" },
+        ticks: {
+          font: { size: 12 },
+          color: "#666",
+          callback: (value) => value.toLocaleString(), // Formata números
+        },
       },
     },
   };
 
   return (
-    <Card className="campaign-card" style={{ height: '500px' }}>
-      <Card.Title> Comparação de Impressões por Período </Card.Title>
-      {loading ? <p>Carregando...</p> : <Line options={options} data={data} />}
+    <Card className="campaign-card p-3 shadow" style={{ height: "500px" }}>
+      <Card.Title className="text-center mb-3 fw-bold">
+        Comparação de Impressões por Período
+      </Card.Title>
+      {loading ? (
+        <p className="text-center">Carregando...</p>
+      ) : (
+        <div className="w-100 h-100">
+          <Line options={options} data={chartData} />
+        </div>
+      )}
     </Card>
   );
 };
