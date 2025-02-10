@@ -2,7 +2,7 @@ export const data_grafico_comparativo = {
   "actual": [
     {
       "date": "2025-02-06T00:00:00.000Z",
-      "week_day": "Quinta-feira",
+      "label": "Quinta-feira",
       "spend": 25591.080087000002,
       "impressions": 7919352,
       "clicks": 9151,
@@ -16,7 +16,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-02-05T00:00:00.000Z",
-      "week_day": "Quarta-feira",
+      "label": "Quarta-feira",
       "spend": 25216.980151,
       "impressions": 10607646,
       "clicks": 9386,
@@ -30,7 +30,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-02-04T00:00:00.000Z",
-      "week_day": "Terça-feira",
+      "label": "Terça-feira",
       "spend": 22849.080025,
       "impressions": 8190532,
       "clicks": 8117,
@@ -44,7 +44,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-02-03T00:00:00.000Z",
-      "week_day": "Segunda-feira",
+      "label": "Segunda-feira",
       "spend": 26332.700060999996,
       "impressions": 10817790,
       "clicks": 9572,
@@ -58,7 +58,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-02-02T00:00:00.000Z",
-      "week_day": "Domingo",
+      "label": "Domingo",
       "spend": 29257.029999000002,
       "impressions": 14137340,
       "clicks": 12361,
@@ -72,7 +72,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-02-01T00:00:00.000Z",
-      "week_day": "Sábado",
+      "label": "Sábado",
       "spend": 27586.149999999998,
       "impressions": 14032119,
       "clicks": 9596,
@@ -86,7 +86,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-01-31T00:00:00.000Z",
-      "week_day": "Sexta-feira",
+      "label": "Sexta-feira",
       "spend": 51527.249998,
       "impressions": 15602735,
       "clicks": 17795,
@@ -102,7 +102,7 @@ export const data_grafico_comparativo = {
   "previous": [
     {
       "date": "2025-01-30T00:00:00.000Z",
-      "week_day": "Quinta-feira",
+      "label": "Quinta-feira",
       "spend": 52507.660002000004,
       "impressions": 17675612,
       "clicks": 18281,
@@ -116,7 +116,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-01-29T00:00:00.000Z",
-      "week_day": "Quarta-feira",
+      "label": "Quarta-feira",
       "spend": 54760.060002,
       "impressions": 20287166,
       "clicks": 19286,
@@ -130,7 +130,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-01-28T00:00:00.000Z",
-      "week_day": "Terça-feira",
+      "label": "Terça-feira",
       "spend": 49051.440002999996,
       "impressions": 16706871,
       "clicks": 19520,
@@ -144,7 +144,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-01-27T00:00:00.000Z",
-      "week_day": "Segunda-feira",
+      "label": "Segunda-feira",
       "spend": 258632.9868430002,
       "impressions": 78192262,
       "clicks": 202959,
@@ -158,7 +158,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-01-26T00:00:00.000Z",
-      "week_day": "Domingo",
+      "label": "Domingo",
       "spend": 31229.270687999997,
       "impressions": 9269206,
       "clicks": 21929,
@@ -172,7 +172,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-01-25T00:00:00.000Z",
-      "week_day": "Sábado",
+      "label": "Sábado",
       "spend": 31281.145048,
       "impressions": 10153881,
       "clicks": 19559,
@@ -186,7 +186,7 @@ export const data_grafico_comparativo = {
     },
     {
       "date": "2025-01-24T00:00:00.000Z",
-      "week_day": "Sexta-feira",
+      "label": "Sexta-feira",
       "spend": 38367.236868000015,
       "impressions": 12220492,
       "clicks": 30429,

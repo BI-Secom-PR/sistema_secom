@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchCampaigns } from "../data/fetchMetrics";
-import { Button, Card, Spinner } from "react-bootstrap"; // Importe o Spinner
+import { Card, Spinner } from "react-bootstrap"; // Importe o Spinner
 
 const CardCampanha = ({ 
   onDateChange, 
@@ -18,6 +18,7 @@ const CardCampanha = ({
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
 
   const rawlineStyles = {
     container: {
@@ -109,9 +110,9 @@ const CardCampanha = ({
   };
 
   useEffect(() => {
-    loadCampaigns(true);
+    loadCampaigns();    
   }, [startDate, endDate]);
-
+ 
   const handleCampaignSelect = (campaignName) => {
     onCampaignSelect(campaignName === selectedCampaign ? null : campaignName);
   };

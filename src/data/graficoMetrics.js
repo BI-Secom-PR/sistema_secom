@@ -6,9 +6,6 @@ export const graficoMetrics = async (startDate = null, endDate = null, selectedC
       const end = endDate ? endDate : format(new Date(), 'yyyy-MM-dd');
       const start = startDate ? startDate : format(subDays(new Date(), 7), 'yyyy-MM-dd');
 
-      console.log(start)
-      console.log(end)
-
       // Construção da URL com ou sem o parâmetro de campanha
       const url = selectedCampaign
         ? `https://api-nest-alpha.vercel.app/plataforma_dia/chart?campaignName=${encodeURIComponent(selectedCampaign)}&startDate=${start}&endDate=${end}`

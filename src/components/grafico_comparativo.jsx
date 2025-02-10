@@ -11,7 +11,6 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { data_grafico_comparativo } from '../data/grafico_comparativo';
 import { graficoMetrics } from '../data/graficoMetrics';
 
 ChartJS.register(
@@ -33,9 +32,6 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       setLoading(true);
       try {
         const data = await graficoMetrics(startDate, endDate, selectedCampaign)
-        console.log("Start Date:", startDate);
-        console.log("End Date:", endDate);
-        console.log(data)
         setMetrics(data);
       } catch (error) {
         console.error('Erro ao carregar métricas:', error);
@@ -48,7 +44,7 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
   }, [startDate, endDate, selectedCampaign]);
 
   // Criando as labels com base nas datas
-  const labels = metrics.actual.map(item => item.week_day);
+  const labels = metrics.actual.map(item => item.label);
 
   // Criando os datasets
   const data = {
