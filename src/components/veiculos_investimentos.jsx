@@ -20,7 +20,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
         { platform: "Facebook", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
         { platform: "Pinterest", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
         { platform: "Linkedin", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
-        { platform: "Google", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+        { platform: "Google Search", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
         { platform: "Tiktok", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
         { platform: "Kwai", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
         { platform: "Youtube", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
@@ -54,11 +54,11 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       case "facebook": return <FaFacebook style={{ color: "#4267B2" }} />;
       case "pinterest": return <FaPinterest style={{ color: "#E60023" }} />;
       case "linkedin": return <FaLinkedin style={{ color: "#0077B5" }} />;
-      case "google": return <FaGoogle style={{ color: "#DB4437" }} />;
+      case "google search": return <FaGoogle style={{ color: "#DB4437" }} />;
       case "tiktok": return <img src={tiktokLogo} alt="TikTok Logo" width="24" height="24" />;
       case "kwai": return <img src={kwaiLogo} alt="Kwai Logo" width="24" height="24" />;
       case "youtube": return <img src={youtubeLogo} alt="Kwai Logo" width="34" height="22" />;
-      case "gdn": return <img src={gdnLogo} alt="Kwai Logo" width="34" height="24" />;
+      case "gdn": return <img src={gdnLogo} alt="Kwai Logo" width="24" height="24" />;
       default: return null;
     }
   };
