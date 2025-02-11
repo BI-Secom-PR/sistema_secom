@@ -82,96 +82,29 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       {
         label: "Veiculação Atual",
         data: metrics.actual.map((item) => item.impressions),
-        borderColor: "#FF6B00",
-        backgroundColor: function(context) {
-          const chart = context.chart;
-          const {ctx, chartArea} = chart;
-          
-          if (!chartArea) {
-            return null;
-          }
-          
-          const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-          gradient.addColorStop(0, "rgba(255, 107, 0, 0)");
-          gradient.addColorStop(0.5, "rgba(255, 107, 0, 0.2)");
-          gradient.addColorStop(1, "rgba(255, 107, 0, 0.3)");
-          return gradient;
-        },
-        borderWidth: 3,
-        pointRadius: 5,
-        pointBackgroundColor: "#FFFFFF",
-        pointBorderColor: "#FF6B00",
+        borderColor: "#ff8800", // Vermelho forte
+        backgroundColor: "rgba(220, 126, 38, 0.2)",
+        borderWidth: 4,
+        pointRadius: 6,
+        pointBackgroundColor: "#ff7300",
+        pointBorderWidth: 2,
         fill: true,
-        tension: 0.3
+        tension: 0.4,
       },
       {
         label: "Veiculação Anterior",
         data: metrics.previous.map((item) => item.impressions),
-        borderColor: "#0066FF",
-        backgroundColor: function(context) {
-          const chart = context.chart;
-          const {ctx, chartArea} = chart;
-          
-          if (!chartArea) {
-            return null;
-          }
-          
-          const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-          gradient.addColorStop(0, "rgba(0, 102, 255, 0)");
-          gradient.addColorStop(0.5, "rgba(0, 102, 255, 0.1)");
-          gradient.addColorStop(1, "rgba(0, 102, 255, 0.2)");
-          return gradient;
-        },
-        borderWidth: 2,
-        pointRadius: 4,
-        pointBackgroundColor: "#FFFFFF",
-        pointBorderColor: "#0066FF",
-        borderDash: [5, 5],
-        fill: true,
-        tension: 0.3
-      }
-    ]
-  };
-  
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'top',
-        labels: {
-          padding: 15,
-          usePointStyle: true
-        }
+        borderColor: "rgba(53, 162, 235, 0.8)", // Azul moderno
+        backgroundColor: "rgba(53, 162, 235, 0.2)",
+        borderWidth: 3,
+        pointRadius: 5,
+        borderDash: [5, 5], // Linha tracejada
+        fill: false,
+        tension: 0.4,
       },
-      tooltip: {
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        titleColor: '#333',
-        bodyColor: '#666',
-        padding: 10,
-        borderColor: '#ddd',
-        borderWidth: 1
-      }
-    },
-    scales: {
-      x: {
-        grid: {
-          display: false
-        }
-      },
-      y: {
-        grid: {
-          color: '#f0f0f0'
-        },
-        ticks: {
-          callback: function(value) {
-            return new Intl.NumberFormat('pt-BR').format(value);
-          }
-        }
-      }
-    }
+    ],
   };
-  
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
