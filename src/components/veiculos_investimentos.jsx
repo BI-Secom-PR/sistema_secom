@@ -57,7 +57,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       case "google": return <FaGoogle style={{ color: "#DB4437" }} />;
       case "tiktok": return <img src={tiktokLogo} alt="TikTok Logo" width="24" height="24" />;
       case "kwai": return <img src={kwaiLogo} alt="Kwai Logo" width="24" height="24" />;
-      case "youtube": return <img src={youtubeLogo} alt="Kwai Logo" width="34" height="24" />;
+      case "youtube": return <img src={youtubeLogo} alt="Kwai Logo" width="34" height="22" />;
       case "gdn": return <img src={gdnLogo} alt="Kwai Logo" width="34" height="24" />;
       default: return null;
     }
