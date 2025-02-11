@@ -3,21 +3,43 @@ import { Card, Row, Col, Spinner } from "react-bootstrap";
 import { FaInstagram, FaFacebook, FaPinterest, FaLinkedin, FaGoogle } from "react-icons/fa";
 import { fetchPlatformMetrics } from '../data/fetchMetrics';
 import tiktokLogo from "../assets/tiktok-logo.png";
-import kwaiLogo from "../assets/kwai-logo.png"
+import kwaiLogo from "../assets/kwai-logo.png";
+import youtubeLogo from "../assets/youtube-logo.png";
+import gdnLogo from "../assets/gdn-logo.png"
 
 const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
-  const [metrics, setMetrics] = useState(null);
+  const [metrics, setMetrics] = useState([]);
 
   useEffect(() => {
     const getMetrics = async () => {
       const result = await fetchPlatformMetrics(startDate, endDate, selectedCampaign);
-      setMetrics(result);
+      
+      // Lista de todas as plataformas que devem ser exibidas
+      const allPlatforms = [
+        { platform: "Instagram", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+        { platform: "Facebook", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+        { platform: "Pinterest", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+        { platform: "Linkedin", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+        { platform: "Google", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+        { platform: "Tiktok", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+        { platform: "Kwai", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+        { platform: "Youtube", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+        { platform: "GDN", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+      ];
+
+      // Mescla os dados retornados com a lista de todas as plataformas
+      const mergedMetrics = allPlatforms.map(platform => {
+        const found = result.find(item => item.platform.toLowerCase() === platform.platform.toLowerCase());
+        return found ? found : platform;
+      });
+
+      setMetrics(mergedMetrics);
     };
 
     getMetrics();
   }, [startDate, endDate, selectedCampaign]);
 
-  if (!metrics) {
+  if (!metrics.length) {
     return (
       <div className="d-flex justify-content-center align-items-center">
         <Spinner animation="border" />
@@ -35,6 +57,8 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       case "google": return <FaGoogle style={{ color: "#DB4437" }} />;
       case "tiktok": return <img src={tiktokLogo} alt="TikTok Logo" width="24" height="24" />;
       case "kwai": return <img src={kwaiLogo} alt="Kwai Logo" width="24" height="24" />;
+      case "youtube": return <img src={youtubeLogo} alt="Kwai Logo" width="34" height="24" />;
+      case "gdn": return <img src={gdnLogo} alt="Kwai Logo" width="34" height="24" />;
       default: return null;
     }
   };

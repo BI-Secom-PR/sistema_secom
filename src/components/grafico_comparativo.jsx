@@ -82,27 +82,68 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       {
         label: "Veiculação Atual",
         data: metrics.actual.map((item) => item.impressions),
-        borderColor: "rgba(220, 38, 38, 1)", // Vermelho forte
-        backgroundColor: "rgba(220, 38, 38, 0.2)",
-        borderWidth: 2,
-        pointRadius: 4,
-        pointBackgroundColor: "rgba(220, 38, 38, 1)",
-        pointBorderWidth: 2,
+        borderColor: "#FF6B00",
+        backgroundColor: "rgba(255, 107, 0, 0.2)",
+        borderWidth: 3,
+        pointRadius: 5,
+        pointBackgroundColor: "#FFFFFF",
+        pointBorderColor: "#FF6B00",
         fill: true,
-        tension: 0.4,
+        tension: 0.3
       },
       {
         label: "Veiculação Anterior",
         data: metrics.previous.map((item) => item.impressions),
-        borderColor: "rgba(53, 162, 235, 0.8)", // Azul moderno
-        backgroundColor: "rgba(53, 162, 235, 0.2)",
+        borderColor: "#0066FF",
+        backgroundColor: "rgba(0, 102, 255, 0.1)",
         borderWidth: 2,
-        pointRadius: 3,
-        borderDash: [5, 5], // Linha tracejada
-        fill: false,
-        tension: 0.4,
+        pointRadius: 4,
+        pointBackgroundColor: "#FFFFFF",
+        pointBorderColor: "#0066FF",
+        borderDash: [5, 5],
+        fill: true,
+        tension: 0.3
+      }
+    ]
+  };
+  
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          padding: 15,
+          usePointStyle: true
+        }
       },
-    ],
+      tooltip: {
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        titleColor: '#333',
+        bodyColor: '#666',
+        padding: 10,
+        borderColor: '#ddd',
+        borderWidth: 1
+      }
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false
+        }
+      },
+      y: {
+        grid: {
+          color: '#f0f0f0'
+        },
+        ticks: {
+          callback: function(value) {
+            return new Intl.NumberFormat('pt-BR').format(value);
+          }
+        }
+      }
+    }
   };
 
   const options = {
