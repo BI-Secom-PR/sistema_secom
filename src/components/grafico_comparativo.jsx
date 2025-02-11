@@ -83,7 +83,20 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         label: "Veiculação Atual",
         data: metrics.actual.map((item) => item.impressions),
         borderColor: "#FF6B00",
-        backgroundColor: "rgba(255, 107, 0, 0.2)",
+        backgroundColor: function(context) {
+          const chart = context.chart;
+          const {ctx, chartArea} = chart;
+          
+          if (!chartArea) {
+            return null;
+          }
+          
+          const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+          gradient.addColorStop(0, "rgba(255, 107, 0, 0)");
+          gradient.addColorStop(0.5, "rgba(255, 107, 0, 0.2)");
+          gradient.addColorStop(1, "rgba(255, 107, 0, 0.3)");
+          return gradient;
+        },
         borderWidth: 3,
         pointRadius: 5,
         pointBackgroundColor: "#FFFFFF",
@@ -95,7 +108,20 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         label: "Veiculação Anterior",
         data: metrics.previous.map((item) => item.impressions),
         borderColor: "#0066FF",
-        backgroundColor: "rgba(0, 102, 255, 0.1)",
+        backgroundColor: function(context) {
+          const chart = context.chart;
+          const {ctx, chartArea} = chart;
+          
+          if (!chartArea) {
+            return null;
+          }
+          
+          const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+          gradient.addColorStop(0, "rgba(0, 102, 255, 0)");
+          gradient.addColorStop(0.5, "rgba(0, 102, 255, 0.1)");
+          gradient.addColorStop(1, "rgba(0, 102, 255, 0.2)");
+          return gradient;
+        },
         borderWidth: 2,
         pointRadius: 4,
         pointBackgroundColor: "#FFFFFF",
@@ -145,7 +171,7 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       }
     }
   };
-
+  
   const options = {
     responsive: true,
     maintainAspectRatio: false,
