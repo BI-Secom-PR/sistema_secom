@@ -8,6 +8,7 @@ import {
   LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
@@ -20,6 +21,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend
 );
 
@@ -44,6 +46,7 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
     loadMetrics();
   }, [startDate, endDate, selectedCampaign]);
 
+  // Array com os nomes dos dias da semana
   const diasSemana = [
     "Domingo",
     "Segunda-feira",
@@ -54,6 +57,7 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
     "Sábado"
   ];
 
+  // Função para formatar a data no formato "DD-MM-YYYY" utilizando métodos UTC
   const formatarData = (data) => {
     const dateObj = new Date(data);
     const dia = String(dateObj.getUTCDate()).padStart(2, "0");
@@ -62,48 +66,76 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
     return `${dia}-${mes}-${ano}`;
   };
 
-  const getXValueActual = (item) => diasSemana.includes(item.label) ? item.label : formatarData(item.date);
-  const getXValuePrevious = (item) => diasSemana.includes(item.label) ? item.label : formatarData(item.date);
+  // Função que, se o item.label for um dia da semana, retorna-o; senão, retorna a data formatada
+  const getXValue = (item) =>
+    diasSemana.includes(item.label) ? item.label : formatarData(item.date);
 
-  const actualLabels = metrics.actual.map(getXValueActual);
-  const previousLabels = metrics.previous.map(getXValuePrevious);
+  // --- Lógica para montar os labels e os dados dos datasets ---
 
   let unionLabels = [];
-  if (metrics.actual.length > 0 && diasSemana.includes(metrics.actual[0].label)) {
-    unionLabels = [...actualLabels];
-    previousLabels.forEach((label) => {
-      if (!unionLabels.includes(label)) {
-        unionLabels.push(label);
-      }
+  let actualData = [];
+  let previousData = [];
+
+  if (metrics.actual.length === 7 && metrics.previous.length === 7) {
+    // Caso comparativo: usa getXValue (que pode retornar dias da semana ou datas formatadas)
+    const actualLabelsComparative = metrics.actual.map(getXValue);
+    const previousLabelsComparative = metrics.previous.map(getXValue);
+
+    // Se os dados atuais forem baseados em dias da semana, preserva a ordem conforme os dados
+    if (metrics.actual.length > 0 && diasSemana.includes(metrics.actual[0].label)) {
+      unionLabels = [...actualLabelsComparative];
+      previousLabelsComparative.forEach((label) => {
+        if (!unionLabels.includes(label)) {
+          unionLabels.push(label);
+        }
+      });
+    } else {
+      // Caso sejam datas, une os labels e os ordena cronologicamente
+      const labelsSet = new Set([...actualLabelsComparative, ...previousLabelsComparative]);
+      unionLabels = Array.from(labelsSet);
+      unionLabels.sort((a, b) => {
+        const [diaA, mesA, anoA] = a.split("-").map(Number);
+        const [diaB, mesB, anoB] = b.split("-").map(Number);
+        return new Date(anoA, mesA - 1, diaA) - new Date(anoB, mesB - 1, diaB);
+      });
+    }
+    actualData = unionLabels.map((label) => {
+      const item = metrics.actual.find((item) => getXValue(item) === label);
+      return item ? item.impressions : null;
+    });
+    previousData = unionLabels.map((label) => {
+      const item = metrics.previous.find((item) => getXValue(item) === label);
+      return item ? item.impressions : null;
     });
   } else {
-    const labelsSet = new Set([...actualLabels, ...previousLabels]);
+    // Caso simples: usa somente a data (item.date) formatada para cada dataset
+    const actualSimpleLabels = metrics.actual.map((item) => formatarData(item.date));
+    const previousSimpleLabels = metrics.previous.map((item) => formatarData(item.date));
+
+    const labelsSet = new Set([...actualSimpleLabels, ...previousSimpleLabels]);
     unionLabels = Array.from(labelsSet);
     unionLabels.sort((a, b) => {
       const [diaA, mesA, anoA] = a.split("-").map(Number);
       const [diaB, mesB, anoB] = b.split("-").map(Number);
       return new Date(anoA, mesA - 1, diaA) - new Date(anoB, mesB - 1, diaB);
     });
+    actualData = unionLabels.map((label) => {
+      const item = metrics.actual.find((item) => formatarData(item.date) === label);
+      return item ? item.impressions : null;
+    });
+    previousData = unionLabels.map((label) => {
+      const item = metrics.previous.find((item) => formatarData(item.date) === label);
+      return item ? item.impressions : null;
+    });
   }
 
-  const actualData = unionLabels.map((label) => {
-    const item = metrics.actual.find((item) => getXValueActual(item) === label);
-    return item ? item.impressions : null;
-  });
-
-  const previousData = unionLabels.map((label) => {
-    const item = metrics.previous.find((item) => getXValuePrevious(item) === label);
-    return item ? item.impressions : null;
-  });
-
-  // Função para calcular o tamanho do ponto e a espessura da borda com base na quantidade de labels
+  // Função para calcular tamanhos dinâmicos para pontos e bordas
   const calculateDynamicSize = (numLabels, minSize, maxSize, maxLabels = 50) => {
     return Math.max(minSize, maxSize - (numLabels / maxLabels) * (maxSize - minSize));
   };
 
-  // Calcula dinamicamente os tamanhos
-  const pointRadius = calculateDynamicSize(unionLabels.length, 2, 6);
-  const borderWidth = calculateDynamicSize(unionLabels.length, 2, 6);
+  const pointRadius = calculateDynamicSize(unionLabels.length, 2, 4);
+  const borderWidth = calculateDynamicSize(unionLabels.length, 2, 4);
 
   const chartData = {
     labels: unionLabels,
@@ -111,12 +143,12 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       {
         label: "Veiculação Anterior",
         data: previousData,
-        borderColor: "rgba(53, 162, 235, 0.8)",
+        borderColor: "rgba(53, 162, 235, 0.8)", // Azul moderno
         backgroundColor: "rgba(53, 162, 235, 0.2)",
-        borderWidth: borderWidth,
-        pointRadius: pointRadius,
+        borderWidth: borderWidth + 1,
+        pointRadius: pointRadius + 1,
         borderDash: [5, 5],
-        fill: false,
+        fill: true,
         tension: 0.4,
       },
       {
@@ -124,8 +156,8 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         data: actualData,
         borderColor: "#ff8800",
         backgroundColor: "rgba(220, 126, 38, 0.2)",
-        borderWidth: borderWidth + 1, // Um pouco maior para destacar
-        pointRadius: pointRadius + 1, // Um pouco maior para diferenciar
+        borderWidth: borderWidth + 1,
+        pointRadius: pointRadius + 1,
         pointBackgroundColor: "#ff7300",
         pointBorderWidth: 2,
         fill: true,
