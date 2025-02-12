@@ -24,7 +24,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
         { platform: "Tiktok", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
         { platform: "Kwai", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
         { platform: "Youtube", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
-        { platform: "GDN", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+        { platform: "Google GDN", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
       ];
 
       // Mescla os dados retornados com a lista de todas as plataformas
@@ -57,8 +57,8 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       case "google search": return <FaGoogle style={{ color: "#DB4437" }} />;
       case "tiktok": return <img src={tiktokLogo} alt="TikTok Logo" width="24" height="24" />;
       case "kwai": return <img src={kwaiLogo} alt="Kwai Logo" width="24" height="24" />;
-      case "youtube": return <img src={youtubeLogo} alt="Kwai Logo" width="34" height="22" />;
-      case "gdn": return <img src={gdnLogo} alt="Kwai Logo" width="24" height="24" />;
+      case "youtube": return <img src={youtubeLogo} alt="Youtube Logo" width="34" height="22" />;
+      case "google gdn": return <img src={gdnLogo} alt="GDN Logo" width="24" height="24" />;
       default: return null;
     }
   };
