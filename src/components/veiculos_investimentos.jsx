@@ -71,12 +71,12 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
   };
 
   const metricStyle = {
-    width: '65px',
+    width: '55px',  // Reduzido de 65px para 55px
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '0 1px' // Diminui o espaçamento interno
+    padding: '0'  // Removido o padding
   };
 
   const sortedMetrics = [...metrics].sort((a, b) => (b.spend || 0) - (a.spend || 0));
@@ -87,9 +87,9 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       {sortedMetrics.map((item, index) => (
         <Row key={index} className="platform-row">
           <Col xs={12} className="platform">
-            <div className="platform-header" style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-              <div className="icon" style={{ marginRight: '8px' }}>{getIcon(item.platform)}</div>
-              <div className="platform-info" style={{ width: '150px', marginRight: '10px' }}>
+            <div className="platform-header d-flex flex-column flex-lg-row" style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+              <div className="icon me-2">{getIcon(item.platform)}</div>
+              <div className="platform-info mb-2 mb-lg-0" style={{ width: '150px', marginRight: '10px' }}>
                 <strong style={{ fontSize: '1.1rem', display: 'block' }}>
                   {item.platform}
                 </strong>
@@ -99,7 +99,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
                     : "R$ 0,00"}
                 </div>
               </div>
-              <div className="metrics" style={{ display: 'flex', justifyContent: 'space-between', gap: '1px', flex: 1 }}>
+              <div className="metrics overflow-auto" style={{ display: 'flex', justifyContent: 'space-between', gap: '0px', flex: 1 }}>
                 <div style={metricStyle}>
                   <span style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>CPM</span>
                   <strong style={{ fontSize: '0.9rem', fontWeight: 'normal' }}>

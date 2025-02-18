@@ -134,35 +134,64 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
     return Math.max(minSize, maxSize - (numLabels / maxLabels) * (maxSize - minSize));
   };
 
-  const pointRadius = calculateDynamicSize(unionLabels.length, 2, 4);
-  const borderWidth = calculateDynamicSize(unionLabels.length, 2, 4);
+  const pointRadius = calculateDynamicSize(unionLabels.length, 1, 4);
+  const borderWidth = calculateDynamicSize(unionLabels.length, 1, 4);
 
   const chartData = {
     labels: unionLabels,
     datasets: [
       {
-        label: "Veiculação Anterior",
-        data: previousData,
-        borderColor: "rgba(53, 162, 235, 0.8)", // Azul moderno
-        backgroundColor: "rgba(53, 162, 235, 0.2)",
-        borderWidth: borderWidth + 1,
-        pointRadius: pointRadius + 1,
-        borderDash: [5, 5],
-        fill: true,
-        tension: 0.4,
-      },
-      {
         label: "Veiculação Atual",
         data: actualData,
-        borderColor: "#ff8800",
-        backgroundColor: "rgba(220, 126, 38, 0.2)",
+        borderColor: "rgb(255, 0, 0)",
+        backgroundColor: function(context) {
+          const chart = context.chart;
+          const {ctx, chartArea} = chart;
+          if (!chartArea) return null;
+          
+          const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+          gradient.addColorStop(0, 'rgba(255, 0, 0, 0)');      
+          gradient.addColorStop(0.2, 'rgba(255, 0, 0, 0.2)');  
+          gradient.addColorStop(0.4, 'rgba(255, 0, 0, 0.4)'); 
+          gradient.addColorStop(0.6, 'rgba(255, 0, 0, 0.5)');  
+          gradient.addColorStop(0.8, 'rgba(255, 0, 0, 0.6)');  
+          gradient.addColorStop(1, 'rgba(255, 0, 0, 0.6)');    
+          return gradient;
+        },
         borderWidth: borderWidth + 1,
         pointRadius: pointRadius + 1,
-        pointBackgroundColor: "#ff7300",
-        pointBorderWidth: 2,
+        pointBackgroundColor: "rgb(255, 0, 0)", // Cor de fundo do ponto (laranja)
+        pointBorderWidth: 2, // Largura da borda do ponto
         fill: true,
         tension: 0.4,
+        order: 2
       },
+      {
+        label: "Veiculação Anterior",
+        data: previousData,
+        borderColor: "rgba(255, 208, 0)",
+        backgroundColor: function(context) {
+          const chart = context.chart;
+          const {ctx, chartArea} = chart;
+          if (!chartArea) return null;
+          
+          const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+          gradient.addColorStop(0, 'rgba(255, 208, 0, 0)');     
+          gradient.addColorStop(0.2, 'rgba(255, 208, 0, 0.2)'); 
+          gradient.addColorStop(0.4, 'rgba(255, 208, 0, 0.4)'); 
+          gradient.addColorStop(0.6, 'rgba(255, 208, 0, 0.4)'); 
+          gradient.addColorStop(0.8, 'rgba(255, 208, 0, 0.6)');  
+          gradient.addColorStop(1, 'rgba(255, 208, 0, 0.7)');   
+          return gradient;
+        },
+        borderWidth: borderWidth + 1,
+        pointRadius: pointRadius + 1,
+        pointBackgroundColor: "rgba(255, 208, 0, 0.8)", // Cor de fundo do ponto (azul)
+        pointBorderWidth: 2, // Largura da borda do ponto (igual à laranja)
+        fill: true,
+        tension: 0.4,
+        order: 1
+      }
     ],
   };
 

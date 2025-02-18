@@ -130,7 +130,7 @@ const Login = () => {
       <Button
         variant="danger"
         className="w-100 py-3 mb-2"
-        style={{ backgroundColor: '#ff3b30', border: 'none', borderRadius: '8px' }}
+        style={{ backgroundColor: '#FF0000', border: 'none', borderRadius: '8px' }}
         type="submit"
         disabled={loading}
       >

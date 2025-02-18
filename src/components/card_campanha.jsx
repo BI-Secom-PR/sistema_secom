@@ -51,7 +51,7 @@ const CardCampanha = ({
       fontFamily: 'Rawline, sans-serif',
     },
     button: {
-      backgroundColor: '#1f9b00',
+      backgroundColor: '#00D000',
       color: 'white',
       border: 'none',
       borderRadius: '4px',
@@ -71,7 +71,7 @@ const CardCampanha = ({
       fontFamily: 'Rawline, sans-serif',
     },
     selectedCampaign: {
-      backgroundColor: '#ff4141',
+      backgroundColor: '#FF0000',
       color: '#ffffff',
       fontFamily: 'Rawline, sans-serif',
       borderRadius: '12px',

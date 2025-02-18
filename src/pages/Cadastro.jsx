@@ -81,7 +81,7 @@ function Cadastro() {
               </div>
             </Form.Group>
 
-            <Button type="submit" variant="danger" className="w-100 py-3" style={{ backgroundColor: '#ff3b30', border: 'none', borderRadius: '8px' }}>
+            <Button type="submit" variant="danger" className="w-100 py-3" style={{ backgroundColor: '#FF0000', border: 'none', borderRadius: '8px' }}>
               Cadastrar
             </Button>
           </Form>

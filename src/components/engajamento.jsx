@@ -73,19 +73,19 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
       <div className="d-flex flex-column gap-5">
         <EngagementItem 
           icon={ThumbsUp}
-          color="#3b82f6"
+          color="#183EFF"
           value={engagementData.likes}
           background="linear-gradient(145deg, #ffffff 0%, #f0f7ff 100%)"
         />
         <EngagementItem 
           icon={MessageCircle}
-          color="#22c55e"
+          color="#00D000"
           value={engagementData.comments}
           background="linear-gradient(145deg, #ffffff 0%, #f0fff4 100%)"
         />
         <EngagementItem 
           icon={Eye}
-          color="#FBD500"
+          color="#FFD000"
           value={engagementData.views}
           background="linear-gradient(145deg, #ffffff 0%, #fffdf3 100%)"
         />

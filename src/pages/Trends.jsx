@@ -185,7 +185,7 @@ function TrendingTopics() {
                     variant="primary" 
                     className="w-100 py-2 rounded-3"
                     style={{ 
-                      backgroundColor: '#4285f4', 
+                      backgroundColor: '#3C3C3C', 
                       border: 'none',
                       fontSize: '0.95rem',
                       fontWeight: '500'
@@ -220,7 +220,7 @@ function TrendingTopics() {
                     variant="primary" 
                     className="w-100 py-2 rounded-3"
                     style={{ 
-                      backgroundColor: '#4285f4', 
+                      backgroundColor: '#3C3C3C', 
                       border: 'none',
                       fontSize: '0.95rem',
                       fontWeight: '500'
@@ -255,7 +255,7 @@ function TrendingTopics() {
                     variant="primary" 
                     className="w-100 py-2 rounded-3"
                     style={{ 
-                      backgroundColor: '#4285f4', 
+                      backgroundColor: '#3C3C3C', 
                       border: 'none',
                       fontSize: '0.95rem',
                       fontWeight: '500'
@@ -349,7 +349,7 @@ function TrendingTopics() {
                               variant="dark" 
                               className="w-100 py-2 rounded-3"
                               style={{ 
-                                backgroundColor: '#000000', 
+                                backgroundColor: '#3C3C3C', 
                                 border: 'none',
                                 fontSize: '0.95rem',
                                 fontWeight: '500'
@@ -392,7 +392,7 @@ function TrendingTopics() {
                     variant="dark" 
                     className="w-100 py-2 rounded-3"
                     style={{ 
-                      backgroundColor: '#000', 
+                      backgroundColor: '#3C3C3C', 
                       border: 'none',
                       fontSize: '0.95rem',
                       fontWeight: '500'
@@ -436,7 +436,7 @@ function TrendingTopics() {
                     variant="primary" 
                     className="w-100 py-2 rounded-3"
                     style={{ 
-                      backgroundColor: '#4285f4', 
+                      backgroundColor: '#3C3C3C', 
                       border: 'none',
                       fontSize: '0.95rem',
                       fontWeight: '500'
@@ -480,7 +480,7 @@ function TrendingTopics() {
                     variant="danger" 
                     className="w-100 py-2 rounded-3"
                     style={{ 
-                      backgroundColor: '#E4405F', 
+                      backgroundColor: '#3C3C3C', 
                       border: 'none',
                       fontSize: '0.95rem',
                       fontWeight: '500'

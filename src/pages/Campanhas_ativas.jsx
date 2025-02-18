@@ -35,7 +35,7 @@ const Campanhas_ativas = () => {
   return (
     <>
       <div className="d-flex flex-column">
-        <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "30px", marginTop: "0px" }}>
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center" style={{ marginBottom: "30px", marginTop: "0px" }}>
           <h1
             style={{
               fontFamily: "Rawline",
@@ -44,18 +44,19 @@ const Campanhas_ativas = () => {
               flex: "1",
               textAlign: "center"
             }}
+            className="mb-3 mb-md-0"
           >
             CAMPANHAS ATIVAS
           </h1>
 
-          <div className="d-flex flex-wrap gap-2 justify-content-end align-items-center" style={{ minWidth: "280px" }}>
+          <div className="d-flex flex-column flex-sm-row gap-2 justify-content-end align-items-center" style={{ minWidth: "280px" }}>
             <input
               type="date"
               id="startDate"
               value={tempStartDate}
               onChange={handleStartDateChange}
-              max={yesterday} // Limita a seleção até ontem
-              className="p-2"
+              max={yesterday}
+              className="p-2 w-100 w-sm-auto"
               style={{
                 border: "1px solid #e5e7eb",
                 borderRadius: "4px",
@@ -68,7 +69,7 @@ const Campanhas_ativas = () => {
               id="endDate"
               value={tempEndDate}
               onChange={handleEndDateChange}
-              className="p-2"
+              className="p-2 w-100 w-sm-auto"
               style={{
                 border: "1px solid #e5e7eb",
                 borderRadius: "4px",
@@ -78,8 +79,8 @@ const Campanhas_ativas = () => {
             />
             <Button
               onClick={handleDateChange}
-              style={{ backgroundColor: "#1f9b00", color: "white" }}
-              className="px-4 py-2"
+              style={{ backgroundColor: "#00D000", color: "white" }}
+              className="px-4 py-2 w-100 w-sm-auto"
             >
               Atualizar
             </Button>
@@ -91,7 +92,7 @@ const Campanhas_ativas = () => {
       <br />
 
       <Row className="g-4">
-        <Col lg={2} className="d-flex align-items-stretch">
+        <Col xs={12} md={6} lg={2} className="d-flex align-items-stretch">
           <CardCampanha 
             startDate={startDate} 
             endDate={endDate} 
@@ -99,14 +100,14 @@ const Campanhas_ativas = () => {
             selectedCampaign={selectedCampaign} 
           />
         </Col>
-        <Col lg={6}>
+        <Col xs={12} md={6} lg={6}>
           <Veiculos_investimentos startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
         </Col>
-        <Col lg={4}>
+        <Col xs={12} lg={4}>
           <Engajamento startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
         </Col>
-        <Col lg={12}>
-        <GraficoComparativo startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
+        <Col xs={12} lg={12}>
+          <GraficoComparativo startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
         </Col>
       </Row>
       <br />
