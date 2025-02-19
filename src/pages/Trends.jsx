@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
-import { User, Home, LayoutDashboard, BarChart3, Clock, LogOut, BarChart2, Search, TrendingUp } from 'lucide-react';
-import govLogo from '../assets/gov-logo.png';
 import xLogo from '../assets/x-logo.png';
 import googleLogo from '../assets/google-logo.png';
-import trendingImage from '../assets/trending.png';
 import instagramLogo from '../assets/instagram-logo.png';
 import tiktokLogo from '../assets/tiktok-logo.png';
 
@@ -110,16 +107,7 @@ function TrendingTopics() {
     }
   };
 }, []);
-
- const menuItems = [
-   { icon: <Home size={24} color="#666" />, label: "Menu" },
-   { icon: <LayoutDashboard size={24} color="#666" />, label: "Campanhas Ativas" },
-   { icon: <BarChart3 size={24} color="#666" />, label: "Dashboard Planilha" },
-   { icon: <Clock size={24} color="#666" />, label: "Monitoramento" },
-   { icon: <BarChart2 size={24} color="#666" />, label: "Power BI" },
-   { icon: <TrendingUp size={24} color="#000" />, label: "Trending" },
- ];
-
+ 
  const trendingX = [
    { rank: 1, topic: "Neymar", tweets: "252K" },
    { rank: 2, topic: "Cristiano Ronaldo", tweets: "41K" },
@@ -181,18 +169,22 @@ function TrendingTopics() {
                   }}
                 />
                 <div className="mt-3">
-                  <Button 
-                    variant="primary" 
-                    className="w-100 py-2 rounded-3"
-                    style={{ 
-                      backgroundColor: '#3C3C3C', 
-                      border: 'none',
-                      fontSize: '0.95rem',
-                      fontWeight: '500'
-                    }}
-                  >
-                    Ver mais detalhes
-                  </Button>
+                <Button 
+                  variant="primary" 
+                  className="w-100 py-2 rounded-3"
+                  style={{ 
+                    backgroundColor: '#3C3C3C', 
+                    border: 'none',
+                    fontSize: '0.95rem',
+                    fontWeight: '500'
+                  }}
+                  href="https://trends.google.com.br/trends/story/BR_cu_oh8DNIcBAAAmqM_en"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  Ver mais detalhes
+                </Button>
+
                 </div>
               </Card.Body>
             </Card>

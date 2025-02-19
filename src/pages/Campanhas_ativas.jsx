@@ -8,9 +8,9 @@ import { format, subDays } from "date-fns";
 import GraficoComparativo from "../components/grafico_comparativo";
 
 const Campanhas_ativas = () => {
-  const yesterday = format((new Date()), "yyyy-MM-dd");
+  const yesterday = format(subDays(new Date(), 1), "yyyy-MM-dd");
 
-  const [startDate, setStartDate] = useState(format(subDays(new Date(), 6), "yyyy-MM-dd"));
+  const [startDate, setStartDate] = useState(format(subDays(new Date(), 7), "yyyy-MM-dd"));
   const [endDate, setEndDate] = useState(yesterday);
   const [tempStartDate, setTempStartDate] = useState(startDate);
   const [tempEndDate, setTempEndDate] = useState(endDate);

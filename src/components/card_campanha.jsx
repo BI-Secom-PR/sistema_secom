@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchCampaigns } from "../data/fetchMetrics";
 import { Card, Spinner } from "react-bootstrap"; // Importe o Spinner
 
-const CardCampanha = ({ 
-  onDateChange, 
+const CardCampanha = ({    
   onCampaignSelect, 
   startDate, 
   endDate, 

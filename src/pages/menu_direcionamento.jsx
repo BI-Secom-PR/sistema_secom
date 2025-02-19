@@ -1,11 +1,9 @@
-import { LogOut, User } from 'lucide-react';
 import React from 'react';
 import { Col, Row, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import campanhasImg from '../assets/campanhas.png';
 import dashboardImg from '../assets/dashboard.png';
 import trendingTopicsImg from '../assets/trending-topics.png';
-import powerBiImg from '../assets/powerbi.png';
 import StilingueImg from '../assets/stilingue.png';
 import DemograficoImg from '../assets/demografico.png';
 

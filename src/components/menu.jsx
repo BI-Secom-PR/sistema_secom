@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../routes/AuthContext';
 import { Button } from 'react-bootstrap';
 import { FiLogOut } from 'react-icons/fi';
+import { Link } from "react-router-dom";
+
 
 const Menu = () => {
   const { isAuthenticated } = useAuth();
@@ -35,22 +37,26 @@ const Menu = () => {
           {menuItems.map((item, index) => {
             const isActive = location.pathname === item.path;
             return (
-              <li key={index} className={`menu-item ${isActive ? 'active' : ''}`}>
-                <a
-                  href={item.path}
-                  style={{
-                    textDecoration: 'none',
-                    color: isActive ? '#000' : '#666',
-                    fontWeight: isActive ? 'bold' : 'normal',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                  }}
-                >
-                  {item.icon}
-                  {!isCollapsed && <span className="menu-text">{item.name}</span>}
-                </a>
-              </li>
+              <Link  className="nav-link lead" to={item.path} onClick={() => window.scrollTo(0, 0)}>
+
+                <li key={index} className={`menu-item ${isActive ? 'active' : ''}`}>
+                  <a
+                    href={item.path}
+                    style={{
+                      textDecoration: 'none',
+                      color: isActive ? '#000' : '#666',
+                      fontWeight: isActive ? 'bold' : 'normal',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                    }}
+                  >
+                    {item.icon}
+                    {!isCollapsed && <span className="menu-text">{item.name}</span>}
+                  </a>
+                </li>
+              </Link>
+
             );
           })}
         </ul>

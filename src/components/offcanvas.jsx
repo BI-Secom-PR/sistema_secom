@@ -1,17 +1,17 @@
 import React from 'react';
 import { Offcanvas, Button } from 'react-bootstrap';
 import { menuItems } from './menuItems';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const OffcanvasMenu = ({ show, handleClose }) => {
-  const navigate = useNavigate();
-
+  
   const logout = () => {
     sessionStorage.removeItem('_role');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('_id');
     sessionStorage.removeItem('email');
-    window.location.reload(navigate('/login'));
+    handleClose(); // Fechar o Offcanvas ao deslogar
+    window.location.href = '/login'; // Redirecionar corretamente
   };
 
   return (
@@ -29,15 +29,22 @@ const OffcanvasMenu = ({ show, handleClose }) => {
         <nav>
           <ul className="menu">
             {menuItems.map((item, index) => (
-              <li key={index} className="menu-item">
-                <a
-                  href={item.path}
-                  style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: '12px' }}
-                >
+              <Link 
+                className="nav-link lead" 
+                to={item.path} 
+                onClick={() => {
+                  handleClose(); // Fechar o menu ao clicar
+                  window.scrollTo(0, 0); // Rolagem para o topo
+                }}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+              >
+                <li key={index} className="menu-item">
+                
                   {item.icon}
-                  <span className="menu-text">{item.name}</span>
-                </a>
-              </li>
+                  <span> {item.name}</span>
+                
+                </li>
+              </Link>
             ))}
           </ul>
         </nav>
