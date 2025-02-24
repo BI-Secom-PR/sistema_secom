@@ -34,7 +34,6 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       setLoading(true);
       try {
         const data = await graficoMetrics(startDate, endDate, selectedCampaign);
-        console.log(data);
         setMetrics(data);
       } catch (error) {
         console.error("Erro ao carregar métricas:", error);
