@@ -14,12 +14,23 @@ const Menu = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const logout = () => {
+    // Removendo dados do sessionStorage
     sessionStorage.removeItem('_role');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('_id');
     sessionStorage.removeItem('email');
-    window.location.reload(navigate('/login'));
+  
+    // Removendo dados do localStorage
+    localStorage.removeItem('_role');
+    localStorage.removeItem('token');
+    localStorage.removeItem('_id');
+    localStorage.removeItem('email');
+  
+    // Redirecionando para a página de login
+    navigate('/login');
+    window.location.reload();
   };
+  
 
   if (!isAuthenticated) return null;
 
