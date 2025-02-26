@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchCampaigns } from "../data/fetchMetrics";
-import { Card, Spinner } from "react-bootstrap"; // Importe o Spinner
+import { Card, Spinner, Badge } from "react-bootstrap"; 
 
 const CardCampanha = ({    
   onCampaignSelect, 
@@ -17,80 +17,124 @@ const CardCampanha = ({
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  // Paleta de cores
+  const colors = {
+    primary: '#00D000',
+    secondary: '#1E293B',
+    selected: '#008500',
+    border: '#E2E8F0',
+    background: '#F8FAFC',
+    lightBg: '#F1F5F9',
+    error: '#EF4444',
+    text: {
+      primary: '#1E293B',
+      secondary: '#64748B',
+      light: '#94A3B8'
+    }
+  };
 
-
-  const rawlineStyles = {
-    container: {
+  const styles = {
+    card: {
+      border: `1px solid ${colors.border}`,
+      borderRadius: '16px',
+      padding: '24px',
+      width: '100%',
+      minHeight: '500px',
       fontFamily: 'Rawline, sans-serif',
+      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      display: 'flex',
+      flexDirection: 'column',
+      background: 'linear-gradient(to bottom, white, #F8FAFC)',
+      transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+    },
+    header: {
+      marginBottom: '20px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${colors.border}`,
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
     },
     title: {
-      fontSize: '1.5rem', 
-      fontWeight: '600', 
-      marginBottom: '16px',
-      fontFamily: 'Rawline, sans-serif',
+      fontSize: '1.2rem',
+      fontWeight: '700',
+      color: colors.secondary,
+      margin: 0
     },
-    card: {
-      border: '1px solid #d3d3d3', // Borda sutil
-      borderRadius: '8px', // Bordas arredondadas
-      padding: '20px', 
-      width: '100%', 
-      minHeight: '500px',  // Mantém altura mínima
-      fontFamily: 'Rawline, sans-serif',
-      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', // Sombreamento sutil
-      display: 'flex',  // Flex para ajustar o conteúdo internamente
-      flexDirection: 'column',  // Organiza o conteúdo em coluna
-    },
-    input: {
-      padding: '8px',
-      border: '1px solid #e5e7eb',
-      borderRadius: '4px',
-      height: '38px',
-      flex: '1',
-      minWidth: '100px',
-      fontFamily: 'Rawline, sans-serif',
-    },
-    button: {
-      backgroundColor: '#00D000',
-      color: 'white',
-      border: 'none',
-      borderRadius: '4px',
-      padding: '8px 16px',
-      height: '38px',
-      minWidth: '100px',
-      fontFamily: 'Rawline, sans-serif',
+    badge: {
+      backgroundColor: colors.primary,
+      padding: '4px 8px',         // Reduzido o padding
+      borderRadius: '20px',       // Mantém o formato arredondado
+      fontSize: '0.7rem',         // Reduzido o tamanho da fonte
       fontWeight: '600',
+      color: 'white',
+      display: 'inline-block',    // Garante que o badge não se expanda
+      alignSelf: 'center'         // Alinha verticalmente
+    },
+    campaignsList: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px',
+      flex: 1,
+      overflowY: 'auto',
+      maxHeight: '400px',
+      padding: '4px'
     },
     campaignItem: {
-      display: 'flex', 
-      alignItems: 'center', 
-      gap: '8px', 
-      padding: '8px', 
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      padding: '12px 16px',
       cursor: 'pointer',
-      width: '100%',
-      fontFamily: 'Rawline, sans-serif',
+      borderRadius: '12px',
+      border: `1px solid transparent`,
+      transition: 'all 0.2s ease',
+      backgroundColor: 'white'
     },
     selectedCampaign: {
-      backgroundColor: '#FF0000',
-      color: '#ffffff',
-      fontFamily: 'Rawline, sans-serif',
-      borderRadius: '12px',
-    },    
-    campaignName: {
-      flex: 1,
-      fontFamily: 'Rawline, sans-serif',
-      fontWeight: '400',
+      backgroundColor: `${colors.primary}40`,
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)'
     },
     statusDot: {
-      width: '10px',
-      height: '10px',
+      width: '12px',
+      height: '12px',
       borderRadius: '50%',
-      backgroundColor: 'green',
-      flexShrink: 0
+      backgroundColor: colors.primary,
+      flexShrink: 0,
+      boxShadow: '0 0 0 2px rgba(0, 208, 0, 0.2)'
+    },
+    campaignName: {
+      flex: 1,
+      fontWeight: '500',
+      color: colors.text.primary,
+      fontSize: '14px',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
     },
     errorMessage: {
-      fontFamily: 'Rawline, sans-serif',
-      color: 'red',
-      fontWeight: '400',
+      padding: '16px',
+      borderRadius: '8px',
+      color: colors.error,
+      backgroundColor: `${colors.error}10`,
+      fontWeight: '500',
+      marginBottom: '16px'
+    },
+    emptyState: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '40px 0',
+      color: colors.text.secondary,
+      textAlign: 'center',
+      flex: 1
+    },
+    spinner: {
+      color: colors.primary,
+      width: '3rem',
+      height: '3rem'
     }
   };
 
@@ -117,44 +161,70 @@ const CardCampanha = ({
   };
 
   return (
-    <Card style={{...rawlineStyles.card, ...rawlineStyles.container}}>
-      <div style={rawlineStyles.container}>
-        <h2 className="fw-bold" style={rawlineStyles.title}>Em veiculação</h2>
-        <br/>
-        {error && <p style={rawlineStyles.errorMessage}>{error}</p>}
-        {loading ? (
-          <div className="d-flex justify-content-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Carregando...</span>
-            </Spinner>
-          </div>
-        ) : null}
-        
-        {campaigns.length > 0 ? (
-          <div className="campaigns-list">
-            {campaigns.map((campaign) => (
-              <div 
-                key={campaign.Nome_Interno_Campanha}
-                onClick={() => handleCampaignSelect(campaign.Nome_Interno_Campanha)}
-                style={{
-                  ...rawlineStyles.campaignItem,
-                  ...(selectedCampaign === campaign.Nome_Interno_Campanha ? rawlineStyles.selectedCampaign : {})
-                }}
-              >
-                <span
-                  style={rawlineStyles.statusDot}
-                ></span>
-              
-                <span style={rawlineStyles.campaignName}>
-                  {campaign.Nome_Interno_Campanha || 'Sem nome'}
-                </span>
-              </div>            
-            ))}
-          </div>
-        ) : (
-          <p style={rawlineStyles.container}>Nenhuma campanha ativa encontrada.</p>
-        )}
+    <Card style={styles.card}>
+      <div style={styles.header}>
+        <h2 style={styles.title}>Em veiculação</h2>
+        <Badge style={styles.badge}>
+          {campaigns.length} campanhas
+        </Badge>
       </div>
+
+      {error && (
+        <div style={styles.errorMessage}>
+          {error}
+        </div>
+      )}
+      
+      {loading ? (
+        <div className="d-flex justify-content-center align-items-center flex-grow-1">
+          <Spinner animation="border" style={styles.spinner}>
+            <span className="visually-hidden">Carregando...</span>
+          </Spinner>
+        </div>
+      ) : (
+        <>
+          {campaigns.length > 0 ? (
+            <div style={styles.campaignsList} className="custom-scrollbar">
+              {campaigns.map((campaign) => {
+                const isSelected = selectedCampaign === campaign.Nome_Interno_Campanha;
+                
+                return (
+                  <div 
+                    key={campaign.Nome_Interno_Campanha}
+                    onClick={() => handleCampaignSelect(campaign.Nome_Interno_Campanha)}
+                    style={{
+                      ...styles.campaignItem,
+                      ...(isSelected ? styles.selectedCampaign : {})
+                    }}
+                  >
+                    <span
+                      style={{
+                        ...styles.statusDot,
+                        backgroundColor: isSelected ? colors.selected : colors.primary
+                      }}
+                    ></span>
+                  
+                    <span style={styles.campaignName}>
+                      {campaign.Nome_Interno_Campanha || 'Sem nome'}
+                    </span>
+                  </div>            
+                );
+              })}
+            </div>
+          ) : (
+            <div style={styles.emptyState}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke={colors.text.light} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <p style={{ marginTop: '16px', fontWeight: '500' }}>
+                Nenhuma campanha ativa encontrada.
+              </p>
+            </div>
+          )}
+        </>
+      )}
     </Card>
   );
 };

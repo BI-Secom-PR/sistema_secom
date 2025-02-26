@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { graficoMetrics } from "../data/graficoMetrics";
+import Spinner from "react-bootstrap/Spinner";
 
 ChartJS.register(
   CategoryScale,
@@ -34,10 +35,12 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       setLoading(true);
       try {
         const data = await graficoMetrics(startDate, endDate, selectedCampaign);
-        console.log(data);
-        setMetrics(data);
+        // Garante que `data` seja um objeto válido
+        setMetrics(data || { actual: [], previous: [] });
       } catch (error) {
         console.error("Erro ao carregar métricas:", error);
+        // Define um estado padrão em caso de erro
+        setMetrics({ actual: [], previous: [] });
       } finally {
         setLoading(false);
       }
@@ -71,17 +74,14 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
     diasSemana.includes(item.label) ? item.label : formatarData(item.date);
 
   // --- Lógica para montar os labels e os dados dos datasets ---
-
   let unionLabels = [];
   let actualData = [];
   let previousData = [];
 
   if (metrics.actual.length === 7 && metrics.previous.length === 7) {
-    // Caso comparativo: usa getXValue (que pode retornar dias da semana ou datas formatadas)
     const actualLabelsComparative = metrics.actual.map(getXValue);
     const previousLabelsComparative = metrics.previous.map(getXValue);
 
-    // Se os dados atuais forem baseados em dias da semana, preserva a ordem conforme os dados
     if (metrics.actual.length > 0 && diasSemana.includes(metrics.actual[0].label)) {
       unionLabels = [...actualLabelsComparative];
       previousLabelsComparative.forEach((label) => {
@@ -90,7 +90,6 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         }
       });
     } else {
-      // Caso sejam datas, une os labels e os ordena cronologicamente
       const labelsSet = new Set([...actualLabelsComparative, ...previousLabelsComparative]);
       unionLabels = Array.from(labelsSet);
       unionLabels.sort((a, b) => {
@@ -108,7 +107,6 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       return item ? item.impressions : null;
     });
   } else {
-    // Caso simples: usa somente a data (item.date) formatada para cada dataset
     const actualSimpleLabels = metrics.actual.map((item) => formatarData(item.date));
     const previousSimpleLabels = metrics.previous.map((item) => formatarData(item.date));
 
@@ -160,8 +158,8 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         },
         borderWidth: borderWidth + 1,
         pointRadius: pointRadius + 1,
-        pointBackgroundColor: "rgb(255, 0, 0)", // Cor de fundo do ponto (laranja)
-        pointBorderWidth: 2, // Largura da borda do ponto
+        pointBackgroundColor: "rgb(255, 0, 0)",
+        pointBorderWidth: 2,
         fill: true,
         tension: 0.4,
         order: 2
@@ -186,8 +184,8 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         },
         borderWidth: borderWidth + 1,
         pointRadius: pointRadius + 1,
-        pointBackgroundColor: "rgba(255, 208, 0, 0.8)", // Cor de fundo do ponto (azul)
-        pointBorderWidth: 2, // Largura da borda do ponto (igual à laranja)
+        pointBackgroundColor: "rgba(255, 208, 0, 0.8)",
+        pointBorderWidth: 2,
         fill: true,
         tension: 0.4,
         order: 1
@@ -232,12 +230,48 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
   };
 
   return (
-    <Card className="campaign-card p-3 shadow" style={{ height: "500px" }}>
-      <Card.Title className="text-center mb-3 fw-bold">
+    <Card 
+      className="campaign-card p-3 shadow" 
+      style={{ 
+        height: "500px", 
+        borderRadius: "16px", 
+        border: "1px solid #ededee",
+        background: "linear-gradient(135deg, #f5f5f5 0%, #fdfdfd 100%)",
+        boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+        transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+        overflow: "hidden"
+      }}
+      onMouseOver={(e) => {
+        e.currentTarget.style.transform = "translateY(-5px)";
+        e.currentTarget.style.boxShadow = "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)";
+      }}
+      onMouseOut={(e) => {
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)";
+      }}
+    >
+      <Card.Title 
+        className="text-center mb-3 fw-bold" 
+        style={{ 
+          fontSize: "20px", 
+          color: "#1E293B", 
+          fontWeight: "600", 
+          letterSpacing: "0.025em" 
+        }}
+      >
         Comparação de Impressões por Período
       </Card.Title>
       {loading ? (
-        <p className="text-center">Carregando...</p>
+        <div className="d-flex justify-content-center align-items-center h-100">
+          <Spinner 
+            animation="border" 
+            style={{ 
+              color: "#CBD5E1",
+              width: "2.5rem",
+              height: "2.5rem"
+            }} 
+          />
+        </div>
       ) : (
         <div className="w-100 h-100">
           <Line options={options} data={chartData} />

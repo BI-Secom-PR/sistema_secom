@@ -3,9 +3,9 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
+import Badge from 'react-bootstrap/Badge';
 import { fetchMetrics } from '../data/fetchMetrics';
 import metricCards from '../data/metricsCard';
-import '../Cards.css'; // Novo arquivo de estilos CSS
 
 function Cards({ startDate, endDate, selectedCampaign }) {
   const [metrics, setMetrics] = useState([]);
@@ -34,12 +34,22 @@ function Cards({ startDate, endDate, selectedCampaign }) {
     return (((current - previous) / previous) * 100).toFixed(2);
   };
 
+  // Paleta de cores para diferentes tipos de cards
+  const cardColors = {
+    investment: { bg: '#ffffff', border: '#E2E8F0', gradient: 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' },
+    clicks: { bg: '#ffffff', border: '#E2E8F0', gradient: 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' },
+    engagement: { bg: '#ffffff', border: '#E2E8F0', gradient: 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' },
+    views: { bg: '#ffffff', border: '#E2E8F0', gradient: 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' },
+    impressions: { bg: '#ffffff', border: '#E2E8F0', gradient: 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' }
+  };
+
+  // Mantendo a função getIcon original
   const getIcon = (type) => {
-    const iconSize = 120; // Aumenta um pouco mais o tamanho do ícone
+    const iconSize = 120;
     const iconContainerStyle = {
       position: 'absolute',
-      top: '-20px',    // Move o ícone mais para cima
-      right: '-20px',  // Move o ícone mais para a direita
+      top: '-20px',
+      right: '-20px',
       opacity: 0.1,
       zIndex: 1,
     };
@@ -82,7 +92,7 @@ function Cards({ startDate, endDate, selectedCampaign }) {
         return (
           <div style={iconContainerStyle}>
             <img 
-              src="https://img.icons8.com/?size=100&id=zSG1XVzrBHr2&format=png&color=000000" 
+              src="https://img.icons8.com/?size=100&id=qtmxiFzhBiJq&format=png&color=000000" 
               alt="engagement" 
               width={iconSize} 
               height={iconSize} 
@@ -104,10 +114,9 @@ function Cards({ startDate, endDate, selectedCampaign }) {
         return null;
     }
   };
-  
 
   return (
-    <Row xs={1} sm={2} md={3} lg={4} xl={5} className="g-4 rawline-font">
+    <Row xs={1} sm={2} md={3} lg={4} xl={5} className="g-4" style={{ fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' }}>
       {metricCards.map((metric, idx) => {
         const matchedMetric = metrics.find(m => m.type === metric.type);
         const currentValue = matchedMetric ? matchedMetric.currentValue : null;
@@ -116,47 +125,118 @@ function Cards({ startDate, endDate, selectedCampaign }) {
 
         const isPositive = percentageDiff > 0;
         const isZero = percentageDiff === '0.00' || percentageDiff === null;
+        
+        // Obter cores específicas para este tipo de card
+        const colors = cardColors[metric.type] || { 
+          bg: '#F8FAFC', 
+          border: '#CBD5E1',
+          gradient: 'linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%)'
+        };
 
         return (
           <Col key={idx} className="d-flex">
-            <Card className={`metric-card ${metric.type} w-100 rawline-font`} style={{ minHeight: '200px', position: 'relative', overflow: 'hidden' }}>
-              <Card.Body className="d-flex flex-column p-3">
-                <div className="metric-content d-flex flex-column gap-2">
-                <Card.Title className="d-flex align-items-center justify-content-between gap-2 rawline-title fs-10">
+            <Card 
+              style={{ 
+                minHeight: '220px', 
+                position: 'relative', 
+                borderRadius: '16px', 
+                border: `1px solid ${colors.border}`,
+                background: colors.gradient,
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+                overflow: 'hidden'
+              }}
+              className="w-100 h-100"
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+              }}
+            >
+              {getIcon(metric.type)}
+              <Card.Body className="d-flex flex-column p-4" style={{ zIndex: 2, position: 'relative' }}>
+                <Card.Title 
+                  style={{ 
+                    fontSize: '16px', 
+                    color: '#1E293B',
+                    fontWeight: '600',
+                    letterSpacing: '0.025em',
+                    marginBottom: '20px'
+                  }}
+                >
                   {metric.title}
-                  {getIcon(metric.type)}
                 </Card.Title>
+                <div className="flex-grow-1 d-flex align-items-center">
                   {loading ? (
-                    <Spinner animation="border" variant="primary" />
+                    <div className="d-flex justify-content-center w-100">
+                      <Spinner 
+                        animation="border" 
+                        style={{ 
+                          color: colors.border,
+                          width: '2.5rem',
+                          height: '2.5rem'
+                        }} 
+                      />
+                    </div>
                   ) : (
-                    <Card.Text className="metric-type mb-0 text-left fw-bold rawline-metric" style={{ fontSize: '20px' }}>
-                      {currentValue !== null && currentValue !== undefined
-                        ? metric.type === 'investment'
-                          ? `R$ ${currentValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                          : Math.round(currentValue).toLocaleString('pt-BR')
-                        : '—'}
-                    </Card.Text>
+                    <div className="d-flex flex-column">
+                      <div 
+                        style={{ 
+                          fontSize: '32px', 
+                          fontWeight: '700',
+                          color: '#1E293B',
+                          lineHeight: '1.2'
+                        }}
+                      >
+                        {currentValue !== null && currentValue !== undefined
+                          ? metric.type === 'investment'
+                            ? `R$ ${currentValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                            : Math.round(currentValue).toLocaleString('pt-BR')
+                          : '—'}
+                      </div>
+                    </div>
                   )}
                 </div>
               </Card.Body>
-              <Card.Footer className="py-2">
-                <div className="d-flex align-items-center justify-content-start">
+              <Card.Footer 
+                style={{ 
+                  backgroundColor: 'transparent', 
+                  borderTop: `1px solid ${colors.border}20`,
+                  padding: '12px 16px'
+                }}
+              >
+                <div className="d-flex align-items-center">
                   {loading ? (
                     <Spinner animation="border" variant="secondary" size="sm" />
                   ) : (
                     <>
-                      <small 
-                        className={`text-${isZero ? 'muted' : isPositive ? 'success' : 'danger'} rawline-percentage`}
-                        style={{ fontSize: '1.4rem', fontWeight: '600' }}
+                      {!isZero && (
+                        <Badge 
+                          pill 
+                          bg={isPositive ? 'success' : 'danger'} 
+                          style={{ 
+                            opacity: 0.9, 
+                            padding: '0.4rem 0.75rem',
+                            fontSize: '14px',
+                            fontWeight: '600'
+                          }}
+                        >
+                          {isPositive ? '↑' : '↓'} {Math.abs(percentageDiff)}%
+                        </Badge>
+                      )}
+                      <span 
+                        style={{ 
+                          fontSize: '13px', 
+                          color: '#64748B',
+                          marginLeft: isZero ? '0' : '10px',
+                          fontWeight: '500'
+                        }}
                       >
-                        <span style={{ fontSize: '1.5rem' }}>
-                          {isZero ? '' : isPositive ? '↑' : '↓'}
-                        </span>
-                        {Math.abs(percentageDiff)}%
-                      </small>
-                      <small className="text-muted ms-2" style={{ fontSize: '15px' }}>
-                        em relação ao período anterior
-                      </small>
+                        {isZero ? 'Sem alteração' : 'em relação ao período anterior'}
+                      </span>
                     </>
                   )}
                 </div>

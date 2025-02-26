@@ -11,12 +11,102 @@ const formatNumber = (num) => {
 };
 
 const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
+  // Importação da fonte Rawline
+  const fontLink = document.createElement('link');
+  fontLink.href = 'https://fonts.googleapis.com/css2?family=Rawline:wght@300;400;600;700&display=swap';
+  fontLink.rel = 'stylesheet';
+  document.head.appendChild(fontLink);
+
   const [engagementData, setEngagementData] = useState({
     likes: 0,
     comments: 0,
     views: 0,
   });
   const [loading, setLoading] = useState(true);
+
+  // Paleta de cores
+  const colors = {
+    primary: '#00D000',
+    secondary: '#1E293B',
+    border: '#E2E8F0',
+    background: '#F8FAFC',
+    lightBg: '#F1F5F9',
+    likes: '#183EFF',
+    comments: '#00D000',
+    views: '#FFD000',
+    text: {
+      primary: '#1E293B',
+      secondary: '#64748B',
+      light: '#94A3B8'
+    }
+  };
+
+  const styles = {
+    card: {
+      border: `1px solid ${colors.border}`,
+      borderRadius: '16px',
+      padding: '24px',
+      width: '100%',
+      minHeight: '500px',
+      fontFamily: 'Rawline, sans-serif',
+      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      display: 'flex',
+      flexDirection: 'column',
+      background: 'linear-gradient(to bottom, white, #F8FAFC)',
+      transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+    },
+    header: {
+      marginBottom: '20px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${colors.border}`,
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    },
+    title: {
+      fontSize: '1.2rem',
+      fontWeight: '700',
+      color: colors.secondary,
+      margin: 0
+    },
+    subtitle: {
+      fontSize: '1rem',
+      fontWeight: '600',
+      color: colors.secondary,
+      marginBottom: '20px'
+    },
+    engagementContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '20px',
+      flex: 1
+    },
+    engagementItem: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '16px',
+      minHeight: '90px',
+      borderRadius: '12px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
+      transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+    },
+    iconValueContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '16px'
+    },
+    valueText: {
+      fontSize: '1.25rem',
+      fontWeight: '700',
+      color: colors.secondary
+    },
+    spinner: {
+      color: colors.primary,
+      width: '1.5rem',
+      height: '1.5rem'
+    }
+  };
 
   useEffect(() => {
     const fetchEngagement = async () => {
@@ -46,19 +136,26 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
 
   const EngagementItem = ({ icon: Icon, color, value, background }) => (
     <div 
-      className="rounded d-flex justify-content-between align-items-center p-4"
       style={{
-        minHeight: '90px',
+        ...styles.engagementItem,
         background,
         borderLeft: `4px solid ${color}`
       }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.05)';
+      }}
     >
-      <div className="d-flex align-items-center" style={{ gap: '1rem' }}>
-        <Icon size={32} color={color} />
+      <div style={styles.iconValueContainer}>
+        <Icon size={28} color={color} />
         {loading ? (
-          <Spinner animation="border" variant="primary" size="sm" />
+          <Spinner animation="border" style={styles.spinner} />
         ) : (
-          <span className="fs-4 fw-bold" style={{ color: '#000000' }}>
+          <span style={styles.valueText}>
             {typeof value === 'number' ? formatNumber(value) : value.toLocaleString()}
           </span>
         )}
@@ -67,25 +164,31 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
   );
 
   return (
-    <Card className="campaign-card h-100 p-4">
-      <h2 className="h4 mb-5 text-dark fw-bold">Engajamento</h2>
-      {selectedCampaign && <h3 className="text-dark mb-4">Campanha: {selectedCampaign}</h3>}
-      <div className="d-flex flex-column gap-5">
+    <Card style={styles.card}>
+      <div style={styles.header}>
+        <h2 style={styles.title}>Engajamento - META</h2>
+      </div>
+      
+      {selectedCampaign && 
+        <h3 style={styles.subtitle}>Campanha: {selectedCampaign}</h3>
+      }
+      
+      <div style={styles.engagementContainer}>
         <EngagementItem 
           icon={ThumbsUp}
-          color="#183EFF"
+          color={colors.likes}
           value={engagementData.likes}
           background="linear-gradient(145deg, #ffffff 0%, #f0f7ff 100%)"
         />
         <EngagementItem 
           icon={MessageCircle}
-          color="#00D000"
+          color={colors.comments}
           value={engagementData.comments}
           background="linear-gradient(145deg, #ffffff 0%, #f0fff4 100%)"
         />
         <EngagementItem 
           icon={Eye}
-          color="#FFD000"
+          color={colors.views}
           value={engagementData.views}
           background="linear-gradient(145deg, #ffffff 0%, #fffdf3 100%)"
         />
