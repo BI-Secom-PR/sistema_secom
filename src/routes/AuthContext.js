@@ -6,8 +6,17 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const role = sessionStorage.getItem('_role'); // Suponha que o token seja armazenado no localStorage
-    setIsAuthenticated(!!role);
+    // Verifica no sessionStorage
+    let role = sessionStorage.getItem('_role');
+    let token = sessionStorage.getItem('token');
+
+    // Se não encontrar, verifica no localStorage
+    if (!role || !token) {
+      role = localStorage.getItem('_role');
+      token = localStorage.getItem('token');
+    }
+
+    setIsAuthenticated(!!role && !!token);
   }, []);
 
   return (

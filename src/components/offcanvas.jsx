@@ -1,18 +1,30 @@
 import React from 'react';
 import { Offcanvas, Button } from 'react-bootstrap';
 import { menuItems } from './menuItems';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const OffcanvasMenu = ({ show, handleClose }) => {
+  const navigate = useNavigate();
   
   const logout = () => {
+    // Removendo dados do sessionStorage
     sessionStorage.removeItem('_role');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('_id');
     sessionStorage.removeItem('email');
-    handleClose(); // Fechar o Offcanvas ao deslogar
-    window.location.href = '/login'; // Redirecionar corretamente
+  
+    // Removendo dados do localStorage
+    localStorage.removeItem('_role');
+    localStorage.removeItem('token');
+    localStorage.removeItem('_id');
+    localStorage.removeItem('email');
+  
+    // Redirecionando para a página de login
+    navigate('/login');
+    window.location.reload();
   };
+  
 
   return (
     <Offcanvas show={show} onHide={handleClose} backdrop="true" className="custom-offcanvas">

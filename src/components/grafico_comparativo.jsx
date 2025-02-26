@@ -35,8 +35,12 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       setLoading(true);
       try {
         const data = await graficoMetrics(startDate, endDate, selectedCampaign);
+<<<<<<< HEAD
         // Garante que `data` seja um objeto válido
         setMetrics(data || { actual: [], previous: [] });
+=======
+        setMetrics(data);
+>>>>>>> 359be330368211ee05f989b73aee79e5a376e300
       } catch (error) {
         console.error("Erro ao carregar métricas:", error);
         // Define um estado padrão em caso de erro

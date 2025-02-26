@@ -1,21 +1,13 @@
 import React from 'react';
-import { Outlet, Navigate } from 'react-router-dom'
+import { Outlet, Navigate } from 'react-router-dom';
 
 const PrivateRoute = () => {
-    const auth = () => {
-        const role = sessionStorage.getItem('_role')
-        if( role !== 'Admin' )
-            return false
-    
-        return true
-    }
-    const teste = auth();
-    return (
-        
-        teste ? <Outlet /> : <Navigate to='/login' />
-        
-    )
-  
+  const auth = () => {
+    const role = sessionStorage.getItem('_role') || localStorage.getItem('_role');
+    return role === 'Admin';
+  };
+
+  return auth() ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;
