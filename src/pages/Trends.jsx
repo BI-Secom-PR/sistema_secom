@@ -27,17 +27,6 @@ const styles = {
     position: 'relative',
     paddingBottom: '1rem',
   },
-  titleUnderline: {
-    content: '',
-    position: 'absolute',
-    bottom: 0,
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '80px',
-    height: '4px',
-    background: 'linear-gradient(90deg, #6366F1 0%, #8B5CF6 100%)',
-    borderRadius: '2px',
-  },
   card: {
     borderRadius: '16px',
     border: 'none',
@@ -178,7 +167,6 @@ function TrendingTopics() {
         <div className="mb-5">
           <h1 style={styles.pageTitle}>
             ASSUNTOS DO MOMENTO
-            <div style={styles.titleUnderline}></div>
           </h1>
         </div>
 
