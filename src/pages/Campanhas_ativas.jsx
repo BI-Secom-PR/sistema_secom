@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cards from "../components/card";
 import CardCampanha from "../components/card_campanha";
 import { Col, Row, Button } from "react-bootstrap";
@@ -15,6 +15,29 @@ const Campanhas_ativas = () => {
   const [tempStartDate, setTempStartDate] = useState(startDate);
   const [tempEndDate, setTempEndDate] = useState(endDate);
   const [selectedCampaign, setSelectedCampaign] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    const timeout = setTimeout(() => {
+      console.log("Tempo limite atingido, recarregando página...");
+      window.location.reload();
+    }, 15000); // Timeout de 15 segundos
+
+    // Simulação de uma requisição assíncrona
+    setTimeout(() => {
+      setData({}); // Garante que data não seja null
+      setLoading(false);
+      clearTimeout(timeout);
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  if (loading) {
+    return <div className="text-center mt-5">Carregando dados, por favor aguarde...</div>;
+  }
 
   const handleStartDateChange = (e) => {
     setTempStartDate(e.target.value);
@@ -25,9 +48,7 @@ const Campanhas_ativas = () => {
   };
 
   const handleDateChange = () => {
-    // Garantir que endDate não passe de ontem
     const newEndDate = tempEndDate > yesterday ? yesterday : tempEndDate;
-    
     setStartDate(tempStartDate);
     setEndDate(newEndDate);
   };
@@ -107,7 +128,7 @@ const Campanhas_ativas = () => {
           <Engajamento startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
         </Col>
         <Col xs={12} lg={12}>
-          <GraficoComparativo startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} />
+          <GraficoComparativo startDate={startDate} endDate={endDate} selectedCampaign={selectedCampaign} data={data} />
         </Col>
       </Row>
       <br />
