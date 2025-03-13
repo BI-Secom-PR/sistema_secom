@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchCampaigns } from "../data/fetchMetrics";
 import { Card, Spinner, Badge } from "react-bootstrap"; 
+import { graficoMetrics } from "../data/graficoMetrics";
 
 const CardCampanha = ({    
   onCampaignSelect, 
@@ -138,12 +139,41 @@ const CardCampanha = ({
     }
   };
 
+  
+
   const loadCampaigns = async () => {
     setLoading(true);
     setError(null);
     try {
+      // Busca a lista de campanhas
       const data = await fetchCampaigns(startDate, endDate);
-      setCampaigns(data);
+      
+      // Define a data de ontem com base no endDate
+      const yesterday = new Date(endDate);
+      yesterday.setDate(yesterday.getDate() - 1);
+  
+      // Para cada campanha, busca os dados de métricas e verifica se ontem teve impressões
+      const campaignsWithStatus = await Promise.all(
+        data.map(async (campaign) => {
+          const metrics = await graficoMetrics(startDate, endDate, campaign.Nome_Interno_Campanha);
+          
+          // Procura o registro de ontem na array "actual"
+          const yesterdayMetric = metrics.actual.find(item => {
+            const metricDate = new Date(item.date);
+            return metricDate.toDateString() === yesterday.toDateString();
+          });
+          
+          // Considera ativa se houver registro de ontem e impressões maiores que zero
+          const isActive = yesterdayMetric && yesterdayMetric.impressions > 0;
+          
+          return {
+            ...campaign,
+            isActive,
+          };
+        })
+      );
+      
+      setCampaigns(campaignsWithStatus);
     } catch (error) {
       setError("Erro ao carregar campanhas. Por favor, tente novamente.");
       console.error("Erro ao carregar campanhas:", error);
@@ -151,6 +181,7 @@ const CardCampanha = ({
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     loadCampaigns();    
@@ -188,6 +219,9 @@ const CardCampanha = ({
               {campaigns.map((campaign) => {
                 const isSelected = selectedCampaign === campaign.Nome_Interno_Campanha;
                 
+                // Se a campanha não teve métricas (isActive false), usa cinza; caso contrário, mantém as cores originais.
+                const dotColor = campaign.isActive ? (isSelected ? colors.selected : colors.primary) : "#808080";
+
                 return (
                   <div 
                     key={campaign.Nome_Interno_Campanha}
@@ -200,14 +234,14 @@ const CardCampanha = ({
                     <span
                       style={{
                         ...styles.statusDot,
-                        backgroundColor: isSelected ? colors.selected : colors.primary
+                        backgroundColor: dotColor
                       }}
                     ></span>
                   
                     <span style={styles.campaignName}>
                       {campaign.Nome_Interno_Campanha || 'Sem nome'}
                     </span>
-                  </div>            
+                  </div>
                 );
               })}
             </div>
