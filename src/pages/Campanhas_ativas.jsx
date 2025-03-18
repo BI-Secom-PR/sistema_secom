@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cards from "../components/card";
 import CardCampanha from "../components/card_campanha";
 import { Col, Row, Button } from "react-bootstrap";
@@ -25,9 +25,7 @@ const Campanhas_ativas = () => {
   };
 
   const handleDateChange = () => {
-    // Garantir que endDate não passe de ontem
     const newEndDate = tempEndDate > yesterday ? yesterday : tempEndDate;
-    
     setStartDate(tempStartDate);
     setEndDate(newEndDate);
   };
