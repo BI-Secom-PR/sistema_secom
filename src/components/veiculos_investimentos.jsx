@@ -81,7 +81,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       alignItems: 'center'
     },
     title: {
-      fontSize: isMobile ? '1.2rem' : '1.2rem',
+      fontSize: isMobile ? '1rem' : '1rem',
       fontWeight: '700',
       color: colors.secondary,
       margin: 0

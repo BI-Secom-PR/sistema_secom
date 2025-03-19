@@ -64,7 +64,7 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
       alignItems: 'center'
     },
     title: {
-      fontSize: '1.2rem',
+      fontSize: '1rem',
       fontWeight: '700',
       color: colors.secondary,
       margin: 0

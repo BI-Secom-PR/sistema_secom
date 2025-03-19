@@ -58,20 +58,20 @@ const CardCampanha = ({
       alignItems: 'center'
     },
     title: {
-      fontSize: '1.2rem',
+      fontSize: '1rem',
       fontWeight: '700',
       color: colors.secondary,
       margin: 0
     },
     badge: {
       backgroundColor: colors.primary,
-      padding: '4px 8px',         // Reduzido o padding
-      borderRadius: '20px',       // Mantém o formato arredondado
-      fontSize: '0.7rem',         // Reduzido o tamanho da fonte
+      padding: '4px 8px',
+      borderRadius: '20px',
+      fontSize: '0.7rem',
       fontWeight: '600',
       color: 'white',
-      display: 'inline-block',    // Garante que o badge não se expanda
-      alignSelf: 'center'         // Alinha verticalmente
+      display: 'inline-block',
+      alignSelf: 'center'
     },
     campaignsList: {
       display: 'flex',
@@ -84,14 +84,15 @@ const CardCampanha = ({
     },
     campaignItem: {
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       gap: '12px',
       padding: '12px 16px',
       cursor: 'pointer',
       borderRadius: '12px',
       border: `1px solid transparent`,
       transition: 'all 0.2s ease',
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      minHeight: '60px' // Garante altura mínima para acomodar múltiplas linhas
     },
     selectedCampaign: {
       backgroundColor: `${colors.primary}40`,
@@ -103,16 +104,25 @@ const CardCampanha = ({
       borderRadius: '50%',
       backgroundColor: colors.primary,
       flexShrink: 0,
-      boxShadow: '0 0 0 2px rgba(0, 208, 0, 0.2)'
+      boxShadow: '0 0 0 2px rgba(0, 208, 0, 0.2)',
+      marginTop: '4px'
     },
     campaignName: {
       flex: 1,
       fontWeight: '500',
       color: colors.text.primary,
       fontSize: '14px',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap'
+      lineHeight: '1.4',
+      wordBreak: 'break-word',
+      whiteSpace: 'normal',
+      overflow: 'visible',
+      display: 'block', // Garante que o texto seja tratado como bloco
+      maxWidth: '100%',  // Importante para evitar que o texto exceda a largura
+      textOverflow: 'clip', // Garante que não haja elipse
+      hyphens: 'auto',  // Permite hifenização automática para palavras longas
+      WebkitHyphens: 'auto',
+      MozHyphens: 'auto',
+      msHyphens: 'auto'
     },
     errorMessage: {
       padding: '16px',
@@ -138,8 +148,6 @@ const CardCampanha = ({
       height: '3rem'
     }
   };
-
-  
 
   const loadCampaigns = async () => {
     setLoading(true);
@@ -182,13 +190,21 @@ const CardCampanha = ({
     }
   };
   
-
   useEffect(() => {
     loadCampaigns();    
   }, [startDate, endDate]);
  
   const handleCampaignSelect = (campaignName) => {
     onCampaignSelect(campaignName === selectedCampaign ? null : campaignName);
+  };
+
+  // Renderiza o nome da campanha com quebra de linha
+  const renderCampaignName = (name) => {
+    return (
+      <div style={styles.campaignName}>
+        {name || 'Sem nome'}
+      </div>
+    );
   };
 
   return (
@@ -237,10 +253,9 @@ const CardCampanha = ({
                         backgroundColor: dotColor
                       }}
                     ></span>
-                  
-                    <span style={styles.campaignName}>
-                      {campaign.Nome_Interno_Campanha || 'Sem nome'}
-                    </span>
+                    
+                    {/* Usando uma div para o nome da campanha em vez de span */}
+                    {renderCampaignName(campaign.Nome_Interno_Campanha)}
                   </div>
                 );
               })}
