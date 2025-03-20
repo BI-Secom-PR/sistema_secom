@@ -235,8 +235,20 @@ const CardCampanha = ({
               {campaigns.map((campaign) => {
                 const isSelected = selectedCampaign === campaign.Nome_Interno_Campanha;
                 
-                // Se a campanha não teve métricas (isActive false), usa cinza; caso contrário, mantém as cores originais.
-                const dotColor = campaign.isActive ? (isSelected ? colors.selected : colors.primary) : "#808080";
+                // Se a campanha não teve métricas (isActive false), usa cinza sem borda; caso contrário, mantém as cores originais.
+                const dotColor = campaign.isActive ? (isSelected ? colors.selected : colors.primary) : "#afafaf";
+                // Apenas define boxShadow se a campanha estiver ativa
+                const dotStyle = campaign.isActive 
+                  ? { 
+                      ...styles.statusDot,
+                      backgroundColor: dotColor,
+                      boxShadow: '0 0 0 2px rgba(0, 208, 0, 0.2)' 
+                    }
+                  : {
+                      ...styles.statusDot, 
+                      backgroundColor: dotColor,
+                      boxShadow: 'none' // Remove a borda para campanhas inativas
+                    };
 
                 return (
                   <div 
@@ -247,12 +259,7 @@ const CardCampanha = ({
                       ...(isSelected ? styles.selectedCampaign : {})
                     }}
                   >
-                    <span
-                      style={{
-                        ...styles.statusDot,
-                        backgroundColor: dotColor
-                      }}
-                    ></span>
+                    <span style={dotStyle}></span>
                     
                     {/* Usando uma div para o nome da campanha em vez de span */}
                     {renderCampaignName(campaign.Nome_Interno_Campanha)}
