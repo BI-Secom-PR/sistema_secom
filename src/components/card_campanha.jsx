@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchCampaigns } from "../data/fetchMetrics";
 import { Card, Spinner, Badge } from "react-bootstrap"; 
 import { graficoMetrics } from "../data/graficoMetrics";
+import { useTheme } from '../context/ThemeContext'; // Importe o useTheme
 
 const CardCampanha = ({    
   onCampaignSelect, 
@@ -9,29 +10,24 @@ const CardCampanha = ({
   endDate, 
   selectedCampaign 
 }) => {
-  // Importação da fonte Rawline
-  const fontLink = document.createElement('link');
-  fontLink.href = 'https://fonts.googleapis.com/css2?family=Rawline:wght@300;400;600;700&display=swap';
-  fontLink.rel = 'stylesheet';
-  document.head.appendChild(fontLink);
+  const { isDarkMode } = useTheme(); // Acesse o estado do tema
 
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
-  // Paleta de cores
+
   const colors = {
-    primary: '#00D000',
-    secondary: '#1E293B',
-    selected: '#008500',
-    border: '#E2E8F0',
-    background: '#F8FAFC',
-    lightBg: '#F1F5F9',
+    primary: isDarkMode ? '#00D000' : '#00D000',
+    secondary: isDarkMode ? '#ffffff' : '#1E293B',
+    selected: isDarkMode ? '#008500' : '#008500',
+    border: isDarkMode ? '#444444' : '#E2E8F0',
+    background: isDarkMode ? '#2d2d2d' : '#F8FAFC',
+    lightBg: isDarkMode ? '#2c2c2c' : '#fefeff',
     error: '#EF4444',
     text: {
-      primary: '#1E293B',
-      secondary: '#64748B',
-      light: '#94A3B8'
+      primary: isDarkMode ? '#ffffff' : '#1E293B',
+      secondary: isDarkMode ? '#94A3B8' : '#64748B',
+      light: isDarkMode ? '#64748B' : '#94A3B8'
     }
   };
 
@@ -46,7 +42,7 @@ const CardCampanha = ({
       boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
       display: 'flex',
       flexDirection: 'column',
-      background: 'linear-gradient(to bottom, white, #F8FAFC)',
+      background: `linear-gradient(to bottom, ${colors.background}, ${colors.lightBg})`,
       transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
     },
     header: {
@@ -91,8 +87,8 @@ const CardCampanha = ({
       borderRadius: '12px',
       border: `1px solid transparent`,
       transition: 'all 0.2s ease',
-      backgroundColor: 'white',
-      minHeight: '60px' // Garante altura mínima para acomodar múltiplas linhas
+      backgroundColor: colors.background,
+      minHeight: '60px'
     },
     selectedCampaign: {
       backgroundColor: `${colors.primary}40`,
@@ -116,10 +112,10 @@ const CardCampanha = ({
       wordBreak: 'break-word',
       whiteSpace: 'normal',
       overflow: 'visible',
-      display: 'block', // Garante que o texto seja tratado como bloco
-      maxWidth: '100%',  // Importante para evitar que o texto exceda a largura
-      textOverflow: 'clip', // Garante que não haja elipse
-      hyphens: 'auto',  // Permite hifenização automática para palavras longas
+      display: 'block',
+      maxWidth: '100%',
+      textOverflow: 'clip',
+      hyphens: 'auto',
       WebkitHyphens: 'auto',
       MozHyphens: 'auto',
       msHyphens: 'auto'
@@ -153,34 +149,24 @@ const CardCampanha = ({
     setLoading(true);
     setError(null);
     try {
-      // Busca a lista de campanhas
       const data = await fetchCampaigns(startDate, endDate);
-      
-      // Define a data de ontem com base no endDate
       const yesterday = new Date(endDate);
       yesterday.setDate(yesterday.getDate() - 1);
-  
-      // Para cada campanha, busca os dados de métricas e verifica se ontem teve impressões
+
       const campaignsWithStatus = await Promise.all(
         data.map(async (campaign) => {
           const metrics = await graficoMetrics(startDate, endDate, campaign.Nome_Interno_Campanha);
-          
-          // Procura o registro de ontem na array "actual"
           const yesterdayMetric = metrics.actual.find(item => {
             const metricDate = new Date(item.date);
             return metricDate.toDateString() === yesterday.toDateString();
           });
-          
-          // Considera ativa se houver registro de ontem e impressões maiores que zero
           const isActive = yesterdayMetric && yesterdayMetric.impressions > 0;
-          
           return {
             ...campaign,
             isActive,
           };
         })
       );
-      
       setCampaigns(campaignsWithStatus);
     } catch (error) {
       setError("Erro ao carregar campanhas. Por favor, tente novamente.");
@@ -189,16 +175,15 @@ const CardCampanha = ({
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     loadCampaigns();    
   }, [startDate, endDate]);
- 
+
   const handleCampaignSelect = (campaignName) => {
     onCampaignSelect(campaignName === selectedCampaign ? null : campaignName);
   };
 
-  // Renderiza o nome da campanha com quebra de linha
   const renderCampaignName = (name) => {
     return (
       <div style={styles.campaignName}>
@@ -221,7 +206,7 @@ const CardCampanha = ({
           {error}
         </div>
       )}
-      
+
       {loading ? (
         <div className="d-flex justify-content-center align-items-center flex-grow-1">
           <Spinner animation="border" style={styles.spinner}>
@@ -234,10 +219,7 @@ const CardCampanha = ({
             <div style={styles.campaignsList} className="custom-scrollbar">
               {campaigns.map((campaign) => {
                 const isSelected = selectedCampaign === campaign.Nome_Interno_Campanha;
-                
-                // Se a campanha não teve métricas (isActive false), usa cinza sem borda; caso contrário, mantém as cores originais.
                 const dotColor = campaign.isActive ? (isSelected ? colors.selected : colors.primary) : "#afafaf";
-                // Apenas define boxShadow se a campanha estiver ativa
                 const dotStyle = campaign.isActive 
                   ? { 
                       ...styles.statusDot,
@@ -247,7 +229,7 @@ const CardCampanha = ({
                   : {
                       ...styles.statusDot, 
                       backgroundColor: dotColor,
-                      boxShadow: 'none' // Remove a borda para campanhas inativas
+                      boxShadow: 'none'
                     };
 
                 return (
@@ -260,8 +242,6 @@ const CardCampanha = ({
                     }}
                   >
                     <span style={dotStyle}></span>
-                    
-                    {/* Usando uma div para o nome da campanha em vez de span */}
                     {renderCampaignName(campaign.Nome_Interno_Campanha)}
                   </div>
                 );

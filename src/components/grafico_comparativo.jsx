@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { graficoMetrics } from "../data/graficoMetrics";
+import { useTheme } from "../context/ThemeContext"; // Importe o useTheme
 
 ChartJS.register(
   CategoryScale,
@@ -28,6 +29,7 @@ ChartJS.register(
 const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
   const [metrics, setMetrics] = useState({ actual: [], previous: [] });
   const [loading, setLoading] = useState(true);
+  const { isDarkMode } = useTheme(); // Acesse o estado do tema
 
   useEffect(() => {
     const loadMetrics = async () => {
@@ -142,25 +144,25 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       {
         label: "Veiculação Atual",
         data: actualData,
-        borderColor: "rgb(255, 0, 0)",
+        borderColor: isDarkMode ? "rgb(255, 99, 132)" : "rgb(255, 0, 0)", // Cor da linha (modo escuro ou claro)
         backgroundColor: function(context) {
           const chart = context.chart;
           const {ctx, chartArea} = chart;
           if (!chartArea) return null;
           
           const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-          gradient.addColorStop(0, 'rgba(255, 0, 0, 0)');      
-          gradient.addColorStop(0.2, 'rgba(255, 0, 0, 0.2)');  
-          gradient.addColorStop(0.4, 'rgba(255, 0, 0, 0.4)'); 
-          gradient.addColorStop(0.6, 'rgba(255, 0, 0, 0.5)');  
-          gradient.addColorStop(0.8, 'rgba(255, 0, 0, 0.6)');  
-          gradient.addColorStop(1, 'rgba(255, 0, 0, 0.6)');    
+          gradient.addColorStop(0, isDarkMode ? 'rgba(255, 99, 132, 0)' : 'rgba(255, 0, 0, 0)');      
+          gradient.addColorStop(0.2, isDarkMode ? 'rgba(255, 99, 132, 0.2)' : 'rgba(255, 0, 0, 0.2)');  
+          gradient.addColorStop(0.4, isDarkMode ? 'rgba(255, 99, 132, 0.4)' : 'rgba(255, 0, 0, 0.4)'); 
+          gradient.addColorStop(0.6, isDarkMode ? 'rgba(255, 99, 132, 0.5)' : 'rgba(255, 0, 0, 0.5)');  
+          gradient.addColorStop(0.8, isDarkMode ? 'rgba(255, 99, 132, 0.6)' : 'rgba(255, 0, 0, 0.6)');  
+          gradient.addColorStop(1, isDarkMode ? 'rgba(255, 99, 132, 0.6)' : 'rgba(255, 0, 0, 0.6)');    
           return gradient;
         },
         borderWidth: borderWidth + 1,
         pointRadius: pointRadius + 1,
-        pointBackgroundColor: "rgb(255, 0, 0)", // Cor de fundo do ponto (laranja)
-        pointBorderWidth: 2, // Largura da borda do ponto
+        pointBackgroundColor: isDarkMode ? "rgb(255, 99, 132)" : "rgb(255, 0, 0)", // Cor do ponto (modo escuro ou claro)
+        pointBorderWidth: 2,
         fill: true,
         tension: 0.4,
         order: 2
@@ -168,25 +170,25 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       {
         label: "Veiculação Anterior",
         data: previousData,
-        borderColor: "rgba(255, 208, 0)",
+        borderColor: isDarkMode ? "rgba(54, 162, 235, 1)" : "rgba(255, 208, 0, 1)", // Cor da linha (modo escuro ou claro)
         backgroundColor: function(context) {
           const chart = context.chart;
           const {ctx, chartArea} = chart;
           if (!chartArea) return null;
           
           const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-          gradient.addColorStop(0, 'rgba(255, 208, 0, 0)');     
-          gradient.addColorStop(0.2, 'rgba(255, 208, 0, 0.2)'); 
-          gradient.addColorStop(0.4, 'rgba(255, 208, 0, 0.4)'); 
-          gradient.addColorStop(0.6, 'rgba(255, 208, 0, 0.4)'); 
-          gradient.addColorStop(0.8, 'rgba(255, 208, 0, 0.6)');  
-          gradient.addColorStop(1, 'rgba(255, 208, 0, 0.7)');   
+          gradient.addColorStop(0, isDarkMode ? 'rgba(54, 162, 235, 0)' : 'rgba(255, 208, 0, 0)');     
+          gradient.addColorStop(0.2, isDarkMode ? 'rgba(54, 162, 235, 0.2)' : 'rgba(255, 208, 0, 0.2)'); 
+          gradient.addColorStop(0.4, isDarkMode ? 'rgba(54, 162, 235, 0.4)' : 'rgba(255, 208, 0, 0.4)'); 
+          gradient.addColorStop(0.6, isDarkMode ? 'rgba(54, 162, 235, 0.4)' : 'rgba(255, 208, 0, 0.4)'); 
+          gradient.addColorStop(0.8, isDarkMode ? 'rgba(54, 162, 235, 0.6)' : 'rgba(255, 208, 0, 0.6)');  
+          gradient.addColorStop(1, isDarkMode ? 'rgba(54, 162, 235, 0.7)' : 'rgba(255, 208, 0, 0.7)');   
           return gradient;
         },
         borderWidth: borderWidth + 1,
         pointRadius: pointRadius + 1,
-        pointBackgroundColor: "rgba(255, 208, 0, 0.8)", // Cor de fundo do ponto (azul)
-        pointBorderWidth: 2, // Largura da borda do ponto (igual à laranja)
+        pointBackgroundColor: isDarkMode ? "rgba(54, 162, 235, 0.8)" : "rgba(255, 208, 0, 0.8)", // Cor do ponto (modo escuro ou claro)
+        pointBorderWidth: 2,
         fill: true,
         tension: 0.4,
         order: 1
@@ -202,28 +204,30 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         position: "top",
         labels: {
           font: { size: 14 },
-          color: "#333",
+          color: isDarkMode ? "#ffffff" : "#333", // Cor do texto da legenda (modo escuro ou claro)
           boxWidth: 20,
         },
       },
       tooltip: {
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.9)" : "rgba(0, 0, 0, 0.7)", // Fundo do tooltip (modo escuro ou claro)
         titleFont: { size: 14 },
         bodyFont: { size: 12 },
         padding: 10,
         displayColors: false,
+        bodyColor: isDarkMode ? "#000000" : "#ffffff", // Cor do texto do tooltip (modo escuro ou claro)
+        titleColor: isDarkMode ? "#000000" : "#ffffff", // Cor do título do tooltip (modo escuro ou claro)
       },
     },
     scales: {
       x: {
         grid: { display: false },
-        ticks: { font: { size: 12 }, color: "#666" },
+        ticks: { font: { size: 12 }, color: isDarkMode ? "#ffffff" : "#666" }, // Cor dos ticks do eixo X (modo escuro ou claro)
       },
       y: {
-        grid: { color: "rgba(200, 200, 200, 0.2)" },
+        grid: { color: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(200, 200, 200, 0.2)" }, // Cor da grade do eixo Y (modo escuro ou claro)
         ticks: {
           font: { size: 12 },
-          color: "#666",
+          color: isDarkMode ? "#ffffff" : "#666", // Cor dos ticks do eixo Y (modo escuro ou claro)
           callback: (value) => value.toLocaleString(),
         },
       },
@@ -231,7 +235,14 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
   };
 
   return (
-    <Card className="campaign-card p-3 shadow" style={{ height: "500px" }}>
+    <Card
+      className="campaign-card p-3 shadow"
+      style={{
+        height: "500px",
+        backgroundColor: isDarkMode ? "#2c2c2c" : "#ffffff", // Cor de fundo do card (modo escuro ou claro)
+        color: isDarkMode ? "#ffffff" : "#000000", // Cor do texto do card (modo escuro ou claro)
+      }}
+    >
       <Card.Title className="text-center mb-3 fw-bold">
         Comparação de Impressões por Período
       </Card.Title>

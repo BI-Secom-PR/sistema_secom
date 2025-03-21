@@ -6,6 +6,7 @@ import Veiculos_investimentos from "../components/veiculos_investimentos";
 import Engajamento from "../components/engajamento";
 import { format, subDays } from "date-fns";
 import GraficoComparativo from "../components/grafico_comparativo";
+import { useTheme } from '../context/ThemeContext'; // Importe o useTheme
 
 const Campanhas_ativas = () => {
   const yesterday = format(subDays(new Date(), 1), "yyyy-MM-dd");
@@ -15,6 +16,8 @@ const Campanhas_ativas = () => {
   const [tempStartDate, setTempStartDate] = useState(startDate);
   const [tempEndDate, setTempEndDate] = useState(endDate);
   const [selectedCampaign, setSelectedCampaign] = useState(null);
+
+  const { isDarkMode, toggleTheme } = useTheme(); // Acesse o estado do tema e a função para alternar
 
   const handleStartDateChange = (e) => {
     setTempStartDate(e.target.value);
@@ -40,14 +43,15 @@ const Campanhas_ativas = () => {
               fontWeight: "600",
               margin: 0,
               flex: "1",
-              textAlign: "center"
+              textAlign: "center",
+              color: isDarkMode ? '#ffffff' : '#000000', // Cor do título muda com o tema
             }}
             className="mb-3 mb-md-0"
           >
             CAMPANHAS ATIVAS
           </h1>
 
-          <div className="d-flex flex-column flex-sm-row gap-2 justify-content-end align-items-center" style={{ minWidth: "280px" }}>
+          <div className="d-flex flex-column flex-sm-row gap-2 justify-content-end align-items-center" style={{ minWidth: "280px", zIndex: 1001 }}>
             <input
               type="date"
               id="startDate"
@@ -56,10 +60,13 @@ const Campanhas_ativas = () => {
               max={yesterday}
               className="p-2 w-100 w-sm-auto"
               style={{
-                border: "1px solid #e5e7eb",
+                border: `1px solid ${isDarkMode ? '#444444' : '#e5e7eb'}`, // Cor da borda muda com o tema
                 borderRadius: "4px",
                 width: "auto",
-                minWidth: "130px"
+                minWidth: "130px",
+                zIndex: 1001, // Adiciona um z-index maior que o do toggle
+                backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff', // Cor de fundo muda com o tema
+                color: isDarkMode ? '#ffffff' : '#000000', // Cor do texto muda com o tema
               }}
             />
             <input
@@ -69,15 +76,23 @@ const Campanhas_ativas = () => {
               onChange={handleEndDateChange}
               className="p-2 w-100 w-sm-auto"
               style={{
-                border: "1px solid #e5e7eb",
+                border: `1px solid ${isDarkMode ? '#444444' : '#e5e7eb'}`, // Cor da borda muda com o tema
                 borderRadius: "4px",
                 width: "auto",
-                minWidth: "130px"
+                minWidth: "130px",
+                zIndex: 1001, // Adiciona um z-index maior que o do toggle
+                backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff', // Cor de fundo muda com o tema
+                color: isDarkMode ? '#ffffff' : '#000000', // Cor do texto muda com o tema
               }}
             />
             <Button
               onClick={handleDateChange}
-              style={{ backgroundColor: "#00D000", color: "white" }}
+              style={{ 
+                backgroundColor: isDarkMode ? '#00D000' : '#00D000', // Cor do botão muda com o tema
+                color: "white",
+                zIndex: 1001, // Adiciona um z-index maior que o do toggle
+                border: 'none',
+              }}
               className="px-4 py-2 w-100 w-sm-auto"
             >
               Atualizar

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Spinner } from 'react-bootstrap';
 import { ThumbsUp, MessageCircle, Eye } from 'lucide-react';
 import { fetchPlatformEngagement } from '../data/fetchMetrics';
+import { useTheme } from '../context/ThemeContext'; // Importe o useTheme
 
 const formatNumber = (num) => {
   if (num >= 1_000_000_000) return (num / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'B';
@@ -11,11 +12,7 @@ const formatNumber = (num) => {
 };
 
 const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
-  // Importação da fonte Rawline
-  const fontLink = document.createElement('link');
-  fontLink.href = 'https://fonts.googleapis.com/css2?family=Rawline:wght@300;400;600;700&display=swap';
-  fontLink.rel = 'stylesheet';
-  document.head.appendChild(fontLink);
+  const { isDarkMode } = useTheme(); // Acesse o estado do tema
 
   const [engagementData, setEngagementData] = useState({
     likes: 0,
@@ -26,18 +23,18 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
 
   // Paleta de cores
   const colors = {
-    primary: '#00D000',
-    secondary: '#1E293B',
-    border: '#E2E8F0',
-    background: '#F8FAFC',
-    lightBg: '#F1F5F9',
-    likes: '#183EFF',
-    comments: '#00D000',
-    views: '#FFD000',
+    primary: isDarkMode ? '#bb86fc' : '#00D000', // Cor primária muda com o tema
+    secondary: isDarkMode ? '#ffffff' : '#1E293B', // Cor secundária muda com o tema
+    border: isDarkMode ? '#444444' : '#E2E8F0', // Cor da borda muda com o tema
+    background: isDarkMode ? '#2d2d2d' : '#F8FAFC', // Cor de fundo muda com o tema
+    lightBg: isDarkMode ? '#2c2c2c' : '#F1F5F9', // Cor de fundo claro muda com o tema
+    likes: isDarkMode ? '#a3b2fd' :'#183EFF', // Cor dos likes (pode permanecer fixa)
+    comments: isDarkMode ? '#80fa80' :'#00D000', // Cor dos comentários (pode permanecer fixa)
+    views: isDarkMode ? '#ffeb90' :'#FFD000', // Cor das visualizações (pode permanecer fixa)
     text: {
-      primary: '#1E293B',
-      secondary: '#64748B',
-      light: '#94A3B8'
+      primary: isDarkMode ? '#ffffff' : '#1E293B', // Cor do texto primário muda com o tema
+      secondary: isDarkMode ? '#94A3B8' : '#64748B', // Cor do texto secundário muda com o tema
+      light: isDarkMode ? '#64748B' : '#94A3B8' // Cor do texto claro muda com o tema
     }
   };
 
@@ -52,7 +49,9 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
       boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
       display: 'flex',
       flexDirection: 'column',
-      background: 'linear-gradient(to bottom, white, #F8FAFC)',
+      background: isDarkMode 
+        ? 'linear-gradient(to bottom, #2d2d2d, #202020)' 
+        : 'linear-gradient(to bottom, white, #F8FAFC)', // Fundo gradiente muda com o tema
       transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
     },
     header: {
@@ -66,13 +65,13 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
     title: {
       fontSize: '1rem',
       fontWeight: '700',
-      color: colors.secondary,
+      color: colors.secondary, // Cor do título muda com o tema
       margin: 0
     },
     subtitle: {
       fontSize: '1rem',
       fontWeight: '600',
-      color: colors.secondary,
+      color: colors.secondary, // Cor do subtítulo muda com o tema
       marginBottom: '20px'
     },
     engagementContainer: {
@@ -89,7 +88,8 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
       minHeight: '90px',
       borderRadius: '12px',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
-      transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+      backgroundColor: isDarkMode ? '#2c2c2c' : 'white', // Cor de fundo do item muda com o tema
     },
     iconValueContainer: {
       display: 'flex',
@@ -99,10 +99,10 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
     valueText: {
       fontSize: '1.25rem',
       fontWeight: '700',
-      color: colors.secondary
+      color: colors.secondary // Cor do texto muda com o tema
     },
     spinner: {
-      color: colors.primary,
+      color: colors.primary, // Cor do spinner muda com o tema
       width: '1.5rem',
       height: '1.5rem'
     }
@@ -138,7 +138,6 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
     <div 
       style={{
         ...styles.engagementItem,
-        background,
         borderLeft: `4px solid ${color}`
       }}
       onMouseEnter={(e) => {
@@ -178,19 +177,16 @@ const Engajamento = ({ startDate, endDate, selectedCampaign }) => {
           icon={ThumbsUp}
           color={colors.likes}
           value={engagementData.likes}
-          background="linear-gradient(145deg, #ffffff 0%, #f0f7ff 100%)"
         />
         <EngagementItem 
           icon={MessageCircle}
           color={colors.comments}
           value={engagementData.comments}
-          background="linear-gradient(145deg, #ffffff 0%, #f0fff4 100%)"
         />
         <EngagementItem 
           icon={Eye}
           color={colors.views}
           value={engagementData.views}
-          background="linear-gradient(145deg, #ffffff 0%, #fffdf3 100%)"
         />
       </div>
     </Card>

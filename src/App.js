@@ -1,22 +1,24 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import Menu from './components/menu';
-import OffcanvasMenu from './components/offcanvas'; // Assuma que este é seu componente Offcanvas
+import OffcanvasMenu from './components/offcanvas';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import Routers from './routes/Routers';
 import { AuthProvider } from './routes/AuthContext';
 import { useAuth } from './routes/AuthContext';
+import { ThemeProvider, useTheme } from './context/ThemeContext'; // Importe o ThemeProvider e useTheme
 
 function App() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Define o estado inicial
-  const [showSidebar, setShowSidebar] = useState(false); // Controla a visibilidade da sidebar
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const { isDarkMode } = useTheme(); // Acesse o estado do tema
 
-  // Função para atualizar o estado com base no redimensionamento da janela
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 768);
     if (window.innerWidth > 768) {
-      setShowSidebar(false); // Fecha a sidebar se a tela voltar para desktop
+      setShowSidebar(false);
     }
   };
 
@@ -25,19 +27,20 @@ function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Controle do estado da sidebar
   const handleShow = () => setShowSidebar(true);
   const handleClose = () => setShowSidebar(false);
 
-  //autenticação
-  const { isAuthenticated } = useAuth();
-
   return (
-    <AuthProvider>
-    <div className={`App ${showSidebar ? 'sidebar-open' : ''}`}>
+    <div
+      className={`App ${showSidebar ? 'sidebar-open' : ''}`}
+      style={{
+        backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff', // Cor de fundo do App
+        color: isDarkMode ? '#ffffff' : '#000000', // Cor do texto
+        minHeight: '100vh', // Garante que o fundo cubra toda a tela
+      }}
+    >
       <Router>
-        {/* Renderiza o botão de menu e o Offcanvas no modo mobile */}
-        {isAuthenticated && ( // Só mostra o menu se estiver autenticado
+        {isAuthenticated && (
           isMobile ? (
             <>
               <button className="menu-button" onClick={handleShow}>
@@ -59,8 +62,17 @@ function App() {
         </div>
       </Router>
     </div>
-    </AuthProvider>
   );
 }
 
-export default App;
+function AppWrapper() {
+  return (
+    <ThemeProvider> {/* Envolva a aplicação com o ThemeProvider */}
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </ThemeProvider>
+  );
+}
+
+export default AppWrapper;

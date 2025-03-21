@@ -1,139 +1,144 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
+import { useTheme } from '../context/ThemeContext'; // Import useTheme
 import xLogo from '../assets/x-logo.png';
 import googleLogo from '../assets/google-logo.png';
 import instagramLogo from '../assets/instagram-logo.png';
 import tiktokLogo from '../assets/tiktok-logo.png';
 import GoogleTrendsRss from '../components/GoogleTrends';
 
-// Estilos customizados
-const styles = {
-  pageContainer: {
-    fontFamily: 'Rawline, Inter, sans-serif',
-    backgroundColor: '#f5f7fa',
-    padding: '2rem 0',
-  },
-  mainContent: {
-    padding: '2rem 3rem',
-    maxWidth: '1440px',
-    margin: '0 auto',
-  },
-  pageTitle: {
-    fontSize: '2.5rem',
-    fontWeight: '700',
-    textAlign: 'center',
-    width: '100%',
-    marginBottom: '2.5rem',
-    position: 'relative',
-    paddingBottom: '1rem',
-  },
-  card: {
-    borderRadius: '16px',
-    border: 'none',
-    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.07)',
-    transition: 'all 0.3s ease',
-    overflow: 'hidden',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column', // Garante que o conteúdo do card seja organizado em coluna
-  },
-  cardHover: {
-    transform: 'translateY(-5px)',
-    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)',
-  },
-  cardHeader: {
-    padding: '1.5rem',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.75rem',
-  },
-  cardLogo: {
-    width: '28px',
-    height: '28px',
-    objectFit: 'contain',
-  },
-  cardTitle: {
-    fontSize: '1.3rem',
-    fontWeight: '600',
-    margin: 0,
-    color: '#1a1a1a',
-  },
-  trendItem: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '1rem 1.5rem',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
-    transition: 'all 0.2s ease',
-    cursor: 'pointer',
-  },
-  trendItemHover: {
-    backgroundColor: '#f8f9fa',
-  },
-  trendRank: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '28px',
-    height: '28px',
-    borderRadius: '50%',
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    marginRight: '1rem',
-    fontWeight: '600',
-  },
-  trendName: {
-    fontWeight: '500',
-    fontSize: '1.05rem',
-    color: '#333',
-  },
-  trendMetric: {
-    color: '#6B7280',
-    fontSize: '0.9rem',
-    fontWeight: '500',
-  },
-  button: {
-    borderRadius: '12px',
-    padding: '0.75rem',
-    fontWeight: '500',
-    fontSize: '1rem',
-    border: 'none',
-    marginTop: 'auto', // Empurra o botão para o final do card
-    transition: 'all 0.2s ease',
-  },
-  buttonHover: {
-    transform: 'translateY(-2px)',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-  },
-  iframeContainer: {
-    borderRadius: '12px',
-    overflow: 'hidden',
-    height: '600px',
-    border: '1px solid rgba(0, 0, 0, 0.05)',
-  },
-};
-
-// Paleta de cores para os botões
-const platformColors = {
-  tiktok: {
-    bg: '#000000',
-    hover: '#1D1D1D',
-  },
-  x: {
-    bg: '#1DA1F2',
-    hover: '#0D8BDB',
-  },
-  google: {
-    bg: '#EA4335',
-    hover: '#D62D1E',
-  },
-  instagram: {
-    bg: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
-    hover: 'linear-gradient(45deg, #e38a2f 0%, #d55e37 25%, #c7233c 50%, #b71f5c 75%, #a7157a 100%)',
-  },
-};
-
 function TrendingTopics() {
+  const { isDarkMode } = useTheme(); // Access theme state
+
+  // Custom styles with dynamic theming
+  const styles = {
+    pageContainer: {
+      fontFamily: 'Rawline, Inter, sans-serif',
+      backgroundColor: isDarkMode ? '#1b1b1b' : '#f5f7fa',
+      padding: '2rem 0',
+      color: isDarkMode ? '#ffffff' : '#000000',
+      transition: 'background-color 0.3s ease, color 0.3s ease',
+    },
+    mainContent: {
+      padding: '2rem 3rem',
+      maxWidth: '1440px',
+      margin: '0 auto',
+    },
+    pageTitle: {
+      fontSize: '2.5rem',
+      fontWeight: '700',
+      textAlign: 'center',
+      width: '100%',
+      marginBottom: '2.5rem',
+      position: 'relative',
+      paddingBottom: '1rem',
+      color: isDarkMode ? '#ffffff' : '#1a1a1a',
+    },
+    card: {
+      borderRadius: '16px',
+      border: 'none',
+      boxShadow: isDarkMode ? '0 4px 15px rgba(0, 0, 0, 0.2)' : '0 4px 15px rgba(0, 0, 0, 0.07)',
+      transition: 'background-color 0.3s ease, color 0.3s ease',
+      overflow: 'hidden',
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff',
+      color: isDarkMode ? '#ffffff' : '#000000',
+    },
+    cardHeader: {
+      padding: '1.5rem',
+      borderBottom: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'}`,
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.75rem',
+      backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff',
+    },
+    cardLogo: {
+      width: '28px',
+      height: '28px',
+      objectFit: 'contain',
+      filter: isDarkMode ? 'brightness(0.9)' : 'none',
+    },
+    cardTitle: {
+      fontSize: '1.3rem',
+      fontWeight: '600',
+      margin: 0,
+      color: isDarkMode ? '#ffffff' : '#1a1a1a',
+    },
+    trendItem: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '1rem 1.5rem',
+      borderBottom: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'}`,
+      transition: 'background-color 0.2s ease',
+      cursor: 'pointer',
+      backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff',
+    },
+    trendItemHover: {
+      backgroundColor: isDarkMode ? '#3c3c3c' : '#f8f9fa',
+    },
+    trendRank: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '28px',
+      height: '28px',
+      borderRadius: '50%',
+      backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)',
+      marginRight: '1rem',
+      fontWeight: '600',
+      color: isDarkMode ? '#cccccc' : '#333333',
+    },
+    trendName: {
+      fontWeight: '500',
+      fontSize: '1.05rem',
+      color: isDarkMode ? '#ffffff' : '#333',
+    },
+    trendMetric: {
+      color: isDarkMode ? '#cccccc' : '#6B7280',
+      fontSize: '0.9rem',
+      fontWeight: '500',
+    },
+    button: {
+      borderRadius: '12px',
+      padding: '0.75rem',
+      fontWeight: '500',
+      fontSize: '1rem',
+      border: 'none',
+      marginTop: 'auto',
+      transition: 'background-color 0.2s ease',
+    },
+    iframeContainer: {
+      borderRadius: '12px',
+      overflow: 'hidden',
+      height: '600px',
+      border: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.05)',
+      backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
+    },
+  };
+
+  // Platform colors - keeping these vibrant regardless of theme
+  const platformColors = {
+    tiktok: {
+      bg: '#000000',
+      hover: '#1D1D1D',
+    },
+    x: {
+      bg: '#1DA1F2',
+      hover: '#0D8BDB',
+    },
+    google: {
+      bg: '#EA4335',
+      hover: '#D62D1E',
+    },
+    instagram: {
+      bg: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
+      hover: 'linear-gradient(45deg, #e38a2f 0%, #d55e37 25%, #c7233c 50%, #b71f5c 75%, #a7157a 100%)',
+    },
+  };
+
   const trendingGoogle = [
     { rank: 1, topic: "atlético-mg x athletic", searches: "5M+" },
     { rank: 2, topic: "sport recife x fortaleza", searches: "2.8M+" },
@@ -150,9 +155,18 @@ function TrendingTopics() {
     { rank: 5, topic: "#riodejaneiro", likes: "680K" }
   ];
 
-  // Componente para o item de tendência
+  // Trend item component with dark mode styling
   const TrendItem = ({ rank, topic, metric }) => (
-    <div style={styles.trendItem} className="trend-item">
+    <div 
+      style={styles.trendItem} 
+      className="trend-item"
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = isDarkMode ? '#3c3c3c' : '#f8f9fa';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = isDarkMode ? '#2c2c2c' : '#ffffff';
+      }}
+    >
       <div className="d-flex align-items-center">
         <span style={styles.trendRank}>{rank}</span>
         <span style={styles.trendName}>{topic}</span>
@@ -160,6 +174,15 @@ function TrendingTopics() {
       <span style={styles.trendMetric}>{metric}</span>
     </div>
   );
+
+  // Helper for button hover effects
+  const handleButtonMouseEnter = (e) => {
+    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+  };
+
+  const handleButtonMouseLeave = (e) => {
+    e.currentTarget.style.boxShadow = 'none';
+  };
 
   return (
     <div style={styles.pageContainer}>
@@ -173,7 +196,10 @@ function TrendingTopics() {
         <Row className="g-4">
           {/* TikTok Card */}
           <Col lg={3} md={6}>
-            <Card style={styles.card} className="h-100">
+            <Card 
+              style={styles.card} 
+              className="h-100"
+            >
               <div style={styles.cardHeader}>
                 <Image src={tiktokLogo} alt="TikTok Logo" style={styles.cardLogo} />
                 <h3 style={styles.cardTitle}>TikTok Trending</h3>
@@ -189,14 +215,22 @@ function TrendingTopics() {
                   title="TikTok Trending" 
                 />
               </div>
-              <Card.Body style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <Card.Body style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                flex: 1, 
+                backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff',
+                padding: '1.5rem' 
+              }}>
                 <Button 
-                  className="w-100 mt-auto" // mt-auto empurra o botão para o final
+                  className="w-100 mt-auto"
                   style={{
                     ...styles.button,
                     backgroundColor: platformColors.tiktok.bg,
                   }}
                   onClick={() => window.open("https://ads.tiktok.com/business/creativecenter/inspiration/popular/hashtag/pc/pt", "_blank")}
+                  onMouseEnter={handleButtonMouseEnter}
+                  onMouseLeave={handleButtonMouseLeave}
                 >
                   Ver mais no TikTok
                 </Button>
@@ -206,7 +240,10 @@ function TrendingTopics() {
 
           {/* X Card */}
           <Col lg={3} md={6}>
-            <Card style={styles.card} className="h-100">
+            <Card 
+              style={styles.card} 
+              className="h-100"
+            >
               <div style={styles.cardHeader}>
                 <Image src={xLogo} alt="X Logo" style={styles.cardLogo} />
                 <h3 style={styles.cardTitle}>X Trends</h3>
@@ -219,10 +256,16 @@ function TrendingTopics() {
                     height: '100%', 
                     border: 'none'
                   }} 
-                  title="TikTok Trending" 
+                  title="X Trending" 
                 />
               </div>
-              <Card.Body style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <Card.Body style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                flex: 1,
+                backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff',
+                padding: '1.5rem'
+              }}>
                 <Button 
                   className="w-100 mt-auto"
                   style={{
@@ -230,6 +273,8 @@ function TrendingTopics() {
                     backgroundColor: platformColors.x.bg,
                   }}
                   onClick={() => window.open("https://trends24.in/brazil/", "_blank")}
+                  onMouseEnter={handleButtonMouseEnter}
+                  onMouseLeave={handleButtonMouseLeave}
                 >
                   Ver mais no X
                 </Button>
@@ -239,13 +284,22 @@ function TrendingTopics() {
 
           {/* Google Card */}
           <Col lg={3} md={6}>
-            <Card style={styles.card} className="h-100">
+            <Card 
+              style={styles.card} 
+              className="h-100"
+            >
               <div style={styles.cardHeader}>
                 <Image src={googleLogo} alt="Google Logo" style={styles.cardLogo} />
                 <h3 style={styles.cardTitle}>Google Trends - Em alta</h3>
               </div>
-              <Card.Body style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-              <GoogleTrendsRss />
+              <Card.Body style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                flex: 1,
+                backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff',
+                padding: '1.5rem'
+              }}>
+                <GoogleTrendsRss isDarkMode={isDarkMode} />
                 <Button 
                   className="w-100 mt-auto"
                   style={{
@@ -253,6 +307,8 @@ function TrendingTopics() {
                     backgroundColor: platformColors.google.bg,
                   }}
                   onClick={() => window.open("https://trends.google.com/trending?geo=BR", "_blank")}
+                  onMouseEnter={handleButtonMouseEnter}
+                  onMouseLeave={handleButtonMouseLeave}
                 >
                   Ver mais no Google
                 </Button>
@@ -262,12 +318,21 @@ function TrendingTopics() {
 
           {/* Instagram Card */}
           <Col lg={3} md={6}>
-            <Card style={styles.card} className="h-100">
+            <Card 
+              style={styles.card} 
+              className="h-100"
+            >
               <div style={styles.cardHeader}>
                 <Image src={instagramLogo} alt="Instagram Logo" style={styles.cardLogo} />
                 <h3 style={styles.cardTitle}>Instagram Trends</h3>
               </div>
-              <Card.Body style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <Card.Body style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                flex: 1,
+                backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff',
+                padding: '1.5rem'
+              }}>
                 {trendingInstagram.map((trend, index) => (
                   <TrendItem 
                     key={index} 
@@ -282,6 +347,8 @@ function TrendingTopics() {
                     ...styles.button,
                     background: platformColors.instagram.bg,
                   }}
+                  onMouseEnter={handleButtonMouseEnter}
+                  onMouseLeave={handleButtonMouseLeave}
                 >
                   Ver mais no Instagram
                 </Button>

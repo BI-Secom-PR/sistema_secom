@@ -6,10 +6,12 @@ import Spinner from 'react-bootstrap/Spinner';
 import Badge from 'react-bootstrap/Badge';
 import { fetchMetrics } from '../data/fetchMetrics';
 import metricCards from '../data/metricsCard';
+import { useTheme } from '../context/ThemeContext';
 
 function Cards({ startDate, endDate, selectedCampaign }) {
   const [metrics, setMetrics] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { isDarkMode } = useTheme();
 
   const loadMetrics = async () => {
     setLoading(true);
@@ -36,11 +38,41 @@ function Cards({ startDate, endDate, selectedCampaign }) {
 
   // Paleta de cores para diferentes tipos de cards
   const cardColors = {
-    investment: { bg: '#ffffff', border: '#E2E8F0', gradient: 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' },
-    clicks: { bg: '#ffffff', border: '#E2E8F0', gradient: 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' },
-    engagement: { bg: '#ffffff', border: '#E2E8F0', gradient: 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' },
-    views: { bg: '#ffffff', border: '#E2E8F0', gradient: 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' },
-    impressions: { bg: '#ffffff', border: '#E2E8F0', gradient: 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' }
+    investment: { 
+      bg: isDarkMode ? '#2d2d2d' : '#ffffff', // Cinza mais claro no modo escuro
+      border: isDarkMode ? '#444444' : '#E2E8F0', 
+      gradient: isDarkMode 
+        ? 'linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%)' // Gradiente ajustado
+        : 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' 
+    },
+    clicks: { 
+      bg: isDarkMode ? '#2d2d2d' : '#ffffff', 
+      border: isDarkMode ? '#444444' : '#E2E8F0', 
+      gradient: isDarkMode 
+        ? 'linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%)' 
+        : 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' 
+    },
+    engagement: { 
+      bg: isDarkMode ? '#2d2d2d' : '#ffffff', 
+      border: isDarkMode ? '#444444' : '#E2E8F0', 
+      gradient: isDarkMode 
+        ? 'linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%)' 
+        : 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' 
+    },
+    views: { 
+      bg: isDarkMode ? '#2d2d2d' : '#ffffff', 
+      border: isDarkMode ? '#444444' : '#E2E8F0', 
+      gradient: isDarkMode 
+        ? 'linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%)' 
+        : 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' 
+    },
+    impressions: { 
+      bg: isDarkMode ? '#2d2d2d' : '#ffffff', 
+      border: isDarkMode ? '#444444' : '#E2E8F0', 
+      gradient: isDarkMode 
+        ? 'linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%)' 
+        : 'linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%)' 
+    }
   };
 
   // Mantendo a função getIcon original
@@ -128,9 +160,11 @@ function Cards({ startDate, endDate, selectedCampaign }) {
         
         // Obter cores específicas para este tipo de card
         const colors = cardColors[metric.type] || { 
-          bg: '#F8FAFC', 
-          border: '#CBD5E1',
-          gradient: 'linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%)'
+          bg: isDarkMode ? '#2d2d2d' : '#F8FAFC', // Cinza mais claro no modo escuro
+          border: isDarkMode ? '#444444' : '#CBD5E1',
+          gradient: isDarkMode 
+            ? 'linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%)' 
+            : 'linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%)'
         };
 
         return (
@@ -161,7 +195,7 @@ function Cards({ startDate, endDate, selectedCampaign }) {
                 <Card.Title 
                   style={{ 
                     fontSize: '16px', 
-                    color: '#1E293B',
+                    color: isDarkMode ? '#ffffff' : '#1E293B',
                     fontWeight: '600',
                     letterSpacing: '0.025em',
                     marginBottom: '20px'
@@ -187,7 +221,7 @@ function Cards({ startDate, endDate, selectedCampaign }) {
                         style={{ 
                           fontSize: '32px', 
                           fontWeight: '700',
-                          color: '#1E293B',
+                          color: isDarkMode ? '#ffffff' : '#1E293B',
                           lineHeight: '1.2'
                         }}
                       >
@@ -230,7 +264,7 @@ function Cards({ startDate, endDate, selectedCampaign }) {
                       <span 
                         style={{ 
                           fontSize: '13px', 
-                          color: '#64748B',
+                          color: isDarkMode ? '#94A3B8' : '#64748B',
                           marginLeft: isZero ? '0' : '10px',
                           fontWeight: '500'
                         }}

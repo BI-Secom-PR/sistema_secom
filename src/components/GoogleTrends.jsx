@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext'; // Importe o useTheme
 
 const TrendsList = () => {
   const [trends, setTrends] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { isDarkMode } = useTheme(); // Acesse o estado do tema
 
   useEffect(() => {
     fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://trends.google.com/trending/rss?geo=BR')}`)
@@ -25,10 +27,13 @@ const TrendsList = () => {
     container: {
       maxWidth: '600px',
       margin: '10px auto',
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: 'Arial, sans-serif',
+      backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff', // Cor de fundo dinâmica
+      padding: '15px',
+      borderRadius: '8px'
     },
     title: {
-      color: '#333',
+      color: isDarkMode ? '#ffffff' : '#333', // Cor do texto dinâmica
       textAlign: 'center',
       fontSize: '1.2em',
       margin: '10px 0'
@@ -38,27 +43,28 @@ const TrendsList = () => {
       listStyle: 'none'
     },
     item: {
-      background: '#f9f9f9',
+      background: isDarkMode ? '#3a3a3a' : '#f9f9f9', // Cor de fundo dinâmica
       margin: '5px 0',
       padding: '8px',
       borderRadius: '5px',
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
+      border: isDarkMode ? '1px solid #444' : 'none' // Borda para melhor visibilidade no modo escuro
     },
     link: {
-      color: '#0066cc',
+      color: isDarkMode ? '#66b0ff' : '#0066cc', // Cor do link dinâmica
       textDecoration: 'none',
       fontSize: '1em',
       fontWeight: 'bold'
     },
     traffic: {
-      color: '#666',
+      color: isDarkMode ? '#aaaaaa' : '#666', // Cor do tráfego dinâmica
       fontSize: '0.8em'
     },
     loading: {
       textAlign: 'center',
-      color: '#666',
+      color: isDarkMode ? '#aaaaaa' : '#666', // Cor do texto de carregamento dinâmica
       fontSize: '0.9em'
     }
   };

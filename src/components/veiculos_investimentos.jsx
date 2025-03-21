@@ -6,13 +6,10 @@ import tiktokLogo from "../assets/tiktok-logo.png";
 import kwaiLogo from "../assets/kwai-logo.png";
 import youtubeLogo from "../assets/youtube-logo.png";
 import gdnLogo from "../assets/gdn-logo.png";
+import { useTheme } from '../context/ThemeContext'; // Importe o useTheme
 
 const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
-  // Importação da fonte Rawline
-  const fontLink = document.createElement('link');
-  fontLink.href = 'https://fonts.googleapis.com/css2?family=Rawline:wght@300;400;600;700&display=swap';
-  fontLink.rel = 'stylesheet';
-  document.head.appendChild(fontLink);
+  const { isDarkMode } = useTheme(); // Acesse o estado do tema
 
   const [metrics, setMetrics] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,15 +17,15 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
 
   // Paleta de cores
   const colors = {
-    primary: '#00D000',
-    secondary: '#1E293B',
-    border: '#E2E8F0',
-    background: '#F8FAFC',
-    lightBg: '#F1F5F9',
+    primary: isDarkMode ? '#bb86fc' : '#00D000', // Cor primária muda com o tema
+    secondary: isDarkMode ? '#ffffff' : '#1E293B', // Cor secundária muda com o tema
+    border: isDarkMode ? '#444444' : '#E2E8F0', // Cor da borda muda com o tema
+    background: isDarkMode ? '#2d2d2d' : '#F8FAFC', // Cor de fundo muda com o tema
+    lightBg: isDarkMode ? '#2c2c2c' : '#F1F5F9', // Cor de fundo claro muda com o tema
     text: {
-      primary: '#1E293B',
-      secondary: '#64748B',
-      light: '#94A3B8'
+      primary: isDarkMode ? '#ffffff' : '#1E293B', // Cor do texto primário muda com o tema
+      secondary: isDarkMode ? '#94A3B8' : '#64748B', // Cor do texto secundário muda com o tema
+      light: isDarkMode ? '#64748B' : '#94A3B8' // Cor do texto claro muda com o tema
     },
     platforms: {
       instagram: '#E1306C',
@@ -69,7 +66,9 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
       display: 'flex',
       flexDirection: 'column',
-      background: 'linear-gradient(to bottom, white, #F8FAFC)',
+      background: isDarkMode 
+        ? 'linear-gradient(to bottom, #2d2d2d, #2c2c2c)' 
+        : 'linear-gradient(to bottom, white, #F8FAFC)', // Fundo gradiente muda com o tema
       transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
     },
     header: {
@@ -83,7 +82,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     title: {
       fontSize: isMobile ? '1rem' : '1rem',
       fontWeight: '700',
-      color: colors.secondary,
+      color: colors.secondary, // Cor do título muda com o tema
       margin: 0
     },
     platformsList: {
@@ -95,7 +94,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     platformRow: {
       padding: isMobile ? '12px' : '16px',
       borderRadius: '12px',
-      backgroundColor: 'white',
+      backgroundColor: isDarkMode ? '#2c2c2c' : 'white', // Cor de fundo do card muda com o tema
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
       position: 'relative',
       overflow: 'hidden',
@@ -134,12 +133,12 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       fontSize: isMobile ? '0.9rem' : '1rem',
       fontWeight: '600',
       display: 'block',
-      color: colors.text.primary
+      color: colors.text.primary // Cor do texto muda com o tema
     },
     investment: {
       fontSize: isMobile ? '0.9rem' : '1rem',
       fontWeight: '500',
-      color: colors.text.secondary
+      color: colors.text.secondary // Cor do texto muda com o tema
     },
     metricsContainer: {
       display: 'flex',
@@ -148,7 +147,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       border: `1px solid ${colors.border}`,
       borderRadius: '8px',
       padding: isMobile ? '8px 5px' : '10px',
-      backgroundColor: colors.lightBg,
+      backgroundColor: colors.lightBg, // Cor de fundo muda com o tema
       transition: 'all 0.2s ease',
       width: isMobile ? '100%' : 'auto',
       overflowX: isMobile ? 'auto' : 'visible'
@@ -172,13 +171,13 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     metricLabel: {
       fontSize: isMobile ? '0.7rem' : '0.8rem',
       fontWeight: '600',
-      color: colors.text.secondary,
+      color: colors.text.secondary, // Cor do texto muda com o tema
       marginBottom: '4px'
     },
     metricValue: {
       fontSize: isMobile ? '0.8rem' : '0.9rem',
       fontWeight: '500',
-      color: colors.text.primary,
+      color: colors.text.primary, // Cor do texto muda com o tema
       whiteSpace: 'nowrap'
     },
     loadingContainer: {
@@ -189,7 +188,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       gap: '10px'
     },
     spinner: {
-      color: colors.primary
+      color: colors.primary // Cor do spinner muda com o tema
     },
   };
 
