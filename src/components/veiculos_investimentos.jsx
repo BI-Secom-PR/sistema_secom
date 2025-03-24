@@ -6,26 +6,25 @@ import tiktokLogo from "../assets/tiktok-logo.png";
 import kwaiLogo from "../assets/kwai-logo.png";
 import youtubeLogo from "../assets/youtube-logo.png";
 import gdnLogo from "../assets/gdn-logo.png";
-import { useTheme } from '../context/ThemeContext'; // Importe o useTheme
+import { useTheme } from '../context/ThemeContext';
 
 const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
-  const { isDarkMode } = useTheme(); // Acesse o estado do tema
+  const { isDarkMode } = useTheme();
 
   const [metrics, setMetrics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // Paleta de cores
   const colors = {
-    primary: isDarkMode ? '#bb86fc' : '#00D000', // Cor primária muda com o tema
-    secondary: isDarkMode ? '#ffffff' : '#1E293B', // Cor secundária muda com o tema
-    border: isDarkMode ? '#444444' : '#E2E8F0', // Cor da borda muda com o tema
-    background: isDarkMode ? '#2d2d2d' : '#F8FAFC', // Cor de fundo muda com o tema
-    lightBg: isDarkMode ? '#2c2c2c' : '#F1F5F9', // Cor de fundo claro muda com o tema
+    primary: isDarkMode ? '#bb86fc' : '#00D000',
+    secondary: isDarkMode ? '#ffffff' : '#1E293B',
+    border: isDarkMode ? '#444444' : '#E2E8F0',
+    background: isDarkMode ? '#2d2d2d' : '#F8FAFC',
+    lightBg: isDarkMode ? '#2c2c2c' : '#F1F5F9',
     text: {
-      primary: isDarkMode ? '#ffffff' : '#1E293B', // Cor do texto primário muda com o tema
-      secondary: isDarkMode ? '#94A3B8' : '#64748B', // Cor do texto secundário muda com o tema
-      light: isDarkMode ? '#64748B' : '#94A3B8' // Cor do texto claro muda com o tema
+      primary: isDarkMode ? '#ffffff' : '#1E293B',
+      secondary: isDarkMode ? '#94A3B8' : '#64748B',
+      light: isDarkMode ? '#64748B' : '#94A3B8'
     },
     platforms: {
       instagram: '#E1306C',
@@ -40,7 +39,6 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     }
   };
 
-  // Monitora redimensionamentos de tela
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -52,7 +50,6 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     };
   }, []);
 
-  // Define o layout com base no tamanho da tela
   const isMobile = windowWidth < 768;
   const isTablet = windowWidth >= 768 && windowWidth < 992;
 
@@ -68,8 +65,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       flexDirection: 'column',
       background: isDarkMode 
         ? 'linear-gradient(to bottom, #2d2d2d, #2c2c2c)' 
-        : 'linear-gradient(to bottom, white, #F8FAFC)', // Fundo gradiente muda com o tema
-      transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+        : 'linear-gradient(to bottom, white, #F8FAFC)',
     },
     header: {
       marginBottom: isMobile ? '12px' : '20px',
@@ -82,7 +78,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     title: {
       fontSize: isMobile ? '1rem' : '1rem',
       fontWeight: '700',
-      color: colors.secondary, // Cor do título muda com o tema
+      color: colors.secondary,
       margin: 0
     },
     platformsList: {
@@ -94,11 +90,10 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     platformRow: {
       padding: isMobile ? '12px' : '16px',
       borderRadius: '12px',
-      backgroundColor: isDarkMode ? '#2c2c2c' : 'white', // Cor de fundo do card muda com o tema
+      backgroundColor: isDarkMode ? '#2c2c2c' : 'white',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
       position: 'relative',
       overflow: 'hidden',
-      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
       border: `1px solid ${colors.border}`
     },
     platformHeader: {
@@ -133,12 +128,12 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       fontSize: isMobile ? '0.9rem' : '1rem',
       fontWeight: '600',
       display: 'block',
-      color: colors.text.primary // Cor do texto muda com o tema
+      color: colors.text.primary
     },
     investment: {
       fontSize: isMobile ? '0.9rem' : '1rem',
       fontWeight: '500',
-      color: colors.text.secondary // Cor do texto muda com o tema
+      color: colors.text.secondary
     },
     metricsContainer: {
       display: 'flex',
@@ -147,8 +142,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       border: `1px solid ${colors.border}`,
       borderRadius: '8px',
       padding: isMobile ? '8px 5px' : '10px',
-      backgroundColor: colors.lightBg, // Cor de fundo muda com o tema
-      transition: 'all 0.2s ease',
+      backgroundColor: colors.lightBg,
       width: isMobile ? '100%' : 'auto',
       overflowX: isMobile ? 'auto' : 'visible'
     },
@@ -171,13 +165,13 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     metricLabel: {
       fontSize: isMobile ? '0.7rem' : '0.8rem',
       fontWeight: '600',
-      color: colors.text.secondary, // Cor do texto muda com o tema
+      color: colors.text.secondary,
       marginBottom: '4px'
     },
     metricValue: {
       fontSize: isMobile ? '0.8rem' : '0.9rem',
       fontWeight: '500',
-      color: colors.text.primary, // Cor do texto muda com o tema
+      color: colors.text.primary,
       whiteSpace: 'nowrap'
     },
     loadingContainer: {
@@ -188,7 +182,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       gap: '10px'
     },
     spinner: {
-      color: colors.primary // Cor do spinner muda com o tema
+      color: colors.primary
     },
   };
 
@@ -198,7 +192,6 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       try {
         const result = await fetchPlatformMetrics(startDate, endDate, selectedCampaign);
         
-        // Lista de todas as plataformas que devem ser exibidas
         const allPlatforms = [
           { platform: "Instagram", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
           { platform: "Facebook", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
@@ -211,7 +204,6 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
           { platform: "Google GDN", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
         ];
 
-        // Mescla os dados retornados com a lista de todas as plataformas
         const mergedMetrics = allPlatforms.map(platform => {
           const found = result.find(item => item.platform.toLowerCase() === platform.platform.toLowerCase());
           return found ? found : platform;
@@ -274,32 +266,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       
       <div style={styles.platformsList}>
         {sortedMetrics.map((item, index) => (
-          <div 
-            key={index} 
-            style={styles.platformRow}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-              
-              // Adiciona hover no contêiner de métricas
-              const metricsContainer = e.currentTarget.querySelector('[data-metrics-container]');
-              if (metricsContainer) {
-                metricsContainer.style.borderColor = 'blue';
-                metricsContainer.style.backgroundColor = 'white';
-              }
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.05)';
-              
-              // Remove hover no contêiner de métricas
-              const metricsContainer = e.currentTarget.querySelector('[data-metrics-container]');
-              if (metricsContainer) {
-                metricsContainer.style.borderColor = colors.border;
-                metricsContainer.style.backgroundColor = colors.lightBg;
-              }
-            }}
-          >
+          <div key={index} style={styles.platformRow}>
             <div style={styles.platformHeader}>
               {isMobile ? (
                 <>

@@ -6,10 +6,8 @@ import { Button } from 'react-bootstrap';
 import { FiLogOut, FiMoon, FiSun } from 'react-icons/fi';
 import { Link } from "react-router-dom";
 import { useTheme } from '../context/ThemeContext';
-
-// Importação das logos locais
-import LogoGovClaro from '../assets/gov-logo.png'; // Ajuste o caminho conforme sua estrutura
-import LogoGovEscuro from '../assets/gov-logo-escuro.png'; // Ajuste o caminho conforme sua estrutura
+import LogoGovClaro from '../assets/gov-logo.png';
+import LogoGovEscuro from '../assets/gov-logo-escuro.png';
 
 const Menu = () => {
   const { isAuthenticated } = useAuth();
@@ -17,7 +15,7 @@ const Menu = () => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
-  
+
   const theme = {
     background: isDarkMode ? '#2c2c2c' : '#ffffff',
     sidebarBg: isDarkMode ? '#2c2c2c' : '#f8f9fa',
@@ -51,8 +49,8 @@ const Menu = () => {
   if (!isAuthenticated) return null;
 
   return (
-    <aside 
-      className="sidebar" 
+    <aside
+      className="sidebar"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
@@ -70,19 +68,22 @@ const Menu = () => {
         zIndex: 1000,
       }}
     >
-      <div className="logo-container" style={{ 
-        padding: '20px 0', 
-        display: 'flex', 
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderBottom: `1px solid ${theme.border}`,
-        transition: 'all 0.3s ease-in-out',
-        minHeight: '70px',
-      }}>
+      <div
+        className="logo-container"
+        style={{
+          padding: '20px 0',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderBottom: `1px solid ${theme.border}`,
+          transition: 'all 0.3s ease-in-out',
+          minHeight: '70px',
+        }}
+      >
         <img
-          src={isDarkMode ? LogoGovEscuro : LogoGovClaro} // Alterna entre as logos
+          src={isDarkMode ? LogoGovEscuro : LogoGovClaro}
           alt="Logo Governo Federal"
-          style={{ 
+          style={{
             width: isHovered ? '150px' : '80px',
             height: 'auto',
             transition: 'width 0.3s ease-in-out',
@@ -92,83 +93,67 @@ const Menu = () => {
         />
       </div>
 
-      <div style={{
-        display: 'flex',
-        justifyContent: isHovered ? 'space-between' : 'center',
-        alignItems: 'center',
-        padding: isHovered ? '15px' : '15px 0',
-        borderBottom: `1px solid ${theme.border}`,
-        transition: 'all 0.3s ease-in-out',
-      }}>
-        {isHovered && (
-          <span style={{ 
-            color: theme.text, 
-            fontWeight: 500,
-            fontSize: '14px',
-            opacity: isHovered ? 1 : 0,
-            transition: 'opacity 0.2s ease-in-out',
-          }}>
-            Mudar tema
-          </span>
-        )}
-        
-        <div style={{
+      <div
+        style={{
           display: 'flex',
-          gap: isHovered ? '10px' : '0',
+          justifyContent: 'center', // Sempre centralizado, sem depender do hover
           alignItems: 'center',
-          justifyContent: 'center',
-          width: isHovered ? 'auto' : '100%',
-          flexDirection: isHovered ? 'row' : 'column',
-        }}>
-          <Button
-            onClick={toggleTheme}
-            aria-label={isDarkMode ? "Ativar modo claro" : "Ativar modo escuro"}
-            style={{
-              backgroundColor: theme.primary,
-              border: 'none',
-              color: '#ffffff',
-              width: '36px',
-              height: '36px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-              transition: 'all 0.2s ease-in-out',
-              margin: isHovered ? '0' : '5px 0',
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? '#1a4980' : '#2c4fe7'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = theme.primary}
-          >
-            {isDarkMode ? <FiSun size={18} /> : <FiMoon size={18} />}
-          </Button>
-        </div>
+          padding: '15px 0',
+          borderBottom: `1px solid ${theme.border}`,
+          transition: 'all 0.3s ease-in-out',
+        }}
+      >
+        <Button
+          onClick={toggleTheme}
+          aria-label={isDarkMode ? "Ativar modo claro" : "Ativar modo escuro"}
+          style={{
+            backgroundColor: theme.primary,
+            border: 'none',
+            color: '#ffffff',
+            width: '36px',
+            height: '36px',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+            transition: 'all 0.2s ease-in-out',
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? '#1a4980' : '#2c4fe7'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = theme.primary}
+        >
+          {isDarkMode ? <FiSun size={18} /> : <FiMoon size={18} />}
+        </Button>
       </div>
 
-      <nav style={{ 
-        flex: 1,
-        overflowY: 'auto',
-        padding: '15px 0',
-      }}>
-        <ul style={{ 
-          listStyleType: 'none',
-          padding: 0,
-          margin: 0,
-        }}>
+      <nav
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          padding: '15px 0',
+        }}
+      >
+        <ul
+          style={{
+            listStyleType: 'none',
+            padding: 0,
+            margin: 0,
+          }}
+        >
           {getMenuItems(isDarkMode).map((item, index) => {
             const isActive = location.pathname === item.path;
             return (
-              <li 
+              <li
                 key={index}
                 style={{
                   margin: '2px 0',
                   padding: '0 10px',
                 }}
               >
-                <Link 
-                  to={item.path} 
-                  onClick={() => window.scrollTo(0, 0)} 
+                <Link
+                  to={item.path}
+                  onClick={() => window.scrollTo(0, 0)}
                   style={{
                     textDecoration: 'none',
                     color: isActive ? (isDarkMode ? '#ffffff' : '#000000') : theme.textMuted,
@@ -185,13 +170,15 @@ const Menu = () => {
                   onMouseEnter={(e) => !isActive && (e.currentTarget.style.backgroundColor = theme.menuItemHover)}
                   onMouseLeave={(e) => !isActive && (e.currentTarget.style.backgroundColor = 'transparent')}
                 >
-                  <span style={{ 
-                    fontSize: '18px',
-                    minWidth: '18px',
-                  }}>
+                  <span
+                    style={{
+                      fontSize: '18px',
+                      minWidth: '18px',
+                    }}
+                  >
                     {item.icon}
                   </span>
-                  <span 
+                  <span
                     style={{
                       fontWeight: isActive ? '600' : '400',
                       fontSize: '14px',
@@ -210,10 +197,12 @@ const Menu = () => {
         </ul>
       </nav>
 
-      <div style={{
-        padding: '15px',
-        borderTop: `1px solid ${theme.border}`,
-      }}>
+      <div
+        style={{
+          padding: '15px',
+          borderTop: `1px solid ${theme.border}`,
+        }}
+      >
         <Button
           onClick={logout}
           style={{
@@ -245,12 +234,14 @@ const Menu = () => {
           }}
         >
           <FiLogOut size={18} />
-          <span style={{
-            opacity: isHovered ? 1 : 0,
-            width: isHovered ? 'auto' : 0,
-            transition: 'opacity 0.2s ease-in-out',
-            overflow: 'hidden',
-          }}>
+          <span
+            style={{
+              opacity: isHovered ? 1 : 0,
+              width: isHovered ? 'auto' : 0,
+              transition: 'opacity 0.2s ease-in-out',
+              overflow: 'hidden',
+            }}
+          >
             Sair
           </span>
         </Button>

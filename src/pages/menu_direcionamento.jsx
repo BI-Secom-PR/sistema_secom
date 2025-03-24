@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Row, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext'; // Importe o useTheme
 import campanhasImg from '../assets/campanhas.png';
 import dashboardImg from '../assets/dashboard.png';
 import trendingTopicsImg from '../assets/trending-topics.png';
@@ -8,6 +9,8 @@ import StilingueImg from '../assets/stilingue.png';
 import DemograficoImg from '../assets/demografico.png';
 
 const Menu_direcionamento = () => {
+  const { isDarkMode } = useTheme(); // Acesse o estado do tema
+
   const imageStyle = {
     width: '100%',
     height: '330px',
@@ -22,19 +25,19 @@ const Menu_direcionamento = () => {
     top: 0,
     left: 0,
     width: '100%',
-    background: 'rgba(24, 62, 255, 0.9)',
-    color: 'white',
+    background: isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(24, 62, 255, 0.9)', // Mantive o overlay azul, mas pode ajustar se quiser
+    color: isDarkMode ? 'black' : 'white',
     padding: '12px 20px',
     borderRadius: '12px 12px 0 0',
     fontFamily: 'Rawline',
-    fontSize: '1.5rem', // Aumentei o tamanho da fonte aqui
+    fontSize: '1.5rem',
     fontWeight: '600',
     textAlign: 'center',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0 3px 6px rgba(0, 0, 0, 0.1)',
-    zIndex: 2 // Adicionado para garantir que o título fique em cima
+    boxShadow: isDarkMode ? '0 3px 6px rgba(255, 255, 255, 0.1)' : '0 3px 6px rgba(0, 0, 0, 0.1)',
+    zIndex: 2
   };
 
   const cardContainerStyle = {
@@ -42,16 +45,28 @@ const Menu_direcionamento = () => {
     cursor: 'pointer',
     transition: 'all 0.3s ease',
     marginBottom: '20px',
-    border: '1px solid rgba(0, 0, 0, 0.08)',
+    border: isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.08)',
     borderRadius: '14px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08)',
-    overflow: 'hidden'
+    boxShadow: isDarkMode 
+      ? '0 4px 6px rgba(255, 255, 255, 0.05), 0 1px 3px rgba(255, 255, 255, 0.08)' 
+      : '0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08)',
+    overflow: 'hidden',
+    backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff' // Fundo do card dinâmico
   };
 
   return (
     <>
       <div className="d-flex justify-content-between align-items-center mb-5">
-        <h1 style={{ fontSize: '2rem', fontFamily: 'Rawline', fontWeight: '600', textAlign: 'center', width: '100%' }}>
+        <h1 
+          style={{ 
+            fontSize: '2rem', 
+            fontFamily: 'Rawline', 
+            fontWeight: '600', 
+            textAlign: 'center', 
+            width: '100%',
+            color: isDarkMode ? '#ffffff' : '#000000' // Cor do título dinâmica
+          }}
+        >
           PAINEL GERAL
         </h1>
       </div>
@@ -70,12 +85,16 @@ const Menu_direcionamento = () => {
                 onMouseEnter={(e) => {
                   e.currentTarget.querySelector('img').style.opacity = '0.8';
                   e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.15)';
+                  e.currentTarget.style.boxShadow = isDarkMode 
+                    ? '0 6px 12px rgba(255, 255, 255, 0.15)' 
+                    : '0 6px 12px rgba(0, 0, 0, 0.15)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.querySelector('img').style.opacity = '0.6';
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08)';
+                  e.currentTarget.style.boxShadow = isDarkMode 
+                    ? '0 4px 6px rgba(255, 255, 255, 0.05), 0 1px 3px rgba(255, 255, 255, 0.08)' 
+                    : '0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08)';
                 }}
               >
                 <div style={overlayStyle}>{item.text}</div>
