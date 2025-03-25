@@ -1,7 +1,8 @@
 import React from 'react';
-import { Col, Row, Image } from 'react-bootstrap';
+import { Col, Row, Image, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext'; // Importe o useTheme
+import { FaSun, FaMoon } from "react-icons/fa"; // Importe ícones do react-icons
 import campanhasImg from '../assets/campanhas.png';
 import dashboardImg from '../assets/dashboard.png';
 import trendingTopicsImg from '../assets/trending-topics.png';
@@ -9,7 +10,7 @@ import StilingueImg from '../assets/stilingue.png';
 import DemograficoImg from '../assets/demografico.png';
 
 const Menu_direcionamento = () => {
-  const { isDarkMode } = useTheme(); // Acesse o estado do tema
+  const { isDarkMode, toggleTheme } = useTheme(); // Acesse o estado do tema e a função para alternar
 
   const imageStyle = {
     width: '100%',
@@ -57,18 +58,44 @@ const Menu_direcionamento = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-center mb-5">
-        <h1 
-          style={{ 
-            fontSize: '2rem', 
-            fontFamily: 'Rawline', 
-            fontWeight: '600', 
-            textAlign: 'center', 
-            width: '100%',
-            color: isDarkMode ? '#ffffff' : '#000000' // Cor do título dinâmica
-          }}
-        >
-          PAINEL GERAL
-        </h1>
+        <div className="d-flex align-items-center" style={{ width: '100%', justifyContent: 'center', position: 'relative' }}>
+          {/* Botão de alternância de tema à esquerda */}
+          <Button
+            onClick={toggleTheme}
+            aria-label={isDarkMode ? "Ativar modo claro" : "Ativar modo escuro"}
+            style={{
+              backgroundColor: isDarkMode ? "#1a3c66" : "#3b5bdb", // Cor primária ajustada para claro/escuro
+              border: "none",
+              color: "#ffffff",
+              width: "36px",
+              height: "36px",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+              transition: "all 0.2s ease-in-out",
+              position: "absolute",
+              left: "0",
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? "#1a4980" : "#2c4fe7"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? "#1a3c66" : "#3b5bdb"}
+          >
+            {isDarkMode ? <FaMoon size={18} /> : <FaSun size={18} />}
+          </Button>
+          <h1 
+            style={{ 
+              fontSize: '2rem', 
+              fontFamily: 'Rawline', 
+              fontWeight: '600', 
+              textAlign: 'center',
+              color: isDarkMode ? '#ffffff' : '#000000' // Cor do título dinâmica
+            }}
+          >
+            PAINEL GERAL
+          </h1>
+        </div>
       </div>
       <Row className="g-4" style={{ fontFamily: 'Rawline' }}>
         {[

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
 import { useTheme } from '../context/ThemeContext'; // Import useTheme
+import { FaSun, FaMoon } from "react-icons/fa"; // Importe ícones do react-icons
 import xLogo from '../assets/x-logo.png';
 import googleLogo from '../assets/google-logo.png';
 import instagramLogo from '../assets/instagram-logo.png';
@@ -8,7 +9,7 @@ import tiktokLogo from '../assets/tiktok-logo.png';
 import GoogleTrendsRss from '../components/GoogleTrends';
 
 function TrendingTopics() {
-  const { isDarkMode } = useTheme(); // Access theme state
+  const { isDarkMode, toggleTheme } = useTheme(); // Access theme state and toggle function
 
   // Custom styles with dynamic theming
   const styles = {
@@ -24,13 +25,19 @@ function TrendingTopics() {
       maxWidth: '1440px',
       margin: '0 auto',
     },
+    titleContainer: {
+      display: 'flex', // Garantir que seja flex para alinhamento
+      alignItems: 'center', // Alinhar verticalmente ao centro
+      justifyContent: 'center', // Centralizar o título horizontalmente
+      position: 'relative',
+      marginBottom: '2.5rem',
+      width: '100%', // Garantir que ocupe toda a largura disponível
+    },
     pageTitle: {
       fontSize: '2.5rem',
       fontWeight: '700',
       textAlign: 'center',
-      width: '100%',
-      marginBottom: '2.5rem',
-      position: 'relative',
+      margin: 0, // Remover margens extras que possam deslocar
       paddingBottom: '1rem',
       color: isDarkMode ? '#ffffff' : '#1a1a1a',
     },
@@ -188,9 +195,38 @@ function TrendingTopics() {
     <div style={styles.pageContainer}>
       <Container fluid style={styles.mainContent}>
         <div className="mb-5">
-          <h1 style={styles.pageTitle}>
-            ASSUNTOS DO MOMENTO
-          </h1>
+          <div className="d-flex align-items-center" style={styles.titleContainer}>
+            {/* Botão de alternância de tema à esquerda */}
+            <Button
+              onClick={toggleTheme}
+              aria-label={isDarkMode ? "Ativar modo claro" : "Ativar modo escuro"}
+              style={{
+                backgroundColor: isDarkMode ? "#1a3c66" : "#3b5bdb", // Cor primária ajustada para claro/escuro
+                border: "none",
+                color: "#ffffff",
+                width: "36px",
+                height: "36px",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                transition: "all 0.2s ease-in-out",
+                position: "absolute",
+                left: "0",
+                top: "50%", // Centralizar verticalmente em relação ao container
+                transform: "translateY(-50%)", // Ajustar para o centro exato
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? "#1a4980" : "#2c4fe7"}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? "#1a3c66" : "#3b5bdb"}
+            >
+              {isDarkMode ? <FaSun size={18} /> : <FaMoon size={18} />}
+            </Button>
+            <h1 style={styles.pageTitle}>
+              ASSUNTOS DO MOMENTO
+            </h1>
+          </div>
         </div>
 
         <Row className="g-4">

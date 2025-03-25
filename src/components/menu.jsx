@@ -93,40 +93,6 @@ const Menu = () => {
         />
       </div>
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center', // Sempre centralizado, sem depender do hover
-          alignItems: 'center',
-          padding: '15px 0',
-          borderBottom: `1px solid ${theme.border}`,
-          transition: 'all 0.3s ease-in-out',
-        }}
-      >
-        <Button
-          onClick={toggleTheme}
-          aria-label={isDarkMode ? "Ativar modo claro" : "Ativar modo escuro"}
-          style={{
-            backgroundColor: theme.primary,
-            border: 'none',
-            color: '#ffffff',
-            width: '36px',
-            height: '36px',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-            transition: 'all 0.2s ease-in-out',
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? '#1a4980' : '#2c4fe7'}
-          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = theme.primary}
-        >
-          {isDarkMode ? <FiSun size={18} /> : <FiMoon size={18} />}
-        </Button>
-      </div>
-
       <nav
         style={{
           flex: 1,
