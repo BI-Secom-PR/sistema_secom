@@ -11,7 +11,6 @@ import { FaSun, FaMoon } from "react-icons/fa"; // Importe ícones do react-icon
 
 const Campanhas_ativas = () => {
   const yesterday = format(subDays(new Date(), 1), "yyyy-MM-dd");
-
   const [startDate, setStartDate] = useState(format(subDays(new Date(), 7), "yyyy-MM-dd"));
   const [endDate, setEndDate] = useState(yesterday);
   const [tempStartDate, setTempStartDate] = useState(startDate);
@@ -59,7 +58,7 @@ const Campanhas_ativas = () => {
                 position: "absolute",
                 left: "0",
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? "#1a4980" : "#2c4fe7"}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? "#194475" : "#2c4fe7"}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? "#1a3c66" : "#3b5bdb"}
             >
               {isDarkMode ? <FaMoon size={18} /> : <FaSun size={18} />}
