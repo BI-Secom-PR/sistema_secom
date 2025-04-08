@@ -1,4 +1,4 @@
-import { Home, LayoutDashboard, BarChart3, Clock, BarChart2, MapIcon, ChartBar } from 'lucide-react';
+import { Home, LayoutDashboard, BarChart3, Clock, Clock2, BarChart2, MapIcon, ChartBar } from 'lucide-react';
 
 // Transforme o array em uma função que recebe isDarkMode como parâmetro
 export const getMenuItems = (isDarkMode) => [
@@ -26,6 +26,16 @@ export const getMenuItems = (isDarkMode) => [
     name: 'Análise Demográfica',
     icon: <MapIcon size={24} color={isDarkMode ? "#ffffff" : "#666"} />, // Cor dinâmica
     path: '/demografico'
+  },
+  {
+    name: 'Dashboard Performance',
+    icon: <BarChart3 size={24} color={isDarkMode ? "#ffffff" : "#666"} />, // Cor dinâmica
+    path: '/performance'
+  },
+  {
+    name: 'Comparativo Histórico',
+    icon: <Clock2 size={24} color={isDarkMode ? "#ffffff" : "#666"} />, // Cor dinâmica
+    path: '/comparativo_historico'
   },
   {
     name: 'Debate Digital',

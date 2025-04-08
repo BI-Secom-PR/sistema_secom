@@ -55,7 +55,7 @@ const Menu = () => {
       onMouseLeave={() => setIsHovered(false)}
       style={{
         backgroundColor: theme.sidebarBg,
-        width: isHovered ? '265px' : '110px',
+        width: isHovered ? '270px' : '110px',
         height: '100vh',
         position: 'fixed',
         left: 0,

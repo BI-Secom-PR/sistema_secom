@@ -14,6 +14,8 @@ import Login from "../pages/login";
 import Cadastro from "../pages/Cadastro";
 import Stilingue from "../pages/AnaliseStilingue";
 import Demografico from "../pages/Demografico";
+import Performance from "../pages/Performance";
+import Comparativo_Historico from "../pages/Comparativo_Historico";
 
 const Routers = () => {
   return (
@@ -39,6 +41,12 @@ const Routers = () => {
           </Route>
           <Route path="/demografico" element={<PrivateRoute />} >
             <Route path="/demografico" element={<Demografico />} />
+          </Route>
+          <Route path="/performance" element={<PrivateRoute />} >
+            <Route path="/performance" element={<Performance />} />
+          </Route>
+          <Route path="/comparativo_historico" element={<PrivateRoute />} >
+            <Route path="/comparativo_historico" element={<Comparativo_Historico />} />
           </Route>
           <Route path="/stilingue" element={<PrivateRoute />} >
             <Route path="/stilingue" element={<Stilingue />} />
