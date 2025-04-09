@@ -196,33 +196,6 @@ function TrendingTopics() {
       <Container fluid style={styles.mainContent}>
         <div className="mb-5">
           <div className="d-flex align-items-center" style={styles.titleContainer}>
-            {/* Botão de alternância de tema à esquerda */}
-            <Button
-              onClick={toggleTheme}
-              aria-label={isDarkMode ? "Ativar modo claro" : "Ativar modo escuro"}
-              style={{
-                backgroundColor: isDarkMode ? "#1a3c66" : "#3b5bdb", // Cor primária ajustada para claro/escuro
-                border: "none",
-                color: "#ffffff",
-                width: "36px",
-                height: "36px",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
-                transition: "all 0.2s ease-in-out",
-                position: "absolute",
-                left: "0",
-                top: "50%", // Centralizar verticalmente em relação ao container
-                transform: "translateY(-50%)", // Ajustar para o centro exato
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? "#1a4980" : "#2c4fe7"}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? "#1a3c66" : "#3b5bdb"}
-            >
-              {isDarkMode ? <FaSun size={18} /> : <FaMoon size={18} />}
-            </Button>
             <h1 style={styles.pageTitle}>
               ASSUNTOS DO MOMENTO
             </h1>

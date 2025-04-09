@@ -59,31 +59,6 @@ const Menu_direcionamento = () => {
     <>
       <div className="d-flex justify-content-between align-items-center mb-5">
         <div className="d-flex align-items-center" style={{ width: '100%', justifyContent: 'center', position: 'relative' }}>
-          {/* Botão de alternância de tema à esquerda */}
-          <Button
-            onClick={toggleTheme}
-            aria-label={isDarkMode ? "Ativar modo claro" : "Ativar modo escuro"}
-            style={{
-              backgroundColor: isDarkMode ? "#1a3c66" : "#3b5bdb", // Cor primária ajustada para claro/escuro
-              border: "none",
-              color: "#ffffff",
-              width: "36px",
-              height: "36px",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
-              transition: "all 0.2s ease-in-out",
-              position: "absolute",
-              left: "0",
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? "#1a4980" : "#2c4fe7"}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = isDarkMode ? "#1a3c66" : "#3b5bdb"}
-          >
-            {isDarkMode ? <FaMoon size={18} /> : <FaSun size={18} />}
-          </Button>
           <h1 
             style={{ 
               fontSize: '2rem', 

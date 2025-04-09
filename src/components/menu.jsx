@@ -28,6 +28,8 @@ const Menu = () => {
     menuItemHover: isDarkMode ? '#2a2a4a' : '#f1f3f5',
     activeItemBg: isDarkMode ? '#183EFF' : '#FFD000',
     boxShadow: isDarkMode ? '0 4px 6px rgba(0, 0, 0, 0.3)' : '0 2px 4px rgba(0, 0, 0, 0.05)',
+    darkModeButtonBg: isDarkMode ? '#1a3c66' : '#3b5bdb',
+    darkModeButtonHover: isDarkMode ? '#194475' : '#2c4fe7',
   };
 
   const logout = () => {
@@ -167,8 +169,57 @@ const Menu = () => {
         style={{
           padding: '15px',
           borderTop: `1px solid ${theme.border}`,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px'
         }}
       >
+        {/* Botão de alternância de tema (Dark Mode) */}
+        <Button
+          onClick={toggleTheme}
+          aria-label={isDarkMode ? "Ativar modo escuro" : "Ativar modo claro"}
+          style={{
+            width: '100%',
+            height: '42px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: isHovered ? 'flex-start' : 'center',
+            gap: '8px',
+            padding: isHovered ? '0 15px' : '0',
+            fontSize: '14px',
+            fontWeight: '500',
+            backgroundColor: theme.darkModeButtonBg,
+            border: 'none',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.15)',
+            transition: 'all 0.2s ease-in-out',
+            cursor: 'pointer',
+            color: '#ffffff',
+            overflow: 'hidden',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = theme.darkModeButtonHover;
+            e.currentTarget.style.transform = 'translateY(-1px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = theme.darkModeButtonBg;
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
+        >
+          {isDarkMode ? <FiMoon size={18} /> : <FiSun size={18} />}
+          <span
+            style={{
+              opacity: isHovered ? 1 : 0,
+              width: isHovered ? 'auto' : 0,
+              transition: 'opacity 0.2s ease-in-out',
+              overflow: 'hidden',
+            }}
+          >
+            {isDarkMode ? 'Modo Escuro' : 'Modo Claro'}
+          </span>
+        </Button>
+
+        {/* Botão de logout existente */}
         <Button
           onClick={logout}
           style={{
