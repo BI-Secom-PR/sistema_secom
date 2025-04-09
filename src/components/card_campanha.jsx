@@ -26,8 +26,8 @@ const CardCampanha = ({
     error: '#EF4444',
     text: {
       primary: isDarkMode ? '#ffffff' : '#1E293B',
-      secondary: isDarkMode ? '#94A3B8' : '#64748B',
-      light: isDarkMode ? '#64748B' : '#94A3B8'
+      secondary: isDarkMode ? '#d3dae4' : '#64748B',
+      light: isDarkMode ? '#d3dae4' : '#94A3B8'
     }
   };
 

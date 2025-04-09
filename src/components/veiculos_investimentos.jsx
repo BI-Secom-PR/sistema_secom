@@ -23,7 +23,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     lightBg: isDarkMode ? '#2c2c2c' : '#F1F5F9',
     text: {
       primary: isDarkMode ? '#ffffff' : '#1E293B',
-      secondary: isDarkMode ? '#94A3B8' : '#64748B',
+      secondary: isDarkMode ? '#d3dae4' : '#64748B',
       light: isDarkMode ? '#64748B' : '#94A3B8'
     },
     platforms: {

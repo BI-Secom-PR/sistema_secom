@@ -90,7 +90,7 @@ function CardsHistorico({ startDate, endDate, selectedCampaign }) {
       : 'linear-gradient(145deg, #ffffff, #f5f7fa)',
     text: {
       primary: isDarkMode ? '#e2e8f0' : '#1E293B',
-      secondary: isDarkMode ? '#cbd5e1' : '#64748B',
+      secondary: isDarkMode ? '#d3dae4' : '#64748B',
       light: isDarkMode ? '#f8fafc' : '#272727'
     },
     comparison: {
