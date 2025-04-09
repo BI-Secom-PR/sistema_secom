@@ -1,12 +1,21 @@
 // src/context/ThemeContext.js
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // Cria o contexto
 const ThemeContext = createContext();
 
 // Provedor do tema
 export const ThemeProvider = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // Inicializa buscando a preferência salva no localStorage, ou define como modo claro (false)
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('isDarkMode');
+    return savedTheme ? JSON.parse(savedTheme) : false;
+  });
+
+  // Salva a preferência no localStorage sempre que isDarkMode mudar
+  useEffect(() => {
+    localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+  }, [isDarkMode]);
 
   // Função para alternar entre os temas
   const toggleTheme = () => {
