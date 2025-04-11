@@ -112,7 +112,7 @@ body {
   position: fixed;
   top: 20px;
   left: 20px;
-  z-index: 1000;
+  z-index: 1100;
   background-color: #FFD000; /* Cinza médio */
   border: none;
   padding: 10px;
@@ -135,6 +135,10 @@ body {
   color: #ffffff; /* Branco para contraste com o fundo cinza */
 }
 
+.sidebar, .custom-offcanvas {
+  z-index: 1095; /* Below the menu button but above the overlay */
+}
+
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -143,7 +147,7 @@ body {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 999; /* Abaixo da sidebar */
+  z-index: 1090; /* Abaixo da sidebar */
 }
 
 /* Exibe o overlay quando a sidebar está ativa */
@@ -296,6 +300,8 @@ body {
   gap: 0.5rem;
   flex-wrap: wrap; /* Permite quebra de linha para dispositivos menores */
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 1080; /* Lower than menu button */
 }
 
 .date-inputs {
