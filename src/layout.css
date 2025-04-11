@@ -46,7 +46,7 @@
   }
   
   .main-content {
-    margin-left: 200px; /* Compensa a largura da sidebar */
+    margin-left: 120px; /* Compensa a largura da sidebar */
     padding: 30px;
     transition: margin-left 0.3s ease-in-out;
   } 
