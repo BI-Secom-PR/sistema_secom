@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchCampaigns } from "../data/fetchMetrics";
 import { Card, Spinner, Badge } from "react-bootstrap"; 
 import { graficoMetrics } from "../data/graficoMetrics";
-import { useTheme } from '../context/ThemeContext'; // Importe o useTheme
+import { useTheme } from '../context/ThemeContext';
 
 const CardCampanha = ({    
   onCampaignSelect, 
@@ -10,8 +10,7 @@ const CardCampanha = ({
   endDate, 
   selectedCampaign 
 }) => {
-  const { isDarkMode } = useTheme(); // Acesse o estado do tema
-
+  const { isDarkMode } = useTheme();
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -74,9 +73,13 @@ const CardCampanha = ({
       flexDirection: 'column',
       gap: '8px',
       flex: 1,
-      overflowY: 'auto',
-      maxHeight: '400px',
-      padding: '4px'
+      padding: '4px',
+      ...(campaigns.length > 15
+        ? {
+            overflowY: 'auto',
+            maxHeight: '1012px', // Altura para 15 campanhas
+          }
+        : {}),
     },
     campaignItem: {
       display: 'flex',
