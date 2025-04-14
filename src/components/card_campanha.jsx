@@ -187,7 +187,7 @@ const CardCampanha = ({
   const renderCampaignName = (name) => {
     return (
       <div style={styles.campaignName}>
-        {name || 'Sem nome'}
+        {name || 'Em definição...'}
       </div>
     );
   };
