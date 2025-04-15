@@ -16,6 +16,7 @@ import Stilingue from "../pages/AnaliseStilingue";
 import Demografico from "../pages/Demografico";
 import Performance from "../pages/Performance";
 import Comparativo_Historico from "../pages/Comparativo_Historico";
+import Painel_8_Telas from "../pages/Painel_8_Telas";
 
 const Routers = () => {
   return (
@@ -47,6 +48,9 @@ const Routers = () => {
           </Route>
           <Route path="/comparativo_historico" element={<PrivateRoute />} >
             <Route path="/comparativo_historico" element={<Comparativo_Historico />} />
+          </Route>
+          <Route path="/painel_8_telas" element={<PrivateRoute />} >
+            <Route path="/painel_8_telas" element={<Painel_8_Telas />} />
           </Route>
           <Route path="/stilingue" element={<PrivateRoute />} >
             <Route path="/stilingue" element={<Stilingue />} />

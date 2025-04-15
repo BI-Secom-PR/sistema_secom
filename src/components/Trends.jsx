@@ -5,6 +5,7 @@ import googleLogo from "../assets/google-logo.png";
 import instagramLogo from "../assets/instagram-logo.png";
 import tiktokLogo from "../assets/tiktok-logo.png";
 import GoogleTrendsRss from "../components/GoogleTrends";
+import { useState, useEffect } from "react";
 
 // Componente para item de tendência
 const TrendItem = ({ rank, topic, metric, isDarkMode, styles }) => (
@@ -68,30 +69,48 @@ const TrendCard = ({ platform, logo, title, children, buttonUrl, buttonText, pla
 // Componente principal
 const TrendingTopics = () => {
   const { isDarkMode } = useTheme();
+  const [isAbove4K, setIsAbove4K] = useState(false);
+
+  // Verifica a resolução ao carregar e ao redimensionar
+  useEffect(() => {
+    const checkResolution = () => {
+      setIsAbove4K(window.innerWidth > 3840 || window.innerHeight > 2160);
+    };
+
+    checkResolution();
+    window.addEventListener("resize", checkResolution);
+    return () => window.removeEventListener("resize", checkResolution);
+  }, []);
 
   const styles = {
     pageContainer: {
       fontFamily: "Rawline, Inter, sans-serif",
       backgroundColor: isDarkMode ? "#1b1b1b" : "#f5f7fa",
-      padding: "2rem 0",
+      padding: "0",
       color: isDarkMode ? "#ffffff" : "#000000",
       transition: "background-color 0.3s ease, color 0.3s ease",
+      width: "100%",
+      boxSizing: "border-box",
+      height: "100%",
     },
     mainContent: {
-      padding: "2rem 3rem",
-      maxWidth: "1440px",
-      margin: "0 auto",
+      padding: "1rem 0",
+      width: "100%",
+      margin: "0",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
     },
     titleContainer: {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       position: "relative",
-      marginBottom: "2.5rem",
+      marginBottom: "1.5rem",
       width: "100%",
     },
     pageTitle: {
-      fontSize: "2.5rem",
+      fontSize: isAbove4K ? "3.3rem" : "2.5rem", // Aumentado de 3rem
       fontWeight: "700",
       textAlign: "center",
       margin: 0,
@@ -104,7 +123,7 @@ const TrendingTopics = () => {
       boxShadow: isDarkMode ? "0 4px 15px rgba(0, 0, 0, 0.2)" : "0 4px 15px rgba(0, 0, 0, 0.07)",
       transition: "background-color 0.3s ease, color 0.3s ease",
       overflow: "hidden",
-      height: "100%",
+      height: "900px",
       display: "flex",
       flexDirection: "column",
       backgroundColor: isDarkMode ? "#2c2c2c" : "#ffffff",
@@ -125,7 +144,7 @@ const TrendingTopics = () => {
       filter: isDarkMode ? "brightness(0.9)" : "none",
     },
     cardTitle: {
-      fontSize: "1.3rem",
+      fontSize: isAbove4K ? "1.8rem" : "1.3rem", // Aumentado de 1.6rem
       fontWeight: "600",
       margin: 0,
       color: isDarkMode ? "#ffffff" : "#1a1a1a",
@@ -134,39 +153,41 @@ const TrendingTopics = () => {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      padding: "1rem 1.5rem",
+      padding: "1.5rem",
       borderBottom: `1px solid ${isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.05)"}`,
       transition: "background-color 0.2s ease",
       cursor: "pointer",
       backgroundColor: isDarkMode ? "#2c2c2c" : "#ffffff",
+      fontSize: isAbove4K ? "1.5rem" : "1.1rem", // Aumentado de 1.3rem
     },
     trendRank: {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      width: "28px",
-      height: "28px",
+      width: "32px",
+      height: "32px",
       borderRadius: "50%",
       backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.05)",
       marginRight: "1rem",
       fontWeight: "600",
       color: isDarkMode ? "#cccccc" : "#333333",
+      fontSize: isAbove4K ? "1.4rem" : "1rem", // Aumentado de 1.2rem
     },
     trendName: {
       fontWeight: "500",
-      fontSize: "1.05rem",
+      fontSize: isAbove4K ? "1.6rem" : "1.15rem", // Aumentado de 1.4rem
       color: isDarkMode ? "#ffffff" : "#333",
     },
     trendMetric: {
       color: isDarkMode ? "#cccccc" : "#6B7280",
-      fontSize: "0.9rem",
+      fontSize: isAbove4K ? "1.4rem" : "1rem", // Aumentado de 1.2rem
       fontWeight: "500",
     },
     button: {
       borderRadius: "12px",
-      padding: "0.75rem",
+      padding: "1rem",
       fontWeight: "500",
-      fontSize: "1rem",
+      fontSize: isAbove4K ? "1.5rem" : "1.1rem", // Aumentado de 1.3rem
       border: "none",
       marginTop: "auto",
       transition: "background-color 0.2s ease",
@@ -174,9 +195,10 @@ const TrendingTopics = () => {
     iframeContainer: {
       borderRadius: "12px",
       overflow: "hidden",
-      height: "600px",
+      height: "750px",
       border: isDarkMode ? "1px solid rgba(255, 255, 255, 0.1)" : "1px solid rgba(0, 0, 0, 0.05)",
       backgroundColor: isDarkMode ? "#1a1a1a" : "#ffffff",
+      flex: 1,
     },
   };
 
@@ -210,13 +232,13 @@ const TrendingTopics = () => {
   return (
     <div style={styles.pageContainer}>
       <Container fluid style={styles.mainContent}>
-        <div className="mb-5">
+        <div className="mb-4">
           <div style={styles.titleContainer}>
             <h1 style={styles.pageTitle}>ASSUNTOS DO MOMENTO</h1>
           </div>
         </div>
 
-        <Row className="g-4">
+        <Row className="g-4" style={{ marginLeft: 0, marginRight: 0, flex: 1 }}>
           <TrendCard
             platform="tiktok"
             logo={tiktokLogo}
@@ -272,7 +294,7 @@ const TrendingTopics = () => {
             platform="instagram"
             logo={instagramLogo}
             title="Instagram Trends"
-            buttonUrl="" // Instagram não tem URL funcional no original
+            buttonUrl=""
             buttonText="Ver mais no Instagram"
             platformColors={platformColors}
             styles={styles}

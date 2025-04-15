@@ -13,7 +13,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { graficoMetrics } from "../data/graficoMetrics";
-import { useTheme } from "../context/ThemeContext"; // Importe o useTheme
+import { useTheme } from "../context/ThemeContext";
 
 ChartJS.register(
   CategoryScale,
@@ -30,7 +30,19 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
   const [metrics, setMetrics] = useState({ actual: [], previous: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { isDarkMode } = useTheme(); // Acesse o estado do tema
+  const { isDarkMode } = useTheme();
+  const [isAbove4K, setIsAbove4K] = useState(false); // Estado para resolução ultra-wide
+
+  // Verifica resolução > 4K
+  useEffect(() => {
+    const checkResolution = () => {
+      setIsAbove4K(window.innerWidth > 3840 || window.innerHeight > 2160);
+    };
+
+    checkResolution();
+    window.addEventListener("resize", checkResolution);
+    return () => window.removeEventListener("resize", checkResolution);
+  }, []);
 
   useEffect(() => {
     const loadMetrics = async () => {
@@ -75,13 +87,19 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
 
   // Componente de spinner personalizado
   const LoadingSpinner = () => (
-    <div className="d-flex flex-column justify-content-center align-items-center h-100">
+    <div className="d-flex flex-column justify-content-center align-items-center w-100" style={{ height: "100%" }}>
       <Spinner 
         animation="border" 
         variant="danger" 
-        style={{ width: "3rem", height: "3rem" }}
+        style={{ width: isAbove4K ? "4rem" : "3rem", height: isAbove4K ? "4rem" : "3rem" }}
       />
-      <p className="mt-3 text-muted" style={{ color: isDarkMode ? '#aaaaaa' : '#6c757d' }}>
+      <p 
+        className="mt-3 text-muted" 
+        style={{ 
+          color: isDarkMode ? "#aaaaaa" : "#6c757d",
+          fontSize: isAbove4K ? "1.75rem" : "1rem"
+        }}
+      >
         Carregando dados do gráfico...
       </p>
     </div>
@@ -89,35 +107,50 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
 
   // Componente de mensagem de erro
   const ErrorMessage = ({ message }) => (
-    <div className="d-flex flex-column justify-content-center align-items-center h-100">
+    <div className="d-flex flex-column justify-content-center align-items-center w-100" style={{ height: "100%" }}>
       <div className="text-danger mb-3">
-        <i className="bi bi-exclamation-triangle-fill" style={{ fontSize: "2rem" }}></i>
+        <i className="bi bi-exclamation-triangle-fill" style={{ fontSize: isAbove4K ? "3rem" : "2rem" }}></i>
       </div>
-      <p className="text-center text-danger">{message}</p>
+      <p 
+        className="text-center text-danger"
+        style={{ fontSize: isAbove4K ? "1.75rem" : "1rem" }}
+      >
+        {message}
+      </p>
       <button 
         className="btn btn-outline-danger mt-2" 
         onClick={() => window.location.reload()}
+        style={{ fontSize: isAbove4K ? "1.75rem" : "1rem" }}
       >
         Tentar novamente
       </button>
     </div>
   );
 
-  // Verifica se temos dados válidos para processar
+  // Caso não haja dados válidos para processar (já finalizado o carregamento)
   if (!loading && (!metrics || !metrics.actual || !metrics.previous)) {
     return (
       <Card 
-        className="campaign-card p-3 shadow" 
+        className={`campaign-card ${isAbove4K ? "p-4" : "p-3"} shadow`} 
         style={{ 
-          height: "500px", 
-          backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff',
-          color: isDarkMode ? '#ffffff' : '#000000'
+          height: isAbove4K ? "35vh" : "500px",
+          backgroundColor: isDarkMode ? "#2c2c2c" : "#ffffff",
+          color: isDarkMode ? "#ffffff" : "#000000",
+          overflow: "hidden"
         }}
       >
-        <Card.Title className="text-center mb-3 fw-bold" style={{ color: isDarkMode ? '#ffffff' : '#000000' }}>
+        <Card.Title 
+          className="text-center mb-3 fw-bold" 
+          style={{ 
+            color: isDarkMode ? "#ffffff" : "#000000",
+            fontSize: isAbove4K ? "1.75rem" : "1rem"
+          }}
+        >
           Comparação de Impressões por Período
         </Card.Title>
-        <ErrorMessage message="Não foi possível carregar os dados do gráfico" />
+        <div className="w-100" style={{ height: "calc(100% - 60px)" }}>
+          <ErrorMessage message="Não foi possível carregar os dados do gráfico" />
+        </div>
       </Card>
     );
   }
@@ -131,14 +164,11 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
   let actualData = [];
   let previousData = [];
 
-  // Só processamos os dados se não estivermos carregando e tivermos dados válidos
   if (!loading && metrics.actual && metrics.previous) {
     if (metrics.actual.length === 7 && metrics.previous.length === 7) {
-      // Caso comparativo: usa getXValue (que pode retornar dias da semana ou datas formatadas)
       const actualLabelsComparative = metrics.actual.map(getXValue);
       const previousLabelsComparative = metrics.previous.map(getXValue);
 
-      // Se os dados atuais forem baseados em dias da semana, preserva a ordem conforme os dados
       if (metrics.actual.length > 0 && diasSemana.includes(metrics.actual[0].label)) {
         unionLabels = [...actualLabelsComparative];
         previousLabelsComparative.forEach((label) => {
@@ -147,7 +177,6 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
           }
         });
       } else {
-        // Caso sejam datas, une os labels e os ordena cronologicamente
         const labelsSet = new Set([...actualLabelsComparative, ...previousLabelsComparative]);
         unionLabels = Array.from(labelsSet);
         unionLabels.sort((a, b) => {
@@ -165,7 +194,6 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         return item ? item.impressions : null;
       });
     } else {
-      // Caso simples: usa somente a data (item.date) formatada para cada dataset
       const actualSimpleLabels = metrics.actual.map((item) => formatarData(item.date));
       const previousSimpleLabels = metrics.previous.map((item) => formatarData(item.date));
 
@@ -187,7 +215,6 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
     }
   }
 
-  // Função para calcular tamanhos dinâmicos para pontos e bordas
   const calculateDynamicSize = (numLabels, minSize, maxSize, maxLabels = 50) => {
     return Math.max(minSize, maxSize - (numLabels / maxLabels) * (maxSize - minSize));
   };
@@ -204,16 +231,15 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         borderColor: "rgb(255, 0, 0)",
         backgroundColor: function(context) {
           const chart = context.chart;
-          const {ctx, chartArea} = chart;
+          const { ctx, chartArea } = chart;
           if (!chartArea) return null;
-          
           const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-          gradient.addColorStop(0, 'rgba(255, 0, 0, 0)');      
-          gradient.addColorStop(0.2, 'rgba(255, 0, 0, 0.2)');  
-          gradient.addColorStop(0.4, 'rgba(255, 0, 0, 0.4)'); 
-          gradient.addColorStop(0.6, 'rgba(255, 0, 0, 0.5)');  
-          gradient.addColorStop(0.8, 'rgba(255, 0, 0, 0.6)');  
-          gradient.addColorStop(1, 'rgba(255, 0, 0, 0.6)');    
+          gradient.addColorStop(0, "rgba(255, 0, 0, 0)");      
+          gradient.addColorStop(0.2, "rgba(255, 0, 0, 0.2)");  
+          gradient.addColorStop(0.4, "rgba(255, 0, 0, 0.4)"); 
+          gradient.addColorStop(0.6, "rgba(255, 0, 0, 0.5)");  
+          gradient.addColorStop(0.8, "rgba(255, 0, 0, 0.6)");  
+          gradient.addColorStop(1, "rgba(255, 0, 0, 0.6)");
           return gradient;
         },
         borderWidth: borderWidth + 1,
@@ -222,7 +248,7 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         pointBorderWidth: 2,
         fill: true,
         tension: 0.4,
-        order: 2
+        order: 2,
       },
       {
         label: "Veiculação Anterior",
@@ -230,16 +256,15 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         borderColor: "rgba(255, 208, 0)",
         backgroundColor: function(context) {
           const chart = context.chart;
-          const {ctx, chartArea} = chart;
+          const { ctx, chartArea } = chart;
           if (!chartArea) return null;
-          
           const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-          gradient.addColorStop(0, 'rgba(255, 208, 0, 0)');     
-          gradient.addColorStop(0.2, 'rgba(255, 208, 0, 0.2)'); 
-          gradient.addColorStop(0.4, 'rgba(255, 208, 0, 0.4)'); 
-          gradient.addColorStop(0.6, 'rgba(255, 208, 0, 0.4)'); 
-          gradient.addColorStop(0.8, 'rgba(255, 208, 0, 0.6)');  
-          gradient.addColorStop(1, 'rgba(255, 208, 0, 0.7)');   
+          gradient.addColorStop(0, "rgba(255, 208, 0, 0)");
+          gradient.addColorStop(0.2, "rgba(255, 208, 0, 0.2)");
+          gradient.addColorStop(0.4, "rgba(255, 208, 0, 0.4)");
+          gradient.addColorStop(0.6, "rgba(255, 208, 0, 0.4)");
+          gradient.addColorStop(0.8, "rgba(255, 208, 0, 0.6)");
+          gradient.addColorStop(1, "rgba(255, 208, 0, 0.7)");
           return gradient;
         },
         borderWidth: borderWidth + 1,
@@ -248,12 +273,11 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
         pointBorderWidth: 2,
         fill: true,
         tension: 0.4,
-        order: 1
-      }
+        order: 1,
+      },
     ],
   };
 
-  // Configurações dinâmicas baseadas no tema
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -261,18 +285,18 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       legend: {
         position: "top",
         labels: {
-          font: { size: 14 },
-          color: isDarkMode ? '#ffffff' : '#333',
+          font: { size: isAbove4K ? 24 : 14 },
+          color: isDarkMode ? "#ffffff" : "#333",
           boxWidth: 20,
         },
       },
       tooltip: {
         backgroundColor: isDarkMode ? "rgba(50, 50, 50, 0.9)" : "rgba(0, 0, 0, 0.7)",
-        titleFont: { size: 14 },
-        bodyFont: { size: 12 },
+        titleFont: { size: isAbove4K ? 24 : 14 },
+        bodyFont: { size: isAbove4K ? 21 : 12 },
         padding: 10,
         displayColors: false,
-        titleColor: isDarkMode ? "#ffffff" : "#ffffff",
+        titleColor: "#ffffff",
         bodyColor: isDarkMode ? "#e0e0e0" : "#ffffff",
       },
     },
@@ -280,20 +304,20 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
       x: {
         grid: { 
           display: false,
-          color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+          color: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"
         },
         ticks: { 
-          font: { size: 12 }, 
-          color: isDarkMode ? '#cccccc' : '#666' 
+          font: { size: isAbove4K ? 21 : 12 },
+          color: isDarkMode ? "#cccccc" : "#666" 
         },
       },
       y: {
         grid: { 
-          color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(200, 200, 200, 0.2)' 
+          color: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(200, 200, 200, 0.2)"
         },
         ticks: {
-          font: { size: 12 },
-          color: isDarkMode ? '#cccccc' : '#666',
+          font: { size: isAbove4K ? 21 : 12 },
+          color: isDarkMode ? "#cccccc" : "#666",
           callback: (value) => value.toLocaleString(),
         },
       },
@@ -302,25 +326,32 @@ const GraficoComparativo = ({ startDate, endDate, selectedCampaign }) => {
 
   return (
     <Card 
-      className="campaign-card p-3 shadow" 
+      className={`campaign-card ${isAbove4K ? "p-4" : "p-3"} shadow`} 
       style={{ 
-        height: "500px", 
-        backgroundColor: isDarkMode ? '#2c2c2c' : '#ffffff',
-        color: isDarkMode ? '#ffffff' : '#000000'
+        height: isAbove4K ? "40vh" : "500px",
+        backgroundColor: isDarkMode ? "#2c2c2c" : "#ffffff",
+        color: isDarkMode ? "#ffffff" : "#000000",
+        overflow: "hidden"
       }}
     >
-      <Card.Title className="text-center mb-3 fw-bold" style={{ color: isDarkMode ? '#ffffff' : '#000000' }}>
+      <Card.Title 
+        className="text-center mb-3 fw-bold" 
+        style={{ 
+          color: isDarkMode ? "#ffffff" : "#000000",
+          fontSize: isAbove4K ? "1.75rem" : "1rem"
+        }}
+      >
         Comparação de Impressões por Período
       </Card.Title>
-      {loading ? (
-        <LoadingSpinner />
-      ) : error ? (
-        <ErrorMessage message={error} />
-      ) : (
-        <div className="w-100 h-100">
+      <div className="w-100" style={{ height: "calc(100% - 60px)" }}>
+        {loading ? (
+          <LoadingSpinner />
+        ) : error ? (
+          <ErrorMessage message={error} />
+        ) : (
           <Line options={options} data={chartData} />
-        </div>
-      )}
+        )}
+      </div>
     </Card>
   );
 };

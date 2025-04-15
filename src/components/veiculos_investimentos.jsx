@@ -10,10 +10,24 @@ import { useTheme } from '../context/ThemeContext';
 
 const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
   const { isDarkMode } = useTheme();
-
   const [metrics, setMetrics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const [isAbove4K, setIsAbove4K] = useState(false);
+
+  useEffect(() => {
+    const checkResolution = () => {
+      const is4KPlus = window.innerWidth > 3840 || window.innerHeight > 2160;
+      setIsAbove4K(is4KPlus);
+      setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
+    };
+
+    checkResolution();
+    window.addEventListener("resize", checkResolution);
+    return () => window.removeEventListener("resize", checkResolution);
+  }, []);
 
   const colors = {
     primary: isDarkMode ? '#bb86fc' : '#00D000',
@@ -39,17 +53,6 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     }
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   const isMobile = windowWidth < 768;
   const isTablet = windowWidth >= 768 && windowWidth < 992;
 
@@ -59,6 +62,8 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       borderRadius: '16px',
       padding: isMobile ? '16px' : '24px',
       width: '100%',
+      height: isAbove4K ? "auto" : "1300px", // Auto height for 4K+ resolutions
+      minHeight: isAbove4K ? "1300px" : "auto", // Ensure minimum height for content
       fontFamily: 'Rawline, sans-serif',
       boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
       display: 'flex',
@@ -66,6 +71,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       background: isDarkMode 
         ? 'linear-gradient(to bottom, #2d2d2d, #2c2c2c)' 
         : 'linear-gradient(to bottom, white, #F8FAFC)',
+      overflowY: isAbove4K ? 'visible' : 'auto' // No scroll for 4K+, scroll for smaller resolutions
     },
     header: {
       marginBottom: isMobile ? '12px' : '20px',
@@ -76,7 +82,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       alignItems: 'center'
     },
     title: {
-      fontSize: isMobile ? '1rem' : '1rem',
+      fontSize: isAbove4K ? '1.8rem' : isMobile ? '1rem' : '1.2rem',
       fontWeight: '700',
       color: colors.secondary,
       margin: 0
@@ -84,11 +90,11 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     platformsList: {
       display: 'flex',
       flexDirection: 'column',
-      gap: isMobile ? '12px' : '16px',
-      marginTop: isMobile ? '8px' : '10px'
+      gap: isAbove4K ? '24px' : isMobile ? '12px' : '16px',
+      marginTop: isAbove4K ? '16px' : isMobile ? '8px' : '10px'
     },
     platformRow: {
-      padding: isMobile ? '12px' : '16px',
+      padding: isAbove4K ? '24px' : isMobile ? '12px' : '16px',
       borderRadius: '12px',
       backgroundColor: isDarkMode ? '#2c2c2c' : 'white',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
@@ -101,7 +107,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       flexDirection: isMobile ? 'column' : 'row',
       alignItems: isMobile ? 'flex-start' : 'center',
       width: '100%',
-      gap: '10px',
+      gap: isAbove4K ? '20px' : '10px',
       position: 'relative',
       zIndex: 1
     },
@@ -112,26 +118,26 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       marginBottom: isMobile ? '10px' : 0
     },
     icon: {
-      width: '30px',
-      height: '30px',
+      width: isAbove4K ? '40px' : '30px',
+      height: isAbove4K ? '40px' : '30px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontSize: '24px',
-      marginRight: '10px'
+      fontSize: isAbove4K ? '32px' : '24px',
+      marginRight: isAbove4K ? '15px' : '10px'
     },
     platformInfo: {
-      width: isMobile ? 'calc(100% - 40px)' : '150px',
-      marginRight: isMobile ? 0 : '20px'
+      width: isMobile ? 'calc(100% - 40px)' : isAbove4K ? '200px' : '150px',
+      marginRight: isMobile ? 0 : isAbove4K ? '30px' : '20px'
     },
     platformName: {
-      fontSize: isMobile ? '0.9rem' : '1rem',
+      fontSize: isAbove4K ? '1.5rem' : isMobile ? '0.9rem' : '1rem',
       fontWeight: '600',
       display: 'block',
       color: colors.text.primary
     },
     investment: {
-      fontSize: isMobile ? '0.9rem' : '1.1rem',
+      fontSize: isAbove4K ? '1.8rem' : isMobile ? '0.9rem' : '1.1rem',
       fontWeight: '700',
       color: colors.text.secondary
     },
@@ -141,7 +147,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       flex: 1,
       border: `1px solid ${colors.border}`,
       borderRadius: '8px',
-      padding: isMobile ? '8px 5px' : '10px',
+      padding: isAbove4K ? '16px' : isMobile ? '8px 5px' : '10px',
       backgroundColor: colors.lightBg,
       width: isMobile ? '100%' : 'auto',
       overflowX: isMobile ? 'auto' : 'visible'
@@ -149,12 +155,12 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
     metrics: {
       display: 'flex',
       justifyContent: isMobile ? 'flex-start' : 'space-between',
-      gap: isMobile ? '10px' : '15px',
+      gap: isAbove4K ? '30px' : isMobile ? '10px' : '15px',
       width: '100%',
       minWidth: isMobile ? '400px' : 'auto'
     },
     metricItem: {
-      width: isMobile ? '60px' : '55px',
+      width: isAbove4K ? '80px' : isMobile ? '60px' : '55px', 
       textAlign: 'center',
       display: 'flex',
       flexDirection: 'column',
@@ -163,13 +169,13 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       flexShrink: 0
     },
     metricLabel: {
-      fontSize: isMobile ? '0.7rem' : '1rem',
+      fontSize: isAbove4K ? '1.3rem' : isMobile ? '0.7rem' : '0.85rem',
       fontWeight: '700',
       color: colors.text.secondary,
-      marginBottom: '4px'
+      marginBottom: isAbove4K ? '8px' : '4px'
     },
     metricValue: {
-      fontSize: isMobile ? '0.8rem' : '1rem',
+      fontSize: isAbove4K ? '1.4rem' : isMobile ? '0.8rem' : '1rem',
       fontWeight: '700',
       color: colors.text.primary,
       whiteSpace: 'nowrap'
@@ -178,12 +184,14 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      minHeight: '200px',
-      gap: '10px'
+      minHeight: isAbove4K ? '300px' : '200px',
+      gap: isAbove4K ? '20px' : '10px'
     },
     spinner: {
-      color: colors.primary
-    },
+      color: colors.primary,
+      width: isAbove4K ? '3rem' : '1.5rem',
+      height: isAbove4K ? '3rem' : '1.5rem'
+    }
   };
 
   useEffect(() => {
@@ -221,25 +229,21 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
   }, [startDate, endDate, selectedCampaign]);
 
   const getIcon = (platform) => {
+    const logoSize = isAbove4K ? 32 : 24;
+    const youtubeWidth = isAbove4K ? 44 : 34;
+    
     switch (platform.toLowerCase()) {
-      case "instagram": return <FaInstagram style={{ color: colors.platforms.instagram }} />;
-      case "facebook": return <FaFacebook style={{ color: colors.platforms.facebook }} />;
-      case "pinterest": return <FaPinterest style={{ color: colors.platforms.pinterest }} />;
-      case "linkedin": return <FaLinkedin style={{ color: colors.platforms.linkedin }} />;
-      case "google search": return <FaGoogle style={{ color: colors.platforms.google }} />;
-      case "tiktok": return <img src={tiktokLogo} alt="TikTok Logo" width="24" height="24" />;
-      case "kwai": return <img src={kwaiLogo} alt="Kwai Logo" width="24" height="24" />;
-      case "youtube": return <img src={youtubeLogo} alt="Youtube Logo" width="34" height="22" />;
-      case "google gdn": return <img src={gdnLogo} alt="GDN Logo" width="24" height="24" />;
+      case "instagram": return <FaInstagram style={{ color: colors.platforms.instagram, fontSize: logoSize }} />;
+      case "facebook": return <FaFacebook style={{ color: colors.platforms.facebook, fontSize: logoSize }} />;
+      case "pinterest": return <FaPinterest style={{ color: colors.platforms.pinterest, fontSize: logoSize }} />;
+      case "linkedin": return <FaLinkedin style={{ color: colors.platforms.linkedin, fontSize: logoSize }} />;
+      case "google search": return <FaGoogle style={{ color: colors.platforms.google, fontSize: logoSize }} />;
+      case "tiktok": return <img src={tiktokLogo} alt="TikTok Logo" width={logoSize} height={logoSize} />;
+      case "kwai": return <img src={kwaiLogo} alt="Kwai Logo" width={logoSize} height={logoSize} />;
+      case "youtube": return <img src={youtubeLogo} alt="Youtube Logo" width={youtubeWidth} height={logoSize} />;
+      case "google gdn": return <img src={gdnLogo} alt="GDN Logo" width={logoSize} height={logoSize} />;
       default: return null;
     }
-  };
-
-  const calculateProgress = (platform) => {
-    if (platform.spend && platform.impressions) {
-      return Math.min(100, (platform.spend / platform.impressions) * 100);
-    }
-    return 0;
   };
 
   if (loading) {
@@ -250,7 +254,12 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
         </div>
         <div style={styles.loadingContainer}>
           <Spinner animation="border" style={styles.spinner} />
-          <span style={{ color: colors.text.secondary }}>Carregando métricas...</span>
+          <span style={{ 
+            color: colors.text.secondary, 
+            fontSize: isAbove4K ? '1.5rem' : '1rem'
+          }}>
+            Carregando métricas...
+          </span>
         </div>
       </Card>
     );
@@ -368,12 +377,6 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
                 </>
               )}
             </div>
-            <div 
-              style={{
-                ...styles.progressBar,
-                width: `${calculateProgress(item)}%`
-              }}
-            ></div>
           </div>
         ))}
       </div>
