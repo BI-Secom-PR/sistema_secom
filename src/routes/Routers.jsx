@@ -14,6 +14,7 @@ import Login from "../pages/login";
 import Cadastro from "../pages/Cadastro";
 import Stilingue from "../pages/AnaliseStilingue";
 import Demografico from "../pages/Demografico";
+import DemograficoReact from "../pages/DemograficoReact";
 import Performance from "../pages/Performance";
 import Comparativo_Historico from "../pages/Comparativo_Historico";
 import Painel_8_Telas from "../pages/Painel_8_Telas";
@@ -42,6 +43,9 @@ const Routers = () => {
           </Route>
           <Route path="/demografico" element={<PrivateRoute />} >
             <Route path="/demografico" element={<Demografico />} />
+          </Route>
+          <Route path="/demograficoreact" element={<PrivateRoute />} >
+            <Route path="/demograficoreact" element={<DemograficoReact />} />
           </Route>
           <Route path="/performance" element={<PrivateRoute />} >
             <Route path="/performance" element={<Performance />} />

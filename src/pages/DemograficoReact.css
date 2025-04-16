@@ -1,0 +1,431 @@
+
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+  }
+  
+  /* Container principal */
+  .demografico-container {
+    display: flex;
+    flex-direction: column;
+    height: 95vh; /* Altura definida para acomodar o conteúdo sem scroll global */
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px; /* Menor padding */
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.3s ease;
+  }
+  
+  .header-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: #e53935;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  /* Layout principal */
+  .dashboard-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  /* Painel lateral de filtros */
+  .side-filters {
+    width: 180px; /* Largura reduzida */
+    padding: 8px;
+    background-color: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    overflow-y: auto;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .side-filters h2 {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 12px;
+    color: #333;
+  }
+  
+  .side-filters h2:first-child {
+    margin-top: 0;
+  }
+  
+  .filter-select-container {
+    position: relative;
+    margin-bottom: 8px;
+  }
+  
+  .filter-select {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    appearance: none;
+    background-color: white;
+    color: #333;
+  }
+  
+  .filter-select-container::after {
+    content: '▼';
+    font-size: 10px;
+    color: #666;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  /* Filtros de data */
+  .date-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  
+  .date-input-container {
+    display: flex;
+  }
+  
+  .date-input {
+    flex: 1;
+    padding: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+  }
+  
+  /* Área principal do dashboard */
+  .dashboard-main {
+    flex: 1;
+    padding: 8px;
+    overflow-y: auto;
+  }
+  
+  /* GRID para os 3 cards principais */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+  
+  /* GRID para os cards de métricas */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Áreas nomeadas se necessário: */
+    grid-template-areas:
+      "a b c"
+      "d e f";
+    gap: 5px;
+  }
+  
+  /* Cards do dashboard – inspirado no card.jsx, dimensões reduzidas */
+  .dashboard-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%);
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 8px;
+    min-height: 160px;
+    color: #333;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background 0.3s ease, color 0.3s ease;
+  }
+  
+  .dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 4px -3px rgba(0, 0, 0, 0.04);
+  }
+  
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  
+  /* Tabelas de métricas */
+  .metrics-table {
+    padding: 6px;
+  }
+  
+  .table-container {
+    max-height: 120px;
+    overflow-y: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 4px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+  }
+  
+  th {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .left-align {
+    text-align: left;
+  }
+  
+  .right-align {
+    text-align: right;
+  }
+  
+  /* Impressões por gênero */
+  .gender-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .gender-icons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .gender-icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .gender-icon {
+    font-size: 20px;
+  }
+  
+  .gender-icon.female {
+    color: #F2B191;
+  }
+  
+  .gender-icon.male {
+    color: #2E6B62;
+  }
+  
+  .gender-label {
+    text-align: center;
+    font-size: 12px;
+    color: #333;
+  }
+  
+  .gender-line {
+    height: 3px;
+    width: 100%;
+    margin-top: 4px;
+    border-radius: 2px;
+  }
+  
+  .gender-line.female {
+    background-color: #F2B191;
+  }
+  
+  .gender-line.male {
+    background-color: #2E6B62;
+  }
+  
+  .gender-stats {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 6px;
+  }
+  
+  .gender-stat {
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    color: #666;
+  }
+  
+  .gender-stat.right {
+    text-align: right;
+    margin-left: auto;
+  }
+  
+  .gender-other {
+    font-size: 8px;
+    color: #666;
+    margin-top: 4px;
+  }
+  
+  /* Impressões geográficas e Distribuição etária */
+  /* Container que envolve os dois gráficos (mapa + barras) */
+  .geographic-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Container para o Mapa do Brasil */
+  .map-container {
+    width: 100%;
+    height: 240px; /* Altura ideal para o mapa */
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  /* Container para o antigo Gráfico de Barras */
+  .bar-chart-container {
+    width: 100%;
+    height: 200px; /* Altura ideal para o gráfico, ajuste conforme necessário */
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  /* Distribuição etária */
+  .age-bars {
+    display: flex;
+    flex-direction: column;
+    margin-top: 6px;
+  }
+  
+  .age-bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  
+  .age-label {
+    width: 50px;
+    font-size: 10px;
+    color: #333;
+  }
+  
+  .age-bar-container {
+    flex: 1;
+    display: flex;
+  }
+  
+  .age-bar {
+    height: 20px;
+    color: white;
+    font-size: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .age-bar.female {
+    background-color: #F2B191;
+  }
+  
+  .age-bar.male {
+    background-color: #2E6B62;
+  }
+  
+  /* Específico para os cards de métricas para uniformizar altura */
+  .dashboard-card.metrics-table {
+    min-height: 160px;
+  }
+  
+  /* Força o card "Maiores CPM" (com extraClass "small-card") a ter altura fixa (igual aos demais) */
+  .dashboard-card.metrics-table.small-card {
+    height: 160px;
+    overflow: hidden;
+  }
+  
+  /* Grid items para posicionamento na grid de métricas */
+  .grid-item-a { grid-area: a; }
+  .grid-item-b { grid-area: b; }
+  .grid-item-c { grid-area: c; }
+  .grid-item-d { grid-area: d; }
+  .grid-item-e { grid-area: e; }
+  .grid-item-f { grid-area: f; }
+  
+  /* ================== Dark Mode Overrides ================== */
+  .dark-mode,
+  .dark-mode * {
+    color: #ffffff !important;
+  }
+  
+  .dark-mode {
+    background-color: #1b1b1b;
+  }
+  
+  .dark-mode .header {
+    background-color: #2c2c2c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .dark-mode .side-filters {
+    background-color: #2c2c2c;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .dark-mode .filter-select,
+  .dark-mode .date-input {
+    background-color: #2c2c2c;
+    border: 1px solid #444;
+  }
+  
+  .dark-mode .dashboard-card {
+    background: linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%);
+    border: 1px solid #444444;
+    color: #ffffff;
+    box-shadow: 0 8px 12px -3px rgba(0, 0, 0, 0.2),
+                0 3px 5px -2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dark-mode .dashboard-card:hover {
+    box-shadow: 0 16px 20px -5px rgba(0, 0, 0, 0.2),
+                0 8px 8px -5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dark-mode table,
+  .dark-mode th,
+  .dark-mode td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* ================== Fim Dark Mode ================== */
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .dashboard-content {
+      flex-direction: column;
+    }
+    
+    .side-filters {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  }
+  

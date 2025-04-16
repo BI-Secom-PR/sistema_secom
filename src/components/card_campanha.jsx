@@ -173,25 +173,55 @@ const CardCampanha = ({ onCampaignSelect, startDate, endDate, selectedCampaign }
   const loadCampaigns = async () => {
     setLoading(true);
     setError(null);
-
+  
     try {
       const data = await fetchCampaigns(startDate, endDate);
+      console.log("Dados retornados por fetchCampaigns:", data);
+      
       const yesterday = new Date(endDate);
       yesterday.setDate(yesterday.getDate() - 1);
-
+      const twoDaysAgo = new Date(endDate);
+      twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+  
       const campaignsWithStatus = await Promise.all(
         data.map(async (campaign) => {
+          console.log(`Buscando métricas para campanha: ${campaign.Nome_Interno_Campanha}`);
           const metrics = await graficoMetrics(startDate, endDate, campaign.Nome_Interno_Campanha);
+          console.log(`Métricas retornadas para ${campaign.Nome_Interno_Campanha}:`, metrics);
+          
+          // Verifica métrica do dia anterior
           const yesterdayMetric = metrics.actual.find(
             (item) => new Date(item.date).toDateString() === yesterday.toDateString()
           );
+          console.log(`Métrica do dia anterior (${yesterday.toDateString()}) para ${campaign.Nome_Interno_Campanha}:`, yesterdayMetric);
+  
+          // Se há métrica do dia anterior com impressões, a campanha é ativa
+          if (yesterdayMetric && yesterdayMetric.impressions > 0) {
+            console.log(`Campanha ${campaign.Nome_Interno_Campanha} marcada como ATIVA (métrica do dia anterior encontrada)`);
+            return {
+              ...campaign,
+              isActive: true,
+            };
+          }
+  
+          // Verifica a última métrica com impressões
+          const lastActiveMetric = metrics.actual
+            .filter((item) => item.impressions > 0)
+            .sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+          console.log(`Última métrica com impressões para ${campaign.Nome_Interno_Campanha}:`, lastActiveMetric);
+  
+          // Se não há métrica com impressões ou a última métrica é anterior a 2 dias, a campanha é inativa
+          const isInactive = !lastActiveMetric || new Date(lastActiveMetric.date) <= twoDaysAgo;
+          console.log(`Campanha ${campaign.Nome_Interno_Campanha} marcada como ${isInactive ? "INATIVA" : "ATIVA"}`);
+  
           return {
             ...campaign,
-            isActive: !!yesterdayMetric && yesterdayMetric.impressions > 0,
+            isActive: !isInactive,
           };
         })
       );
-
+  
+      console.log("Campanhas com status final:", campaignsWithStatus);
       setCampaigns(campaignsWithStatus);
     } catch (err) {
       setError("Erro ao carregar campanhas. Por favor, tente novamente.");
