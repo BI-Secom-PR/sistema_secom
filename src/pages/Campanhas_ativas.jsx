@@ -9,7 +9,6 @@ import Engajamento from "../components/engajamento"
 import { format, subDays } from "date-fns"
 import GraficoComparativo from "../components/grafico_comparativo"
 import { useTheme } from '../context/ThemeContext' // Importe o useTheme
-import { FaSun, FaMoon } from "react-icons/fa" // Importe ícones do react-icons
 
 const Campanhas_ativas = () => {
   const yesterday = format(subDays(new Date(), 1), "yyyy-MM-dd")
@@ -24,7 +23,7 @@ const Campanhas_ativas = () => {
   const [autoRetrying, setAutoRetrying] = useState(false)
   const [dataLoaded, setDataLoaded] = useState(false)
   
-  const { isDarkMode, toggleTheme } = useTheme() // Acesse o estado do tema e a função para alternar
+  const { isDarkMode } = useTheme() // Acesse o estado do tema e a função para alternar
 
   // Função para buscar dados com mecanismo de retry
   const fetchInitialData = useCallback(async () => {
