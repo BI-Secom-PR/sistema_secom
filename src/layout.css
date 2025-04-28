@@ -1,14 +1,15 @@
 /* src/styles/components/layout.css */
 .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 250px;
-    background: #fff;
-    border-right: 1px solid #eaeaea;
-    padding: 20px;
-  }
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 250px;
+  background: #fff;
+  border-right: 1px solid #eaeaea;
+  padding: 20px;
+  z-index: 1080; /* Menor que o Offcanvas (1095) */
+}
   
   .logo-container {
     padding: 20px;

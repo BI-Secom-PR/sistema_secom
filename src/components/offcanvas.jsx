@@ -1,39 +1,120 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Offcanvas, Button } from 'react-bootstrap';
 import { getMenuItems } from './menuItems';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { FiLogOut, FiMoon, FiSun } from 'react-icons/fi';
+import LogoGovClaro from '../assets/gov-logo.png';
+import LogoGovEscuro from '../assets/gov-logo-escuro.png';
+
+// Estilos CSS atualizados para o backdrop e Offcanvas
+const offcanvasStyles = `
+  .custom-offcanvas .offcanvas-backdrop {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+  }
+  .custom-offcanvas.show .offcanvas-backdrop {
+    opacity: 1;
+  }
+  .custom-offcanvas .offcanvas {
+    opacity: 1 !important;
+    transition: transform 0.3s ease-in-out;
+  }
+  .custom-offcanvas .offcanvas-header .btn-close {
+    filter: invert(1);
+  }
+  .menu-item {
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out;
+  }
+  .menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .menu-item.active {
+    background-color: #FFD000;
+    color: #000000;
+    font-weight: 600;
+  }
+  [data-theme="dark"] .menu-item {
+    color: #e0e0e0 !important; /* Texto claro para itens não ativos */
+  }
+  [data-theme="dark"] .menu-item.active {
+    background-color: #485dc9;
+    color: #ffffff !important; /* Texto branco puro para item ativo */
+  }
+  [data-theme="dark"] .menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  [data-theme="dark"] .custom-offcanvas .btn {
+    color: #ffffff !important; /* Texto branco para botões */
+  }
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+    width: 100%;
+  }
+  .custom-button {
+    width: 90%;
+    max-width: 220px;
+  }
+`;
+
+// Injetar estilos no documento
+const styleSheet = document.createElement('style');
+styleSheet.type = 'text/css';
+styleSheet.innerText = offcanvasStyles;
+document.head.appendChild(styleSheet);
 
 const OffcanvasMenu = ({ show, handleClose }) => {
   const navigate = useNavigate();
   const { isDarkMode, toggleTheme } = useTheme();
+  const location = useLocation();
 
   const theme = {
     background: isDarkMode ? '#2c2c2c' : '#ffffff',
-    text: isDarkMode ? '#e6e6e6' : '#212529',
-    textMuted: isDarkMode ? '#a0a0a0' : '#6c757d',
+    sidebarBg: isDarkMode ? '#2c2c2c' : '#f8f9fa',
+    text: isDarkMode ? '#ffffff' : '#212529',
+    textMuted: isDarkMode ? '#e0e0e0' : '#6c757d',
     border: isDarkMode ? '#2a2a4a' : '#dee2e6',
     secondary: isDarkMode ? '#e94560' : '#dc3545',
     darkModeButtonBg: isDarkMode ? '#1a3c66' : '#3b5bdb',
     darkModeButtonHover: isDarkMode ? '#194475' : '#2c4fe7',
+    menuItemHover: isDarkMode ? '#2e3553' : '#f1f3f5',
+    activeItemBg: isDarkMode ? '#485dc9' : '#FFD000',
+  };
+
+  // Controlar o backdrop e evitar conflitos
+  useEffect(() => {
+    const backdrop = document.querySelector('.offcanvas-backdrop');
+    if (show && backdrop) {
+      backdrop.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+      backdrop.style.opacity = '1';
+    }
+    return () => {
+      if (backdrop) {
+        backdrop.style.opacity = '0';
+      }
+    };
+  }, [show]);
+
+  const handleMenuItemClick = (path) => {
+    navigate(path);
+    setTimeout(() => {
+      handleClose();
+      window.scrollTo(0, 0);
+    }, 100);
   };
 
   const logout = () => {
-    // Removendo dados do sessionStorage
-    sessionStorage.removeItem('_role');
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('_id');
-    sessionStorage.removeItem('email');
-
-    // Removendo dados do localStorage
-    localStorage.removeItem('_role');
-    localStorage.removeItem('token');
-    localStorage.removeItem('_id');
-    localStorage.removeItem('email');
-
-    // Redirecionando para a página de login
+    sessionStorage.clear();
+    localStorage.clear();
     navigate('/login');
+    handleClose();
     window.location.reload();
   };
 
@@ -43,61 +124,82 @@ const OffcanvasMenu = ({ show, handleClose }) => {
       onHide={handleClose}
       backdrop="true"
       className="custom-offcanvas"
-      style={{ backgroundColor: theme.background }}
+      style={{
+        backgroundColor: theme.sidebarBg,
+        width: '270px',
+      }}
     >
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title style={{ color: theme.text }}>
+        <Offcanvas.Title>
           <img
-            src="https://logodownload.org/wp-content/uploads/2023/01/governo-federal-2023-logo-lula.png"
+            src={isDarkMode ? LogoGovEscuro : LogoGovClaro}
             alt="Logo Governo Federal"
-            className="logo"
+            style={{
+              width: '150px',
+              height: 'auto',
+              objectFit: 'contain',
+              filter: isDarkMode ? 'brightness(0.9) contrast(1.1)' : 'none',
+            }}
           />
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
         <nav>
-          <ul className="menu">
-            {getMenuItems(isDarkMode).map((item, index) => (
-              <Link
-                className="nav-link lead"
-                to={item.path}
-                key={index}
-                onClick={() => {
-                  handleClose();
-                  window.scrollTo(0, 0);
-                }}
-                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-              >
-                <li className="menu-item" style={{ color: theme.text }}>
-                  {item.icon}
-                  <span>{item.name}</span>
+          <ul
+            style={{
+              listStyleType: 'none',
+              padding: 0,
+              margin: 0,
+            }}
+          >
+            {getMenuItems(isDarkMode).map((item, index) => {
+              const isActive = location.pathname === item.path;
+              return (
+                <li key={index} style={{ margin: '5px 10px' }}>
+                  <div
+                    onClick={() => handleMenuItemClick(item.path)}
+                    style={{
+                      textDecoration: 'none',
+                      color: isActive ? (isDarkMode ? '#ffffff' : '#000000') : theme.textMuted,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <div
+                      className={`menu-item ${isActive ? 'active' : ''}`}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        fontSize: '14px',
+                        fontWeight: isActive ? '600' : '400',
+                      }}
+                    >
+                      <span style={{ fontSize: '18px', color: isDarkMode ? '#ffffff' : '#212529' }}>
+                        {item.icon}
+                      </span>
+                      <span>{item.name}</span>
+                    </div>
+                  </div>
                 </li>
-              </Link>
-            ))}
+              );
+            })}
           </ul>
         </nav>
-        <div 
-          className="action-buttons-container" 
-          style={{ 
-            position: 'absolute', 
-            bottom: '20px', 
-            width: '100%', 
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '12px'
-          }}
+        <div
+          className="button-container"
         >
-          {/* Dark Mode Toggle Button */}
           <Button
             onClick={toggleTheme}
-            aria-label={isDarkMode ? "Ativar modo escuro" : "Ativar modo claro"}
+            aria-label={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
+            className="custom-button"
             style={{
-              width: '65%',
               height: '42px',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
               gap: '12px',
               padding: '0 15px',
               fontSize: '14px',
@@ -119,19 +221,17 @@ const OffcanvasMenu = ({ show, handleClose }) => {
               e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
-            {isDarkMode ? <FiMoon size={18} /> : <FiSun size={18} />}
-            <span>{isDarkMode ? 'Modo Escuro' : 'Modo Claro'}</span>
+            {isDarkMode ? <FiMoon size={18} /> : <FiSun size= {18} />}
+            <span>{isDarkMode ? 'Modo Claro' : 'Modo Escuro'}</span>
           </Button>
-
-          {/* Logout Button */}
           <Button
             onClick={logout}
+            className="custom-button"
             style={{
-              width: '65%',
               height: '42px',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
               gap: '12px',
               padding: '0 15px',
               fontSize: '14px',
