@@ -9,20 +9,15 @@ import LogoGovEscuro from '../assets/gov-logo-escuro.png';
 
 // Estilos CSS atualizados para o backdrop e Offcanvas
 const offcanvasStyles = `
-  .custom-offcanvas .offcanvas-backdrop {
+  /* Backdrop separado */
+  .custom-backdrop {
     background-color: rgba(0, 0, 0, 0.2) !important;
     transition: opacity 0.3s ease-in-out;
-    opacity: 0;
-  }
-  .custom-offcanvas.show .offcanvas-backdrop {
     opacity: 1;
   }
   .custom-offcanvas .offcanvas {
     opacity: 1 !important;
     transition: transform 0.3s ease-in-out;
-  }
-  .custom-offcanvas .offcanvas-header .btn-close {
-    filter: invert(1);
   }
   .menu-item {
     padding: 12px 15px;
@@ -38,17 +33,17 @@ const offcanvasStyles = `
     font-weight: 600;
   }
   [data-theme="dark"] .menu-item {
-    color: #e0e0e0 !important; /* Texto claro para itens não ativos */
+    color: #e0e0e0 !important;
   }
   [data-theme="dark"] .menu-item.active {
     background-color: #485dc9;
-    color: #ffffff !important; /* Texto branco puro para item ativo */
+    color: #ffffff !important;
   }
   [data-theme="dark"] .menu-item:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
   [data-theme="dark"] .custom-offcanvas .btn {
-    color: #ffffff !important; /* Texto branco para botões */
+    color: #ffffff !important;
   }
   .button-container {
     display: flex;
@@ -88,19 +83,24 @@ const OffcanvasMenu = ({ show, handleClose }) => {
     activeItemBg: isDarkMode ? '#485dc9' : '#FFD000',
   };
 
-  // Controlar o backdrop e evitar conflitos
+  // Controlar o backdrop e garantir fechamento ao clicar fora
   useEffect(() => {
-    const backdrop = document.querySelector('.offcanvas-backdrop');
-    if (show && backdrop) {
-      backdrop.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
-      backdrop.style.opacity = '1';
-    }
+    if (!show) return;
+    const backdropEl = document.querySelector('.offcanvas-backdrop');
+    if (!backdropEl) return;
+
+    // estilizar via classe dedicada
+    backdropEl.classList.add('custom-backdrop');
+
+    // fechar ao clicar no backdrop
+    const handleOutsideClick = () => handleClose();
+    backdropEl.addEventListener('click', handleOutsideClick);
+
     return () => {
-      if (backdrop) {
-        backdrop.style.opacity = '0';
-      }
+      backdropEl.removeEventListener('click', handleOutsideClick);
+      backdropEl.classList.remove('custom-backdrop');
     };
-  }, [show]);
+  }, [show, handleClose]);
 
   const handleMenuItemClick = (path) => {
     navigate(path);
@@ -122,14 +122,15 @@ const OffcanvasMenu = ({ show, handleClose }) => {
     <Offcanvas
       show={show}
       onHide={handleClose}
-      backdrop="true"
+      backdrop={true}
+      backdropClassName="custom-backdrop"
       className="custom-offcanvas"
       style={{
         backgroundColor: theme.sidebarBg,
         width: '270px',
       }}
     >
-      <Offcanvas.Header closeButton>
+      <Offcanvas.Header> {/* botão de X removido */}
         <Offcanvas.Title>
           <img
             src={isDarkMode ? LogoGovEscuro : LogoGovClaro}
@@ -145,13 +146,7 @@ const OffcanvasMenu = ({ show, handleClose }) => {
       </Offcanvas.Header>
       <Offcanvas.Body>
         <nav>
-          <ul
-            style={{
-              listStyleType: 'none',
-              padding: 0,
-              margin: 0,
-            }}
-          >
+          <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
             {getMenuItems(isDarkMode).map((item, index) => {
               const isActive = location.pathname === item.path;
               return (
@@ -167,16 +162,9 @@ const OffcanvasMenu = ({ show, handleClose }) => {
                       cursor: 'pointer',
                     }}
                   >
-                    <div
-                      className={`menu-item ${isActive ? 'active' : ''}`}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '12px',
-                        fontSize: '14px',
-                        fontWeight: isActive ? '600' : '400',
-                      }}
-                    >
+                    <div className={`menu-item ${isActive ? 'active' : ''}`} style={{
+                      display: 'flex', alignItems: 'center', gap: '12px', fontSize: '14px', fontWeight: isActive ? '600' : '400'
+                    }}> 
                       <span style={{ fontSize: '18px', color: isDarkMode ? '#ffffff' : '#212529' }}>
                         {item.icon}
                       </span>
@@ -188,29 +176,16 @@ const OffcanvasMenu = ({ show, handleClose }) => {
             })}
           </ul>
         </nav>
-        <div
-          className="button-container"
-        >
+        <div className="button-container">
           <Button
             onClick={toggleTheme}
             aria-label={isDarkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
             className="custom-button"
             style={{
-              height: '42px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              gap: '12px',
-              padding: '0 15px',
-              fontSize: '14px',
-              fontWeight: '500',
-              backgroundColor: theme.darkModeButtonBg,
-              border: 'none',
-              borderRadius: '8px',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.15)',
-              cursor: 'pointer',
-              color: '#ffffff',
-              transition: 'all 0.2s ease',
+              height: '42px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start',
+              gap: '12px', padding: '0 15px', fontSize: '14px', fontWeight: '500',
+              backgroundColor: theme.darkModeButtonBg, border: 'none', borderRadius: '8px',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.15)', cursor: 'pointer', color: '#ffffff', transition: 'all 0.2s ease'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = theme.darkModeButtonHover;
@@ -221,28 +196,17 @@ const OffcanvasMenu = ({ show, handleClose }) => {
               e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
-            {isDarkMode ? <FiMoon size={18} /> : <FiSun size= {18} />}
+            {isDarkMode ? <FiMoon size={18} /> : <FiSun size={18} />}
             <span>{isDarkMode ? 'Modo Claro' : 'Modo Escuro'}</span>
           </Button>
           <Button
             onClick={logout}
             className="custom-button"
             style={{
-              height: '42px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              gap: '12px',
-              padding: '0 15px',
-              fontSize: '14px',
-              fontWeight: '500',
-              backgroundColor: theme.secondary,
-              border: 'none',
-              borderRadius: '8px',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.15)',
-              cursor: 'pointer',
-              color: '#ffffff',
-              transition: 'all 0.2s ease',
+              height: '42px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start',
+              gap: '12px', padding: '0 15px', fontSize: '14px', fontWeight: '500',
+              backgroundColor: theme.secondary, border: 'none', borderRadius: '8px',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.15)', cursor: 'pointer', color: '#ffffff', transition: 'all 0.2s ease'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = isDarkMode ? '#d13652' : '#c82333';

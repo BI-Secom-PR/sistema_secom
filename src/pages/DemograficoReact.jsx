@@ -81,7 +81,6 @@ const Header = () => {
   return (
     <div className="header">
       <div className="header-title">Núcleo SPP Digital</div>
-      <button className="close-button">×</button>
     </div>
   );
 };
