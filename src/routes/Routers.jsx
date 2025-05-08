@@ -18,6 +18,7 @@ import DemograficoReact from "../pages/DemograficoReact";
 import Performance from "../pages/Performance";
 import Comparativo_Historico from "../pages/Comparativo_Historico";
 import Painel_8_Telas from "../pages/Painel_8_Telas";
+import CampaignManager from "../pages/CampaignManager";
 
 const Routers = () => {
   return (
@@ -46,6 +47,9 @@ const Routers = () => {
           </Route>
           <Route path="/demograficoreact" element={<PrivateRoute />} >
             <Route path="/demograficoreact" element={<DemograficoReact />} />
+          </Route>
+          <Route path="/campaignmanager" element={<PrivateRoute />} >
+            <Route path="/campaignmanager" element={<CampaignManager />} />
           </Route>
           <Route path="/performance" element={<PrivateRoute />} >
             <Route path="/performance" element={<Performance />} />

@@ -7,7 +7,7 @@ const Powerbi = () => {
           title="Dash único - SPP" 
           width="100%" 
           height="1060" 
-          src="https://app.powerbi.com/view?r=eyJrIjoiMzZhMjM0YWUtNjZjOC00YzIxLWIyZmItMzQ1Y2UwMDQ1MmUxIiwidCI6IjM4Nzc0ZWEwLTc0YjQtNGYxZC05N2RhLTM1ZDQzZmI5MDJmZCJ9&pageName=1d17ff2a4c851ca1f8f0" 
+          src="https://app.powerbi.com/reportEmbed?reportId=6098d487-4700-44e4-abf2-9ec13a4a740d&autoAuth=true&ctid=38774ea0-74b4-4f1d-97da-35d43fb902fd" 
           frameborder="0" 
           allowFullScreen="true">
         </iframe>
