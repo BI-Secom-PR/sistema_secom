@@ -273,8 +273,7 @@ const Painel_8_Telas = () => {
                 </div>
             </div>
             </div>
-
-            {/* Lado direito - 50% da tela */}
+            
             <div style={{ width: "50%", display: "flex", flexDirection: "column", gap: "20px" }}>
             <div style={{ 
                 flex: "3", 
