@@ -232,11 +232,6 @@ const TrendingTopics = () => {
   return (
     <div style={styles.pageContainer}>
       <Container fluid style={styles.mainContent}>
-        <div className="mb-4">
-          <div style={styles.titleContainer}>
-            <h1 style={styles.pageTitle}>ASSUNTOS DO MOMENTO</h1>
-          </div>
-        </div>
 
         <Row className="g-4" style={{ marginLeft: 0, marginRight: 0, flex: 1 }}>
           <TrendCard
