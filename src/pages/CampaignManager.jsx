@@ -96,28 +96,33 @@ const CampaignManager = ({ startDate, endDate }) => {
         const data = await fetchCampaigns(startDate, endDate);
         console.log("Campanhas retornadas pela API:", data);
 
-        // Separar campanhas com base na presença de "_" no nome
+        // Separar campanhas com base na presença de "_" ou "|" no nome
         const registered = [];
         const unregistered = [];
 
         data.forEach((campaign, index) => {
+          // Garantir que Nome_Interno_Campanha é uma string
+          const campaignName = campaign.Nome_Interno_Campanha || "";
+          
+          // Criar objeto base para a campanha com ID único
           const campaignData = {
             id: campaign.id ? campaign.id.toString() : `api-${index}-${Date.now()}`, // Garantir ID único
-            name: campaign.Nome_Interno_Campanha,
-            originalName: campaign.Nome_Interno_Campanha,
+            name: campaignName,
+            originalName: campaignName,
             active: true,
             selected: false,
           };
 
-          if (campaign.Nome_Interno_Campanha.includes("_")) {
+          // Verificar se o nome da campanha contém "_" ou "|"
+          if (campaignName.includes("_") || campaignName.includes("|")) {
             unregistered.push(campaignData);
           } else {
             registered.push({
               ...campaignData,
               items: [{
                 id: campaign.id ? campaign.id.toString() : `item-${index}-${Date.now()}`,
-                name: campaign.Nome_Interno_Campanha,
-                originalName: campaign.Nome_Interno_Campanha,
+                name: campaignName,
+                originalName: campaignName,
               }],
             });
           }
@@ -125,7 +130,6 @@ const CampaignManager = ({ startDate, endDate }) => {
 
         console.log("Campanhas registradas formatadas:", registered);
         console.log("Campanhas não registradas formatadas:", unregistered);
-
         // Substituir registeredCampaigns, mantendo apenas campanhas únicas por ID
         setRegisteredCampaigns(() => {
           const campaignMap = new Map();
