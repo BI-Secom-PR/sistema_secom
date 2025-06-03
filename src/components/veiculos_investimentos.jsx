@@ -6,6 +6,7 @@ import tiktokLogo from "../assets/tiktok-logo.png";
 import kwaiLogo from "../assets/kwai-logo.png";
 import youtubeLogo from "../assets/youtube-logo.png";
 import gdnLogo from "../assets/gdn-logo.png";
+import demandLogo from "../assets/google-demand-logo.png";
 import { useTheme } from '../context/ThemeContext';
 
 const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
@@ -210,6 +211,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
           { platform: "Kwai", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
           { platform: "Youtube", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
           { platform: "Google GDN", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
+          { platform: "Google Demand", spend: 0, CPM: 0, CPV: 0, CPC: 0, CTR: 0, VTR: 0, impressions: 0 },
         ];
 
         const mergedMetrics = allPlatforms.map(platform => {
@@ -242,6 +244,7 @@ const Veiculos_investimentos = ({ startDate, endDate, selectedCampaign }) => {
       case "kwai": return <img src={kwaiLogo} alt="Kwai Logo" width={logoSize} height={logoSize} />;
       case "youtube": return <img src={youtubeLogo} alt="Youtube Logo" width={youtubeWidth} height={logoSize} />;
       case "google gdn": return <img src={gdnLogo} alt="GDN Logo" width={logoSize} height={logoSize} />;
+      case "google demand": return <img src={demandLogo} alt="Demand Logo" width={logoSize} height={logoSize} />;
       default: return null;
     }
   };
