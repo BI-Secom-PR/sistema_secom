@@ -1,13 +1,32 @@
-import React from 'react';
-import { Outlet, Navigate } from 'react-router-dom';
+"use client"
+import { Navigate, Outlet } from "react-router-dom"
+import { useAuth } from "./AuthContext"
 
 const PrivateRoute = () => {
-  const auth = () => {
-    const role = sessionStorage.getItem('_role') || localStorage.getItem('_role');
-    return role === 'Admin';
-  };
+  const { isAuthenticated, loading, checkAuth } = useAuth()
 
-  return auth() ? <Outlet /> : <Navigate to="/login" />;
-};
+  console.log("=== PRIVATE ROUTE ===")
+  console.log("Loading:", loading)
+  console.log("IsAuthenticated:", isAuthenticated)
 
-export default PrivateRoute;
+  // Se ainda está carregando, mostrar loading
+  if (loading) {
+    console.log("Ainda carregando autenticação...")
+    return <div>Carregando...</div>
+  }
+
+  // Verificar autenticação novamente
+  const authStatus = checkAuth()
+  console.log("Status de autenticação verificado:", authStatus)
+
+  // Se não está autenticado, redirecionar para login
+  if (!authStatus) {
+    console.log("Usuário não autenticado, redirecionando para login")
+    return <Navigate to="/login" replace />
+  }
+
+  console.log("Usuário autenticado, permitindo acesso")
+  return <Outlet />
+}
+
+export default PrivateRoute
