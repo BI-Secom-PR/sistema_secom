@@ -19,6 +19,7 @@ import Performance from "../pages/Performance";
 import Comparativo_Historico from "../pages/Comparativo_Historico";
 import Painel_8_Telas from "../pages/Painel_8_Telas";
 import CampaignManager from "../pages/CampaignManager";
+import Metabase from "../pages/Metabase";
 
 const Routers = () => {
   return (
@@ -53,6 +54,9 @@ const Routers = () => {
           </Route>
           <Route path="/performance" element={<PrivateRoute />} >
             <Route path="/performance" element={<Performance />} />
+          </Route>
+          <Route path="/metabase" element={<PrivateRoute />} >
+            <Route path="/metabase" element={<Metabase />} />
           </Route>
           <Route path="/comparativo_historico" element={<PrivateRoute />} >
             <Route path="/comparativo_historico" element={<Comparativo_Historico />} />

@@ -11,6 +11,8 @@
     "cra-template": "1.2.0",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.6.3",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-encode": "^1.0.1",
     "lucide-react": "^0.473.0",
     "newsapi": "^2.4.1",
     "postcss": "^8.5.3",
